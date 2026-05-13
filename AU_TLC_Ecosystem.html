@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AU Teaching & Learning Capability Ecosystem — Evidence Document 1, Page 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green-bg: #E1F5EE;
+  --green-border: #0F6E56;
+  --green-text: #085041;
+  --blue-bg: #E6F1FB;
+  --blue-border: #185FA5;
+  --blue-text: #0C447C;
+  --blue-mid: #185FA5;
+  --gold-bg: #FAEEDA;
+  --gold-border: #BA7517;
+  --gold-text: #633806;
+  --gold-dark: #854F0B;
+  --gold-header: #BA7517;
+  --red-bg: #FAECE7;
+  --red-border: #993C1D;
+  --red-text: #712B13;
+  --red-mid: #A32D2D;
+  --red-header: #993C1D;
+  --purple-bg: #EEEDFE;
+  --purple-border: #534AB7;
+  --purple-text: #3C3489;
+  --purple-mid: #534AB7;
+  --purple-header: #534AB7;
+  --yellow-bg: #FDF5E3;
+  --yellow-border: #C8971F;
+  --yellow-text: #C8971F;
+  --sage-bg: #EAF3DE;
+  --sage-border: #3B6D11;
+  --sage-text: #27500A;
+  --sage-mid: #3B6D11;
+  --font: 'Source Sans 3', 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: #ECECEC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 28px 16px 40px;
+}
+
+.page-wrapper {
+  background: #fff;
+  width: 100%;
+  max-width: 960px;
+  padding: 28px 36px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  border-radius: 5px;
+}
+
+/* ── HEADER ── */
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #C8971F;
+}
+.doc-header-left h1 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1F3A6E;
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+.doc-header-left p { font-size: 10.5px; color: #888; }
+.doc-header-right { text-align: right; }
+.award-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #C8971F;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.institution { font-size: 10.5px; color: #666; margin-top: 2px; }
+
+/* ── DIAGRAM ── */
+.diagram { width: 100%; }
+
+/* INTERNATIONAL ROW */
+.intl-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 0;
+}
+.intl-box {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: 8px;
+  padding: 10px 14px 11px;
+  text-align: center;
+}
+.intl-box .box-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green-text);
+  margin-bottom: 3px;
+}
+.intl-box .box-sub {
+  font-size: 10px;
+  color: var(--green-text);
+  line-height: 1.55;
+}
+
+/* CONNECTORS */
+.connector-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.connector-cell {
+  display: flex;
+  justify-content: center;
+}
+.arrow-down {
+  width: 1px;
+  height: 14px;
+  background: #0F6E56;
+  position: relative;
+  margin: 0 auto;
+}
+.arrow-down::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: -4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid #0F6E56;
+}
+.arrow-down-blue {
+  width: 1px;
+  height: 14px;
+  background: var(--blue-border);
+  position: relative;
+  margin: 0 auto;
+}
+.arrow-down-blue::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: -4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--blue-border);
+}
+.arrow-down-gold {
+  width: 1px;
+  height: 12px;
+  background: var(--red-border);
+  position: relative;
+  margin: 0 auto;
+}
+.arrow-down-gold::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: -4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--red-border);
+}
+.arrow-down-sage {
+  width: 1px;
+  height: 12px;
+  background: var(--sage-mid);
+  position: relative;
+  margin: 0 auto;
+}
+.arrow-down-sage::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: -4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--sage-mid);
+}
+.arrow-down-blue2 {
+  width: 1px;
+  height: 12px;
+  background: var(--blue-mid);
+  position: relative;
+  margin: 0 auto;
+}
+.arrow-down-blue2::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: -4px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--blue-mid);
+}
+
+/* AU RISE BOX */
+.rise-box {
+  background: var(--blue-bg);
+  border: 1.5px solid var(--blue-border);
+  border-radius: 10px;
+  padding: 11px 18px 13px;
+  text-align: center;
+  margin-bottom: 0;
+}
+.rise-box .rise-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--blue-text);
+  margin-bottom: 4px;
+}
+.rise-box .rise-sub {
+  font-size: 10.5px;
+  color: var(--blue-mid);
+}
+
+/* THREE-COLUMN PILLARS */
+.pillars-row {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 10px;
+  margin-top: 0;
+}
+
+.pillar-box {
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.pillar-header {
+  padding: 6px 10px 7px;
+  text-align: center;
+}
+.pillar-header .ph-label {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.92;
+  display: block;
+  margin-bottom: 1px;
+}
+.pillar-header .ph-title {
+  font-size: 9.5px;
+  opacity: 0.88;
+}
+.pillar-body {
+  padding: 8px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+}
+
+/* Pillar III — Gold */
+.pillar-iii { background: var(--gold-bg); border-color: var(--gold-border); }
+.pillar-iii .pillar-header { background: var(--gold-header); color: #fff; }
+
+/* Enabler I — Red */
+.enabler-i { background: var(--red-bg); border-color: var(--red-border); }
+.enabler-i .pillar-header { background: var(--red-header); color: #fff; }
+
+/* Pillar IV — Purple */
+.pillar-iv { background: var(--purple-bg); border-color: var(--purple-border); }
+.pillar-iv .pillar-header { background: var(--purple-header); color: #fff; }
+
+/* Inner cards */
+.card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 7px 9px 8px;
+  text-align: center;
+}
+.card .card-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+.card .card-body {
+  font-size: 9.5px;
+  line-height: 1.5;
+}
+
+/* Pillar III card colors */
+.pillar-iii .card { border: 0.5px solid var(--gold-border); }
+.pillar-iii .card .card-title { color: var(--gold-text); }
+.pillar-iii .card .card-body { color: var(--gold-dark); }
+
+/* Enabler I card colors */
+.enabler-i .card { border: 0.5px solid var(--red-border); }
+.enabler-i .card .card-title { color: var(--red-text); }
+.enabler-i .card .card-body { color: var(--red-mid); }
+
+/* Pillar IV card colors */
+.pillar-iv .card { border: 0.5px solid var(--purple-border); }
+.pillar-iv .card .card-title { color: var(--purple-text); }
+.pillar-iv .card .card-body { color: var(--purple-mid); }
+
+/* Enabler I two-column grid */
+.enabler-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.enabler-grid .card { text-align: center; }
+
+/* Authentic Assessment special card */
+.card-authentic {
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--yellow-border) !important;
+  background: var(--yellow-bg) !important;
+}
+.card-authentic .badge {
+  background: var(--yellow-text);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  min-width: 44px;
+  flex-shrink: 0;
+}
+.card-authentic .badge .pct {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+.card-authentic .badge .n {
+  font-size: 8px;
+  margin-top: 2px;
+  opacity: 0.9;
+}
+.card-authentic .badge-text {
+  padding: 7px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-authentic .badge-text .card-title {
+  text-align: left;
+  margin-bottom: 2px;
+}
+.card-authentic .badge-text .card-body {
+  text-align: left;
+}
+
+/* ── FACULTY SATISFACTION BANNER ── */
+.satisfaction-banner {
+  background: var(--yellow-bg);
+  border: 1px solid var(--yellow-border);
+  border-radius: 7px;
+  padding: 7px 16px 9px;
+  margin-top: 0;
+}
+.satisfaction-banner .sat-label {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gold-text);
+  margin-bottom: 5px;
+}
+.satisfaction-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.stat-pct {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--yellow-text);
+  line-height: 1;
+}
+.stat-desc {
+  font-size: 9px;
+  color: var(--gold-text);
+}
+
+/* ── RECOGNITION PIPELINE ── */
+.pipeline-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 0;
+}
+.pipeline-box {
+  flex: 1;
+  background: var(--sage-bg);
+  border: 0.5px solid var(--sage-border);
+  border-radius: 6px;
+  padding: 7px 8px 8px;
+  text-align: center;
+}
+.pipeline-box .pipe-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--sage-text);
+  display: block;
+  margin-bottom: 2px;
+}
+.pipeline-box .pipe-sub {
+  font-size: 9px;
+  color: var(--sage-mid);
+  line-height: 1.45;
+}
+.pipe-arrow {
+  width: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage-mid);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* ── STUDENT OUTCOMES ── */
+.outcomes-box {
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-border);
+  border-radius: 8px;
+  padding: 11px 16px 12px;
+  text-align: center;
+}
+.outcomes-box .out-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--blue-text);
+  margin-bottom: 5px;
+}
+.outcomes-box .out-body {
+  font-size: 9.5px;
+  color: var(--blue-mid);
+  line-height: 1.6;
+}
+
+/* ── LEGEND ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+  margin-top: 0;
+  padding-top: 10px;
+  border-top: 0.5px solid #ddd;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  color: #444;
+  white-space: nowrap;
+}
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  border-width: 0.5px;
+  border-style: solid;
+}
+
+/* ── SPACERS (visual connectors) ── */
+.spacer-connector {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 6px;
+}
+.spacer-connector-3 {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 10px;
+  padding: 0;
+}
+.spacer-connector-3 .connector-cell {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── FOOTER ── */
+.doc-footer {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 0.5px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.doc-footer p { font-size: 9px; color: #aaa; }
+
+/* ── INSTRUCTIONS ── */
+.instructions {
+  background: #E6F1FB;
+  border: 1px solid #B5D4F4;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 18px;
+  max-width: 960px;
+  width: 100%;
+}
+.instructions h2 { font-size: 12px; color: #0C447C; margin-bottom: 6px; font-weight: 600; }
+.instructions p { font-size: 11px; color: #185FA5; line-height: 1.6; }
+
+/* Vertical gap utility */
+.gap-xs { height: 6px; }
+.gap-sm { height: 10px; }
+.gap-md { height: 12px; }
+
+@media print {
+  body { background: white; padding: 0; }
+  .page-wrapper { box-shadow: none; padding: 18px 24px; max-width: 100%; }
+  .instructions { display: none; }
+  @page { size: A4 landscape; margin: 10mm; }
+}
+
+@media (max-width: 600px) {
+  .page-wrapper { padding: 16px 14px; }
+  .pillars-row { grid-template-columns: 1fr; }
+  .intl-row { grid-template-columns: 1fr; }
+  .pipeline-row { flex-direction: column; }
+  .pipe-arrow { transform: rotate(90deg); }
+  .satisfaction-stats { flex-direction: column; gap: 6px; align-items: flex-start; padding-left: 8px; }
+  .legend { gap: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-header-left">
+      <h1>Teaching and Learning Capability Ecosystem — Evidence Document 1, Page 2</h1>
+      <p>Supporting evidence for THE Awards Arab World 2026 · Teaching and Learning Strategy of the Year</p>
+    </div>
+    <div class="doc-header-right">
+      <div class="award-label">THE Awards Arab World 2026</div>
+      <div class="institution">Ajman University · United Arab Emirates</div>
+    </div>
+  </div>
+
+  <!-- DIAGRAM -->
+  <div class="diagram">
+
+    <!-- INTERNATIONAL PARTNERSHIPS -->
+    <div class="intl-row">
+      <div class="intl-box">
+        <div class="box-title">University of East Anglia (UK)</div>
+        <div class="box-sub">Heart of Teaching · MOU Signed<br>75 faculty completed · 4 live webinars</div>
+      </div>
+      <div class="intl-box">
+        <div class="box-title">QUB + Ulster University (UK)</div>
+        <div class="box-sub">Education for Sustainable Development<br>65 faculty · pilot courses in progress</div>
+      </div>
+    </div>
+
+    <!-- ARROWS DOWN TO RISE -->
+    <div class="spacer-connector" style="margin-top:0;">
+      <div style="height:14px;position:relative;display:flex;flex-direction:column;align-items:center;">
+        <div style="width:1px;flex:1;background:#0F6E56;"></div>
+        <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid #0F6E56;"></div>
+      </div>
+      <div style="height:14px;position:relative;display:flex;flex-direction:column;align-items:center;">
+        <div style="width:1px;flex:1;background:#0F6E56;"></div>
+        <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid #0F6E56;"></div>
+      </div>
+    </div>
+
+    <!-- AU RISE -->
+    <div class="rise-box">
+      <div class="rise-title">AU RISE — Revitalizing Instruction, Skills &amp; Education</div>
+      <div class="rise-sub">Ajman University Strategic Framework 2025–2027 · Theme: From Activity to Impact</div>
+    </div>
+
+    <!-- ARROWS DOWN TO PILLARS -->
+    <div class="spacer-connector-3" style="margin-top:0;">
+      <div class="connector-cell" style="height:14px;align-items:flex-end;">
+        <div style="display:flex;flex-direction:column;align-items:center;height:100%;">
+          <div style="width:1px;flex:1;background:var(--blue-border);"></div>
+          <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--blue-border);"></div>
+        </div>
+      </div>
+      <div class="connector-cell" style="height:14px;align-items:flex-end;">
+        <div style="display:flex;flex-direction:column;align-items:center;height:100%;">
+          <div style="width:1px;flex:1;background:var(--blue-border);"></div>
+          <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--blue-border);"></div>
+        </div>
+      </div>
+      <div class="connector-cell" style="height:14px;align-items:flex-end;">
+        <div style="display:flex;flex-direction:column;align-items:center;height:100%;">
+          <div style="width:1px;flex:1;background:var(--blue-border);"></div>
+          <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--blue-border);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THREE PILLARS -->
+    <div class="pillars-row">
+
+      <!-- PILLAR III -->
+      <div class="pillar-box pillar-iii">
+        <div class="pillar-header">
+          <span class="ph-label">Pillar III</span>
+          <span class="ph-title">Student-Centric Responsive Pedagogy</span>
+        </div>
+        <div class="pillar-body">
+          <div class="card">
+            <span class="card-title">AU LIFT</span>
+            <div class="card-body">6 modules · UAE CAA Outcomes-Based Framework<br>Faculty redesign courses, not just attend</div>
+          </div>
+          <div class="pillar-body">
+<div class="card">
+              <span class="card-title" style="color:var(--gold-text);font-size:10.5px;font-weight:600;">Authentic Assessment</span>
+              <div class="card-body" style="color:var(--gold-dark);font-size:9.5px;">Redesign rate confirmed</div>
+            </div>
+          </div>
+          <div class="card">
+            <span class="card-title">Heart of Teaching (UEA)</span>
+            <div class="card-body">Relational &amp; reflective pedagogy<br>75 faculty · MOU signed · impact study</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENABLER I -->
+      <div class="pillar-box enabler-i">
+        <div class="pillar-header">
+          <span class="ph-label">Enabler I</span>
+          <span class="ph-title">Faculty &amp; Staff Development and Support</span>
+        </div>
+        <div class="pillar-body">
+          <div class="enabler-grid">
+            <div class="card">
+              <span class="card-title">PD Framework</span>
+              <div class="card-body">Bronze · Silver · Gold<br>93 sessions · 1,437 instances</div>
+            </div>
+            <div class="card">
+              <span class="card-title">CoP — 400+</span>
+              <div class="card-body">Community of Practice<br>Exceeds AU RISE 60% target</div>
+            </div>
+            <div class="card">
+              <span class="card-title">Best Teacher Award</span>
+              <div class="card-body">Annual · VCAA-governed<br>College Council evaluated</div>
+            </div>
+            <div class="card">
+              <span class="card-title">Recognition Ceremony</span>
+              <div class="card-body">Bi-annual · VCAA attends<br>Completion + implementation</div>
+            </div>
+            <div class="card">
+              <span class="card-title">Advance HE Fellowship</span>
+              <div class="card-body">Silver tier · PSF 2023</div>
+            </div>
+            <div class="card">
+              <span class="card-title">TLC Website</span>
+              <div class="card-body">3,408 visits · 90 days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PILLAR IV -->
+      <div class="pillar-box pillar-iv">
+        <div class="pillar-header">
+          <span class="ph-label">Pillar IV</span>
+          <span class="ph-title">Digitally Enabled Learning Environment</span>
+        </div>
+        <div class="pillar-body">
+          <div class="card">
+            <span class="card-title">AI for All AU</span>
+            <div class="card-body">DEC · 120+ universities · 31 countries<br>1,275 students · 103 faculty · 22 staff</div>
+          </div>
+          <div class="card">
+            <span class="card-title">Nearpod</span>
+            <div class="card-body">35 active faculty · 11 training sessions</div>
+          </div>
+          <div class="card">
+            <span class="card-title">EMC — Moodle Certification</span>
+            <div class="card-body">5 components · course design<br>Moodle Workplace — PD tracking</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end pillars-row -->
+
+    <!-- ARROW DOWN TO SATISFACTION -->
+    <div style="display:flex;justify-content:center;height:13px;align-items:flex-end;margin-top:0;">
+      <div style="display:flex;flex-direction:column;align-items:center;height:100%;">
+        <div style="width:1px;flex:1;background:var(--red-border);"></div>
+        <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--red-border);"></div>
+      </div>
+    </div>
+
+    <!-- FACULTY SATISFACTION BANNER -->
+    <div class="satisfaction-banner">
+      <div class="sat-label">Faculty satisfaction with TLC support (TLC Survey Data · n=217)</div>
+      <div class="satisfaction-stats">
+        <div class="stat-item">
+          <span class="stat-pct">100%</span>
+          <span class="stat-desc">Overall support From TLC During online</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-pct">100%</span>
+          <span class="stat-desc">Online Teaching Delivery  support</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-pct">97%</span>
+          <span class="stat-desc">Redesigning Assessments For Online Delivery</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARROW DOWN TO PIPELINE -->
+    <div style="display:flex;justify-content:center;height:13px;align-items:flex-end;margin-top:0;">
+      <div style="display:flex;flex-direction:column;align-items:center;height:100%;">
+        <div style="width:1px;flex:1;background:var(--sage-mid);"></div>
+        <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--sage-mid);"></div>
+      </div>
+    </div>
+
+    <!-- RECOGNITION PIPELINE -->
+    <div class="pipeline-row">
+      <div class="pipeline-box">
+        <span class="pipe-title">AU LIFT</span>
+        <div class="pipe-sub">Capability built</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipeline-box">
+        <span class="pipe-title">Best Teacher Award</span>
+        <div class="pipe-sub">Applied · recognised</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipeline-box">
+        <span class="pipe-title">Advance HE</span>
+        <div class="pipe-sub">Fellowship<br>International benchmark</div>
+      </div>
+      <div class="pipe-arrow">&#8594;</div>
+      <div class="pipeline-box">
+        <span class="pipe-title">Gold Tier</span>
+        <div class="pipe-sub">Lead · Mentor · Contribute</div>
+      </div>
+    </div>
+
+    <!-- ARROW DOWN TO OUTCOMES -->
+    <div style="display:flex;justify-content:center;height:13px;align-items:flex-end;margin-top:0;">
+      <div style="display:flex;flex-direction:column;align-items:center;height:100%;">
+        <div style="width:1px;flex:1;background:var(--blue-mid);"></div>
+        <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--blue-mid);"></div>
+      </div>
+    </div>
+
+    <!-- STUDENT OUTCOMES -->
+    <div class="outcomes-box">
+      <div class="out-title">Student Outcomes — Undergraduate &amp; Postgraduate · All 9 Colleges</div>
+      <div class="out-body">
+        9 AU Institutional Learning Outcomes: Critical Thinking · Innovation · Digital Fluency · Communication · Teamwork · Social Responsibility<br>
+        Information Literacy · Quantitative Reasoning · Knowledge &amp; Skills &nbsp;→&nbsp; Future-Ready Graduates
+      </div>
+    </div>
+
+    <div class="gap-sm"></div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#E1F5EE;border-color:#0F6E56;"></div>
+        International
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#FAEEDA;border-color:#BA7517;"></div>
+        Pillar III — Pedagogy
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#FAECE7;border-color:#993C1D;"></div>
+        Enabler I — Faculty Development
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#EEEDFE;border-color:#534AB7;"></div>
+        Pillar IV — Digital Learning
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#FDF5E3;border-color:#C8971F;"></div>
+        Satisfaction data
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#EAF3DE;border-color:#3B6D11;"></div>
+        Recognition
+      </div>
+    </div>
+
+  </div><!-- end diagram -->
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <p>Evidence Document 1, Page 2 of 2 · THE Awards Arab World 2026 · Ajman University</p>
+    <p>All metrics: TLC Success Stories Report 2026 · Satisfaction data: TLC Survey n=217</p>
+  </div>
+
+</div><!-- end page-wrapper -->
+
+<div class="instructions">
+  <h2>How to use this file</h2>
+  <p>
+    <strong>To save as PDF (best quality):</strong> Press <kbd>Ctrl+P</kbd> (or <kbd>Cmd+P</kbd> on Mac), choose "Save as PDF", set paper to A4 Landscape, margins to Minimum, and save.<br>
+    <strong>To insert into Word:</strong> Insert → Pictures → select the saved PDF or use a screenshot taken at 150% browser zoom for sharpest text.<br>
+    <strong>This file works in all modern browsers</strong> (Chrome, Edge, Firefox, Safari) and scales correctly on any screen size.
+  </p>
+</div>
+
+</body>
+</html>
