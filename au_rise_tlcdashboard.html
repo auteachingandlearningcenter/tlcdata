@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AU RISE — Institutional Performance Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:       #1B4FD8;
+    --blue-light: #EBF0FD;
+    --blue-mid:   #3B6EF5;
+    --teal:       #0E7C6F;
+    --teal-light: #E4F4F2;
+    --teal-mid:   #12A695;
+    --gold:       #B07800;
+    --gold-light: #FDF3DC;
+    --gold-mid:   #D99C00;
+    --ink:        #141920;
+    --muted:      #64748B;
+    --border:     #E2E8F0;
+    --bg:         #F7F9FC;
+    --white:      #FFFFFF;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--ink);
+    color: #fff;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo-badge {
+    background: linear-gradient(135deg, var(--blue-mid), var(--teal-mid));
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+  .header-title { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  .header-sub   { font-size: 12px; color: #94A3B8; margin-top: 2px; }
+  .header-right { font-size: 11px; color: #64748B; text-align: right; line-height: 1.6; }
+
+  /* ── Main ── */
+  main { padding: 24px 28px 32px; max-width: 1340px; margin: 0 auto; }
+
+  /* ── Section headers ── */
+  .section { margin-bottom: 24px; }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 5px 11px 5px 8px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .section-label .dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  }
+  .blue-label  { background: var(--blue-light);  color: var(--blue);  }
+  .blue-label  .dot { background: var(--blue-mid); }
+  .teal-label  { background: var(--teal-light);  color: var(--teal);  }
+  .teal-label  .dot { background: var(--teal-mid); }
+  .gold-label  { background: var(--gold-light);  color: var(--gold);  }
+  .gold-label  .dot { background: var(--gold-mid); }
+
+  /* ── Grid ── */
+  .grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .grid-3 { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+
+  /* ── KPI Card ── */
+  .card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+    border-top: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    border-radius: 0 0 0 60px;
+    opacity: .07;
+  }
+
+  /* Blue cards */
+  .card-blue  { border-top-color: var(--blue-mid); }
+  .card-blue::before  { background: var(--blue-mid); }
+  .card-blue  .metric { color: var(--blue); }
+  .card-blue  .icon   { color: var(--blue-mid); }
+
+  /* Teal cards */
+  .card-teal  { border-top-color: var(--teal-mid); }
+  .card-teal::before  { background: var(--teal-mid); }
+  .card-teal  .metric { color: var(--teal); }
+  .card-teal  .icon   { color: var(--teal-mid); }
+
+  /* Gold cards */
+  .card-gold  { border-top-color: var(--gold-mid); }
+  .card-gold::before  { background: var(--gold-mid); }
+  .card-gold  .metric { color: var(--gold); }
+  .card-gold  .icon   { color: var(--gold-mid); }
+
+  .metric {
+    font-family: 'DM Mono', monospace;
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -.02em;
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-top: 7px;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+  .badge-gold { background: var(--gold-light); color: var(--gold); }
+
+  /* ── Partnerships ── */
+  .partnerships {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    border-left: 4px solid var(--ink);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 32px;
+    align-items: flex-start;
+  }
+  .partnerships-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    width: 100%;
+    margin-bottom: 4px;
+  }
+  .partner-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--ink);
+  }
+  .partner-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  @media (max-width: 640px) {
+    main { padding: 16px; }
+    header { padding: 14px 16px; flex-direction: column; align-items: flex-start; }
+    .grid { grid-template-columns: 1fr 1fr; }
+    .metric { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div class="header-left">
+    <div class="logo-badge">AU RISE</div>
+    <div>
+      <div class="header-title">Institutional Performance Dashboard</div>
+      <div class="header-sub">Centre for Excellence in Learning &amp; Teaching · Academic Year 2025–26</div>
+    </div>
+  </div>
+  <div class="header-right">
+    Academic Year<br><strong style="color:#fff;font-size:13px;">2025 – 2026</strong>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ ENABLER I ══ -->
+  <section class="section">
+    <div class="section-label blue-label">
+      <span class="dot"></span>Enabler I — Faculty Development
+    </div>
+    <div class="grid">
+
+      <div class="card card-blue">
+        <div class="metric">93</div>
+        <div class="card-title">PD Sessions Delivered</div>
+        <div class="card-desc">Across all colleges &amp; disciplines</div>
+        <div class="badge badge-blue">↑ 191% Growth</div>
+      </div>
+
+      <div class="card card-blue">
+        <div class="metric">1,437</div>
+        <div class="card-title">Faculty Engagement</div>
+        <div class="card-desc">Total engagement instances recorded</div>
+        <div class="badge badge-blue">E1 · Capacity Building</div>
+      </div>
+
+      <div class="card card-blue">
+        <div class="metric">400+</div>
+        <div class="card-title">CoP Members</div>
+        <div class="card-desc">Community of Practice</div>
+        <div class="badge badge-blue">Target Exceeded</div>
+      </div>
+
+      <div class="card card-blue">
+        <div class="metric">3,408</div>
+        <div class="card-title">Website Visits</div>
+        <div class="card-desc">First 90 days post-launch</div>
+        <div class="badge badge-blue">E1 · Outreach</div>
+      </div>
+
+      <div class="card card-blue">
+        <div class="metric">2×</div>
+        <div class="card-title">Recognition Ceremonies</div>
+        <div class="card-desc">Annual faculty recognition events</div>
+        <div class="badge badge-blue">E1 · Culture</div>
+      </div>
+
+      <div class="card card-blue">
+        <div class="metric">9/9</div>
+        <div class="card-title">Colleges Engaged</div>
+        <div class="card-desc">Full institutional reach achieved</div>
+        <div class="badge badge-blue">100% Coverage</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ══ PILLAR III ══ -->
+  <section class="section">
+    <div class="section-label teal-label">
+      <span class="dot"></span>Pillar III — Pedagogy
+    </div>
+    <div class="grid">
+
+      <div class="card card-teal">
+        <div class="metric">97%</div>
+        <div class="card-title">Assessment Redesign</div>
+        <div class="card-desc">Courses with redesigned assessments</div>
+        <div class="badge badge-teal">P3 · Assessment</div>
+      </div>
+
+      <div class="card card-teal">
+        <div class="metric">4,213</div>
+        <div class="card-title">Interactive Activities</div>
+        <div class="card-desc">Deployed across all courses</div>
+        <div class="badge badge-teal">P3 · Engagement</div>
+      </div>
+
+      <div class="card card-teal">
+        <div class="metric">24</div>
+        <div class="card-title">AU LIFT Faculty</div>
+        <div class="card-desc">Leadership in Faculty Teaching cohort</div>
+        <div class="badge badge-teal">P3 · Leadership</div>
+      </div>
+
+      <div class="card card-teal">
+        <div class="metric">75</div>
+        <div class="card-title">Heart of Teaching</div>
+        <div class="card-desc">Programme participants</div>
+        <div class="badge badge-teal">P3 · Wellbeing</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ══ PILLAR IV ══ -->
+  <section class="section">
+    <div class="section-label gold-label">
+      <span class="dot"></span>Pillar IV — Digital Learning
+    </div>
+    <div class="grid grid-3">
+
+      <div class="card card-gold">
+        <div class="metric">100%</div>
+        <div class="card-title">Online Support Satisfaction</div>
+        <div class="card-desc">Student satisfaction rating</div>
+        <div class="badge badge-gold">P4 · Quality</div>
+      </div>
+
+      <div class="card card-gold">
+        <div class="metric">136</div>
+        <div class="card-title">Nearpod Educators</div>
+        <div class="card-desc">Active certified users</div>
+        <div class="badge badge-gold">P4 · EdTech</div>
+      </div>
+
+      <div class="card card-gold">
+        <div class="metric">941</div>
+        <div class="card-title">Lessons Launched</div>
+        <div class="card-desc">Live Nearpod sessions delivered</div>
+        <div class="badge badge-gold">P4 · Digital</div>
+      </div>
+
+      <div class="card card-gold">
+        <div class="metric">6,800</div>
+        <div class="card-title">Student Joins</div>
+        <div class="card-desc">Nearpod student participation</div>
+        <div class="badge badge-gold">P4 · Reach</div>
+      </div>
+
+      <div class="card card-gold">
+        <div class="metric">1,275</div>
+        <div class="card-title">AI Programme Students</div>
+        <div class="card-desc">Enrolled in AI literacy initiatives</div>
+        <div class="badge badge-gold">P4 · AI Literacy</div>
+      </div>
+
+      <div class="card card-gold">
+        <div class="metric">23</div>
+        <div class="card-title">Moodle Certifications</div>
+        <div class="card-desc">Staff completions — LMS upskilling</div>
+        <div class="badge badge-gold">P4 · LMS</div>
+      </div>
+
+    </div>
+  </section>
+	
+	<section>
+	<!-- ══ RESOURCES ══ -->
+<div class="partnerships" style="margin-top:20px; border-left:4px solid #1B4FD8;">
+  <div class="partnerships-title">📊 Resource Analytics</div>
+
+  <div class="partner-item">
+    <span class="partner-dot"></span>
+    <strong><a href="https://engage.cloud.microsoft/main/insights/overview/groups/eyJfdHlwZSI6Ikdyb3VwIiwiaWQiOiIyMjIyMDk3Mjg1MTIifQ">Teaching & Learning Center – Viva Engage Community Analytics</strong></a>
+  </div>
+	<div class="partner-item">
+	  <span class="partner-dot"></span>
+	  <strong><a href="https://tlcmasana-lab.github.io/Moodle-html-content/AU_TLC_Ecosystem.html">Teaching & Learning Center – Ecosystem</strong></a>
+  </div>
+</div>
+	</section>
+
+  <hr class="divider">
+
+  <!-- ══ PARTNERSHIPS ══ -->
+  <div class="partnerships">
+    <div class="partnerships-title">🌐 International Partnerships</div>
+    <div class="partner-item"><span class="partner-dot"></span><strong>UEA</strong> — University of East Anglia · Collaborative research &amp; faculty exchange</div>
+    <div class="partner-item"><span class="partner-dot"></span><strong>Queen's University Belfast</strong> · Pedagogical innovation &amp; programme alignment</div>
+    <div class="partner-item"><span class="partner-dot"></span><strong>Ulster University</strong> · Digital learning frameworks &amp; curriculum co-design</div>
+  </div>
+
+</main>
+
+</body>
+</html>
