@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching & Learning Center | Ajman University</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =====================================================
+   CSS CUSTOM PROPERTIES & RESET
+   ===================================================== */
+:root {
+  --orange: #F29F00;
+  --orange-light: #FFB82E;
+  --orange-dark: #D98E00;
+  --blue: #39A9DC;
+  --blue-dark: #1E7BAD;
+  --blue-deeper: #0D5C8A;
+  --white: #FFFFFF;
+  --off-white: #F8F9FB;
+  --gray-50: #F4F5F7;
+  --gray-100: #E8EAEE;
+  --gray-200: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-600: #4B5563;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.14);
+  --shadow-xl: 0 24px 64px rgba(0,0,0,0.16);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --nav-height: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--gray-800); background: var(--white); overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* =====================================================
+   TYPOGRAPHY
+   ===================================================== */
+.display-xl { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 900; line-height: 1.1; }
+.display-lg { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.15; }
+.display-md { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; line-height: 1.2; }
+.heading-lg { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 700; line-height: 1.3; }
+.heading-md { font-size: 1.15rem; font-weight: 600; line-height: 1.4; }
+.body-lg { font-size: 1.05rem; line-height: 1.7; color: var(--gray-600); }
+.body-md { font-size: 0.95rem; line-height: 1.65; color: var(--gray-600); }
+.label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); }
+
+/* =====================================================
+   LAYOUT UTILITIES
+   ===================================================== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.container-wide { max-width: 1400px; margin: 0 auto; padding: 0 32px; }
+.section { padding: 96px 0; }
+.section-sm { padding: 64px 0; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.gap-4 { gap: 4px; } .gap-8 { gap: 8px; } .gap-12 { gap: 12px; } .gap-16 { gap: 16px; } .gap-24 { gap: 24px; } .gap-32 { gap: 32px; } .gap-48 { gap: 48px; }
+.text-center { text-align: center; }
+.mt-8 { margin-top: 8px; } .mt-12 { margin-top: 12px; } .mt-16 { margin-top: 16px; } .mt-24 { margin-top: 24px; } .mt-32 { margin-top: 32px; } .mt-48 { margin-top: 48px; } .mt-64 { margin-top: 64px; }
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 50px; font-weight: 600; font-size: 0.92rem; transition: var(--transition); }
+.btn-primary { background: var(--orange); color: #fff; box-shadow: 0 4px 20px rgba(242,159,0,0.35); }
+.btn-primary:hover { background: var(--orange-dark); box-shadow: 0 6px 28px rgba(242,159,0,0.5); transform: translateY(-2px); }
+.btn-secondary { background: var(--blue); color: #fff; box-shadow: 0 4px 20px rgba(57,169,220,0.3); }
+.btn-secondary:hover { background: var(--blue-dark); transform: translateY(-2px); }
+.btn-outline { background: transparent; color: var(--blue); border: 2px solid var(--blue); }
+.btn-outline:hover { background: var(--blue); color: #fff; transform: translateY(-2px); }
+.btn-ghost { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(8px); }
+.btn-ghost:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+.btn-lg { padding: 16px 36px; font-size: 1rem; }
+.btn-sm { padding: 8px 20px; font-size: 0.85rem; }
+.btn svg { width: 18px; height: 18px; }
+
+/* =====================================================
+   CARDS
+   ===================================================== */
+.card { background: var(--white); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-md); transition: var(--transition); border: 1px solid var(--gray-100); }
+.card:hover { box-shadow: var(--shadow-xl); transform: translateY(-4px); }
+.card-blue { background: var(--blue-deeper); color: #fff; border: none; }
+.card-orange { background: var(--orange); color: #fff; border: none; }
+.card-gradient { background: linear-gradient(135deg, var(--blue-deeper) 0%, var(--blue) 100%); color: #fff; border: none; }
+
+/* =====================================================
+   SECTION HEADERS
+   ===================================================== */
+.section-header { margin-bottom: 56px; }
+.section-header .label { display: block; margin-bottom: 12px; }
+.section-header p { max-width: 620px; margin-top: 16px; }
+.section-header.centered { text-align: center; }
+.section-header.centered p { margin: 16px auto 0; }
+
+/* =====================================================
+   NAV
+   ===================================================== */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-height);
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gray-100);
+  transition: var(--transition);
+}
+#navbar.scrolled { box-shadow: var(--shadow-md); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+.nav-logo { display: flex; align-items: center; gap: 12px; }
+.nav-logo-mark {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deeper) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 900; font-size: 1.2rem; color: #fff;
+}
+.nav-logo-text { display: flex; flex-direction: column; }
+.nav-logo-text .primary { font-weight: 700; font-size: 0.95rem; color: var(--gray-900); line-height: 1.1; }
+.nav-logo-text .secondary { font-size: 0.72rem; color: var(--gray-400); letter-spacing: 0.05em; }
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-item { position: relative; }
+.nav-link {
+  display: flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  font-weight: 500; font-size: 0.88rem; color: var(--gray-700);
+  transition: var(--transition); white-space: nowrap;
+}
+.nav-link:hover { color: var(--blue); background: var(--gray-50); }
+.nav-link.active { color: var(--blue); }
+.nav-link svg { width: 14px; height: 14px; transition: var(--transition); }
+.nav-item:hover .nav-link svg { transform: rotate(180deg); }
+.nav-cta { display: flex; align-items: center; gap: 12px; }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--gray-700); border-radius: 2px; transition: var(--transition); }
+
+/* Mega Menu */
+.mega-menu {
+  position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl);
+  border: 1px solid var(--gray-100); padding: 24px; min-width: 480px;
+  opacity: 0; visibility: hidden; transition: var(--transition);
+  pointer-events: none;
+}
+.nav-item:hover .mega-menu { opacity: 1; visibility: visible; pointer-events: all; transform: translateX(-50%) translateY(0); }
+.mega-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mega-link { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: var(--radius-md); transition: var(--transition); }
+.mega-link:hover { background: var(--gray-50); }
+.mega-link-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--gray-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--blue); font-size: 1.1rem; }
+.mega-link-text .title { font-weight: 600; font-size: 0.88rem; color: var(--gray-900); }
+.mega-link-text .desc { font-size: 0.78rem; color: var(--gray-400); margin-top: 2px; }
+.mega-footer { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: space-between; }
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none; position: fixed; top: var(--nav-height); left: 0; right: 0; bottom: 0;
+  background: #fff; z-index: 999; overflow-y: auto; padding: 24px;
+}
+.mobile-menu.open { display: block; }
+.mobile-nav-link { display: block; padding: 14px 16px; border-radius: var(--radius-md); font-weight: 500; color: var(--gray-800); border-bottom: 1px solid var(--gray-100); }
+.mobile-nav-link:hover { background: var(--gray-50); color: var(--blue); }
+
+/* =====================================================
+   HERO
+   ===================================================== */
+#hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  padding-top: var(--nav-height);
+  background: linear-gradient(165deg, var(--blue-deeper) 0%, #0A4A73 50%, var(--blue-dark) 100%);
+  overflow: hidden;
+}
+.hero-bg-shapes { position: absolute; inset: 0; pointer-events: none; }
+.hero-shape-1 {
+  position: absolute; top: -80px; right: -80px; width: 520px; height: 520px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(242,159,0,0.2) 0%, transparent 70%);
+}
+.hero-shape-2 {
+  position: absolute; bottom: 80px; left: -120px; width: 400px; height: 400px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(57,169,220,0.25) 0%, transparent 70%);
+}
+.hero-grid-lines {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; padding: 64px 0; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(242,159,0,0.15); border: 1px solid rgba(242,159,0,0.4);
+  border-radius: 50px; padding: 6px 16px; margin-bottom: 24px;
+}
+.hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); animation: pulse 2s infinite; }
+.hero-badge span { font-size: 0.78rem; font-weight: 600; color: var(--orange-light); letter-spacing: 0.06em; text-transform: uppercase; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+.hero-title { color: #fff; }
+.hero-title .accent { color: var(--orange); }
+.hero-desc { color: rgba(255,255,255,0.75); font-size: 1.1rem; line-height: 1.75; margin-top: 20px; }
+.hero-actions { display: flex; align-items: center; gap: 16px; margin-top: 36px; flex-wrap: wrap; }
+.hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.hero-stat { text-align: center; padding: 20px 16px; border-radius: var(--radius-md); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px); }
+.hero-stat .num { font-family: var(--font-display); font-size: 2rem; font-weight: 900; color: var(--orange); line-height: 1; }
+.hero-stat .lbl { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-top: 6px; }
+.hero-visual { position: relative; }
+.hero-card-stack { position: relative; }
+.hero-main-card {
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-xl);
+  padding: 36px; color: #fff;
+}
+.hero-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--orange); border-radius: 50px; padding: 5px 14px; font-size: 0.78rem; font-weight: 700; margin-bottom: 20px; }
+.progress-list { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+.progress-item { display: flex; flex-direction: column; gap: 8px; }
+.progress-item .pi-header { display: flex; justify-content: space-between; font-size: 0.85rem; }
+.progress-item .pi-label { font-weight: 500; }
+.progress-item .pi-value { color: var(--orange-light); font-weight: 700; }
+.progress-bar { height: 6px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--orange), var(--orange-light)); transition: width 1.5s ease; width: 0; }
+.floating-badge {
+  position: absolute; background: #fff; border-radius: var(--radius-md);
+  padding: 12px 16px; box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: 10px; animation: float 4s ease-in-out infinite;
+}
+.floating-badge .fb-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.floating-badge .fb-text .v { font-weight: 700; font-size: 1rem; color: var(--gray-900); }
+.floating-badge .fb-text .l { font-size: 0.72rem; color: var(--gray-400); }
+.badge-1 { bottom: -24px; left: -24px; animation-delay: 0s; }
+.badge-2 { top: -16px; right: -20px; animation-delay: 2s; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* =====================================================
+   IMPACT STRIP
+   ===================================================== */
+#impact-strip { background: var(--orange); padding: 20px 0; }
+.impact-strip-inner { display: flex; align-items: center; gap: 0; overflow: hidden; }
+.impact-ticker { display: flex; align-items: center; gap: 48px; animation: ticker 25s linear infinite; white-space: nowrap; }
+.impact-ticker-item { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 600; font-size: 0.9rem; }
+.impact-ticker-sep { color: rgba(255,255,255,0.4); font-size: 1.2rem; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* =====================================================
+   ABOUT / MISSION
+   ===================================================== */
+#about { background: var(--off-white); }
+.about-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: center; }
+.about-visual { position: relative; }
+.about-graphic {
+  background: linear-gradient(135deg, var(--blue-deeper), var(--blue));
+  border-radius: var(--radius-xl); padding: 48px; color: #fff; position: relative; overflow: hidden;
+}
+.about-graphic::before {
+  content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px;
+  border-radius: 50%; background: rgba(242,159,0,0.15);
+}
+.about-graphic::after {
+  content: ''; position: absolute; bottom: -40px; left: -40px; width: 150px; height: 150px;
+  border-radius: 50%; background: rgba(255,255,255,0.06);
+}
+.about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.pillar-chip {
+  background: rgba(255,255,255,0.12); border-radius: var(--radius-md);
+  padding: 16px; border: 1px solid rgba(255,255,255,0.15);
+}
+.pillar-chip .icon { font-size: 1.5rem; margin-bottom: 8px; }
+.pillar-chip .name { font-weight: 600; font-size: 0.88rem; }
+.about-content {}
+.value-list { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+.value-item { display: flex; gap: 16px; align-items: flex-start; }
+.value-dot { width: 40px; height: 40px; border-radius: var(--radius-md); background: rgba(57,169,220,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--blue); font-size: 1.1rem; }
+.value-text .vt-title { font-weight: 700; font-size: 0.95rem; color: var(--gray-900); }
+.value-text .vt-desc { font-size: 0.88rem; color: var(--gray-400); margin-top: 4px; line-height: 1.5; }
+
+/* =====================================================
+   IMPACT DASHBOARD
+   ===================================================== */
+#impact { background: var(--white); }
+.impact-dashboard { background: linear-gradient(135deg, var(--blue-deeper) 0%, #0A3D5E 100%); border-radius: var(--radius-xl); padding: 56px; overflow: hidden; position: relative; }
+.impact-dashboard::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(242,159,0,0.12) 0%, transparent 70%); }
+.impact-title-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.stat-card {
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-lg); padding: 28px 24px; text-align: center;
+  transition: var(--transition); cursor: default;
+}
+.stat-card:hover { background: rgba(255,255,255,0.13); transform: translateY(-4px); }
+.stat-card .sc-icon { font-size: 2rem; margin-bottom: 12px; }
+.stat-card .sc-num { font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--orange); line-height: 1; }
+.stat-card .sc-label { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 8px; line-height: 1.4; }
+.impact-chart-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; margin-top: 24px; }
+.bar-chart-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-lg); padding: 28px; }
+.bar-chart-card .bcc-title { font-weight: 600; font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 24px; }
+.bar-chart { display: flex; align-items: flex-end; gap: 12px; height: 120px; }
+.bar-item { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+.bar { width: 100%; border-radius: 6px 6px 0 0; transition: height 1.5s ease; background: linear-gradient(180deg, var(--orange-light), var(--orange)); min-height: 4px; }
+.bar-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); }
+.mini-stats { display: flex; flex-direction: column; gap: 16px; }
+.mini-stat { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-md); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
+.mini-stat .ms-label { font-size: 0.82rem; color: rgba(255,255,255,0.6); }
+.mini-stat .ms-value { font-family: var(--font-display); font-size: 1.4rem; font-weight: 900; color: var(--orange); }
+.mini-stat .ms-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-top: 8px; overflow: hidden; width: 80px; }
+.mini-stat .ms-fill { height: 100%; border-radius: 4px; background: var(--blue); }
+
+/* =====================================================
+   TEF — Teaching Excellence Framework
+   ===================================================== */
+#tef { background: var(--off-white); }
+.tef-intro { max-width: 700px; margin: 0 auto 64px; text-align: center; }
+.pathway-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+.pathway-card { border-radius: var(--radius-lg); padding: 40px 32px; text-align: center; position: relative; overflow: hidden; transition: var(--transition); }
+.pathway-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; }
+.pathway-bronze { background: linear-gradient(160deg, #FFF8F0 0%, #FFF 100%); border: 2px solid #C8860A; }
+.pathway-bronze::before { background: linear-gradient(90deg, #C8860A, #E8A020); }
+.pathway-silver { background: linear-gradient(160deg, #F0F4FF 0%, #FFF 100%); border: 2px solid var(--blue); }
+.pathway-silver::before { background: linear-gradient(90deg, var(--blue-dark), var(--blue)); }
+.pathway-gold { background: linear-gradient(160deg, #FFFBF0 0%, #FFF 100%); border: 2px solid var(--orange); }
+.pathway-gold::before { background: linear-gradient(90deg, var(--orange-dark), var(--orange-light)); }
+.pathway-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.pathway-medal { font-size: 3rem; margin-bottom: 16px; }
+.pathway-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; }
+.pathway-bronze .pathway-title { color: #C8860A; }
+.pathway-silver .pathway-title { color: var(--blue-dark); }
+.pathway-gold .pathway-title { color: var(--orange-dark); }
+.pathway-desc { font-size: 0.88rem; color: var(--gray-600); margin-top: 12px; line-height: 1.65; }
+.pathway-criteria { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.pathway-criteria li { display: flex; gap: 8px; font-size: 0.85rem; color: var(--gray-700); align-items: flex-start; }
+.pathway-criteria li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+.outcome-chain { background: #fff; border-radius: var(--radius-xl); padding: 48px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-100); }
+.chain-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin-bottom: 36px; color: var(--gray-900); }
+.chain-flow { display: flex; align-items: center; gap: 0; overflow-x: auto; padding-bottom: 8px; }
+.chain-node { background: linear-gradient(135deg, var(--blue-deeper), var(--blue)); color: #fff; border-radius: var(--radius-md); padding: 20px 18px; text-align: center; min-width: 140px; flex-shrink: 0; }
+.chain-node .cn-icon { font-size: 1.6rem; margin-bottom: 8px; }
+.chain-node .cn-title { font-weight: 700; font-size: 0.82rem; }
+.chain-node .cn-desc { font-size: 0.72rem; color: rgba(255,255,255,0.7); margin-top: 4px; }
+.chain-arrow { color: var(--orange); font-size: 1.4rem; flex-shrink: 0; padding: 0 4px; }
+
+/* =====================================================
+   PROGRAMS
+   ===================================================== */
+#programs { background: var(--white); }
+.program-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.program-card { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--gray-100); transition: var(--transition); background: #fff; }
+.program-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+.program-card-header { padding: 32px 28px 24px; }
+.program-card-body { padding: 0 28px 28px; }
+.program-icon { width: 52px; height: 52px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
+.pc-blue .program-icon { background: rgba(57,169,220,0.12); }
+.pc-orange .program-icon { background: rgba(242,159,0,0.12); }
+.pc-deep .program-icon { background: rgba(13,92,138,0.12); }
+.pc-blue .program-card-header { border-bottom: 3px solid var(--blue); }
+.pc-orange .program-card-header { border-bottom: 3px solid var(--orange); }
+.pc-deep .program-card-header { border-bottom: 3px solid var(--blue-deeper); }
+.program-title { font-weight: 700; font-size: 1.05rem; color: var(--gray-900); }
+.program-sub { font-size: 0.82rem; color: var(--gray-400); margin-top: 4px; }
+.program-features { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.program-feature { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--gray-600); }
+.program-feature::before { content: '→'; color: var(--blue); font-weight: 700; }
+
+/* =====================================================
+   INNOVATION / AI
+   ===================================================== */
+#innovation { background: linear-gradient(180deg, var(--off-white) 0%, #fff 100%); }
+.innovation-header-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 64px; }
+.ai-highlight-box { background: linear-gradient(135deg, var(--blue-deeper), var(--blue-dark)); border-radius: var(--radius-xl); padding: 48px; color: #fff; position: relative; overflow: hidden; }
+.ai-highlight-box::before { content: 'AI'; position: absolute; top: -20px; right: -10px; font-family: var(--font-display); font-size: 8rem; font-weight: 900; color: rgba(255,255,255,0.05); line-height: 1; }
+.ai-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+.ai-stat { background: rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 20px; text-align: center; }
+.ai-stat .asn { font-family: var(--font-display); font-size: 2rem; font-weight: 900; color: var(--orange); }
+.ai-stat .asl { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-top: 4px; }
+.innovation-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.innov-card { border-radius: var(--radius-lg); padding: 28px 24px; border: 1px solid var(--gray-100); transition: var(--transition); background: #fff; }
+.innov-card:hover { border-color: var(--blue); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.innov-card .ic-icon { font-size: 2rem; margin-bottom: 16px; }
+.innov-card .ic-title { font-weight: 700; font-size: 0.95rem; color: var(--gray-900); }
+.innov-card .ic-desc { font-size: 0.83rem; color: var(--gray-500); margin-top: 8px; line-height: 1.55; }
+
+/* =====================================================
+   SHOWCASE
+   ===================================================== */
+#showcase { background: var(--white); }
+.testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.testimonial-card { background: var(--off-white); border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--gray-100); position: relative; }
+.testimonial-card::before { content: '"'; position: absolute; top: 16px; right: 24px; font-family: var(--font-display); font-size: 5rem; color: var(--orange); opacity: 0.15; line-height: 1; }
+.tc-quote { font-size: 0.9rem; color: var(--gray-700); line-height: 1.7; font-style: italic; }
+.tc-author { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+.tc-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: #fff; flex-shrink: 0; }
+.tc-info .tc-name { font-weight: 700; font-size: 0.88rem; color: var(--gray-900); }
+.tc-info .tc-role { font-size: 0.78rem; color: var(--gray-400); }
+.awards-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+.award-card { background: linear-gradient(135deg, var(--orange-dark), var(--orange-light)); border-radius: var(--radius-lg); padding: 28px 20px; text-align: center; color: #fff; transition: var(--transition); }
+.award-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(242,159,0,0.35); }
+.award-card .aw-icon { font-size: 2.4rem; margin-bottom: 12px; }
+.award-card .aw-title { font-weight: 700; font-size: 0.92rem; }
+.award-card .aw-year { font-size: 0.78rem; opacity: 0.8; margin-top: 4px; }
+
+/* =====================================================
+   RESEARCH
+   ===================================================== */
+#research { background: var(--off-white); }
+.research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.research-card { background: #fff; border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--gray-100); transition: var(--transition); }
+.research-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.rc-tag { display: inline-block; background: rgba(57,169,220,0.1); color: var(--blue-dark); border-radius: 50px; padding: 4px 14px; font-size: 0.75rem; font-weight: 600; margin-bottom: 14px; }
+.rc-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; }
+.rc-desc { font-size: 0.88rem; color: var(--gray-500); margin-top: 10px; line-height: 1.6; }
+.rc-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+.rc-authors { font-size: 0.78rem; color: var(--gray-400); }
+.rc-cta { font-size: 0.82rem; font-weight: 600; color: var(--blue); display: flex; align-items: center; gap: 4px; }
+
+/* =====================================================
+   PARTNERSHIPS
+   ===================================================== */
+#partnerships { background: var(--white); }
+.partners-hero { background: linear-gradient(135deg, var(--blue-deeper), var(--blue-dark)); border-radius: var(--radius-xl); padding: 56px; color: #fff; text-align: center; margin-bottom: 48px; position: relative; overflow: hidden; }
+.partners-hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+.partner-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.partner-card { background: #fff; border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--gray-100); text-align: center; transition: var(--transition); }
+.partner-card:hover { border-color: var(--blue); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.partner-logo-box { width: 80px; height: 80px; border-radius: var(--radius-lg); background: linear-gradient(135deg, var(--blue-deeper), var(--blue)); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #fff; font-family: var(--font-display); font-weight: 900; font-size: 1.4rem; }
+.partner-name { font-weight: 700; font-size: 1rem; color: var(--gray-900); }
+.partner-country { font-size: 0.82rem; color: var(--gray-400); margin-top: 4px; }
+.partner-desc { font-size: 0.85rem; color: var(--gray-600); margin-top: 12px; line-height: 1.6; }
+
+/* =====================================================
+   RESOURCES
+   ===================================================== */
+#resources { background: var(--off-white); }
+.resource-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.resource-card { background: #fff; border-radius: var(--radius-lg); padding: 28px; border: 1px solid var(--gray-100); transition: var(--transition); }
+.resource-card:hover { border-color: var(--orange); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.rc-icon-box { width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(242,159,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 16px; }
+.rc-name { font-weight: 700; font-size: 0.95rem; color: var(--gray-900); }
+.rc-count { font-size: 0.8rem; color: var(--gray-400); margin-top: 4px; }
+.rc-download { display: inline-flex; align-items: center; gap: 6px; color: var(--orange); font-weight: 600; font-size: 0.82rem; margin-top: 16px; }
+
+/* =====================================================
+   CONTACT CTA
+   ===================================================== */
+#contact { background: linear-gradient(135deg, var(--blue-deeper) 0%, #0A3D5E 100%); padding: 96px 0; }
+.contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.contact-content { color: #fff; }
+.contact-form-box { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(12px); border-radius: var(--radius-xl); padding: 40px; }
+.form-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.form-field label { font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.8); }
+.form-field input, .form-field select, .form-field textarea {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-md); padding: 12px 16px; color: #fff;
+  font-family: var(--font-body); font-size: 0.9rem; outline: none;
+  transition: var(--transition);
+}
+.form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,0.4); }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--orange); }
+.form-field select option { background: var(--blue-deeper); color: #fff; }
+.form-field textarea { min-height: 100px; resize: vertical; }
+.contact-info-list { display: flex; flex-direction: column; gap: 24px; margin-top: 36px; }
+.ci-item { display: flex; align-items: flex-start; gap: 16px; }
+.ci-icon { width: 44px; height: 44px; border-radius: var(--radius-md); background: rgba(242,159,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.ci-text .cit-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+.ci-text .cit-value { font-weight: 500; color: rgba(255,255,255,0.9); margin-top: 4px; font-size: 0.92rem; }
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+#footer { background: var(--gray-900); color: rgba(255,255,255,0.6); padding: 64px 0 32px; }
+.footer-inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+.footer-brand .fb-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.footer-brand .fb-mark { width: 40px; height: 40px; border-radius: 8px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 900; color: #fff; font-size: 1rem; }
+.footer-brand .fb-name { font-weight: 700; font-size: 0.95rem; color: #fff; }
+.footer-brand .fb-sub { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+.footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 280px; }
+.footer-col h4 { font-weight: 700; font-size: 0.88rem; color: rgba(255,255,255,0.9); margin-bottom: 16px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul a { font-size: 0.83rem; color: rgba(255,255,255,0.5); transition: var(--transition); }
+.footer-col ul a:hover { color: var(--orange); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; }
+.footer-bottom span { font-size: 0.8rem; }
+.footer-social { display: flex; gap: 12px; }
+.social-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: var(--transition); color: rgba(255,255,255,0.5); }
+.social-btn:hover { background: var(--blue); color: #fff; }
+
+/* =====================================================
+   ANIMATIONS & SCROLL EFFECTS
+   ===================================================== */
+.fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+.fade-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-left.visible { opacity: 1; transform: none; }
+.fade-right { opacity: 0; transform: translateX(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-right.visible { opacity: 1; transform: none; }
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* =====================================================
+   DIVIDER & MISC
+   ===================================================== */
+.section-divider { width: 64px; height: 4px; border-radius: 2px; background: var(--orange); margin: 16px 0; }
+.section-divider.centered { margin: 16px auto; }
+.tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(57,169,220,0.1); color: var(--blue-dark); border-radius: 50px; padding: 4px 14px; font-size: 0.78rem; font-weight: 600; }
+.tag.orange { background: rgba(242,159,0,0.12); color: var(--orange-dark); }
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 1100px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .innovation-cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { display: none; }
+  .about-inner { grid-template-columns: 1fr; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .pathway-cards { grid-template-columns: 1fr; }
+  .program-grid { grid-template-columns: 1fr 1fr; }
+  .partner-cards { grid-template-columns: 1fr 1fr; }
+  .contact-inner { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .awards-row { grid-template-columns: 1fr 1fr; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+  .impact-chart-row { grid-template-columns: 1fr; }
+  .research-grid { grid-template-columns: 1fr; }
+  .testimonials { grid-template-columns: 1fr; }
+  .resource-grid { grid-template-columns: repeat(2, 1fr); }
+  .innovation-header-row { grid-template-columns: 1fr; }
+  .impact-dashboard { padding: 32px 20px; }
+  .impact-title-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+@media (max-width: 600px) {
+  .container { padding: 0 16px; }
+  .section { padding: 64px 0; }
+  .program-grid { grid-template-columns: 1fr; }
+  .partner-cards { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .awards-row { grid-template-columns: 1fr 1fr; }
+  .resource-grid { grid-template-columns: 1fr; }
+  .chain-flow { flex-direction: column; align-items: flex-start; }
+  .chain-arrow { transform: rotate(90deg); }
+  .ai-stat-row { grid-template-columns: 1fr; }
+  .impact-dashboard { padding: 24px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====================================================
+     NAVIGATION
+     ==================================================== -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-mark">TLC</div>
+        <div class="nav-logo-text">
+          <span class="primary">Teaching & Learning Center</span>
+          <span class="secondary">Ajman University</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li class="nav-item">
+          <a href="#tef" class="nav-link">Excellence <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <div class="mega-menu">
+            <div class="mega-menu-grid">
+              <a href="#tef" class="mega-link">
+                <div class="mega-link-icon">🏆</div>
+                <div class="mega-link-text"><div class="title">TEF Pathway</div><div class="desc">Bronze, Silver & Gold</div></div>
+              </a>
+              <a href="#tef" class="mega-link">
+                <div class="mega-link-icon">🤝</div>
+                <div class="mega-link-text"><div class="title">Community of Practice</div><div class="desc">400+ members</div></div>
+              </a>
+              <a href="#programs" class="mega-link">
+                <div class="mega-link-icon">📚</div>
+                <div class="mega-link-text"><div class="title">Faculty Development</div><div class="desc">93 PD sessions</div></div>
+              </a>
+              <a href="#research" class="mega-link">
+                <div class="mega-link-icon">🔬</div>
+                <div class="mega-link-text"><div class="title">Research & Insights</div><div class="desc">SoTL research</div></div>
+              </a>
+            </div>
+            <div class="mega-footer">
+              <span class="body-md" style="font-size:0.82rem;">Aligned with AU RISE Strategy</span>
+              <a href="#tef" class="btn btn-primary btn-sm">Explore Framework →</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#programs" class="nav-link">Programs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <div class="mega-menu">
+            <div class="mega-menu-grid">
+              <a href="#programs" class="mega-link">
+                <div class="mega-link-icon">🎓</div>
+                <div class="mega-link-text"><div class="title">Workshops & Sessions</div><div class="desc">1,437 attendances</div></div>
+              </a>
+              <a href="#innovation" class="mega-link">
+                <div class="mega-link-icon">🤖</div>
+                <div class="mega-link-text"><div class="title">AI for All AU</div><div class="desc">1,275 students trained</div></div>
+              </a>
+              <a href="#innovation" class="mega-link">
+                <div class="mega-link-icon">📱</div>
+                <div class="mega-link-text"><div class="title">Nearpod Integration</div><div class="desc">941 lessons delivered</div></div>
+              </a>
+              <a href="#showcase" class="mega-link">
+                <div class="mega-link-icon">🌟</div>
+                <div class="mega-link-text"><div class="title">Recognition & Awards</div><div class="desc">TLC ceremony</div></div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li><a href="#innovation" class="nav-link">Innovation</a></li>
+        <li><a href="#showcase" class="nav-link">Showcase</a></li>
+        <li><a href="#partnerships" class="nav-link">Partnerships</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#resources" class="btn btn-outline btn-sm">Resources</a>
+        <a href="#contact" class="btn btn-primary btn-sm">Get Involved</a>
+      </div>
+      <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-nav-link" onclick="toggleMenu()">About TLC</a>
+  <a href="#tef" class="mobile-nav-link" onclick="toggleMenu()">Teaching Excellence Framework</a>
+  <a href="#programs" class="mobile-nav-link" onclick="toggleMenu()">Programs & Services</a>
+  <a href="#innovation" class="mobile-nav-link" onclick="toggleMenu()">Innovation & Digital Learning</a>
+  <a href="#showcase" class="mobile-nav-link" onclick="toggleMenu()">Showcase & Recognition</a>
+  <a href="#research" class="mobile-nav-link" onclick="toggleMenu()">Research & Insights</a>
+  <a href="#partnerships" class="mobile-nav-link" onclick="toggleMenu()">Partnerships</a>
+  <a href="#resources" class="mobile-nav-link" onclick="toggleMenu()">Resources</a>
+  <a href="#contact" class="mobile-nav-link" onclick="toggleMenu()">Contact / Get Involved</a>
+  <div style="padding:24px 0;display:flex;gap:12px;">
+    <a href="#contact" class="btn btn-primary" style="flex:1;justify-content:center;">Get Involved</a>
+  </div>
+</div>
+
+<!-- ====================================================
+     HERO
+     ==================================================== -->
+<section id="hero">
+  <div class="hero-bg-shapes">
+    <div class="hero-shape-1"></div>
+    <div class="hero-shape-2"></div>
+    <div class="hero-grid-lines"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <div class="dot"></div>
+          <span>AU RISE Strategy Aligned</span>
+        </div>
+        <h1 class="display-xl hero-title">
+          Where Teaching<br><span class="accent">Excellence</span><br>Is Architected
+        </h1>
+        <p class="hero-desc">The Teaching & Learning Center at Ajman University is not a support unit — it is the institutional engine powering pedagogical innovation, faculty excellence, and transformative student outcomes.</p>
+        <div class="hero-actions">
+          <a href="#tef" class="btn btn-primary btn-lg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Explore Framework
+          </a>
+          <a href="#impact" class="btn btn-ghost btn-lg">View Impact Data</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num" data-target="93">0</div>
+            <div class="lbl">PD Sessions</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num" data-target="1437">0</div>
+            <div class="lbl">Attendances</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num" data-target="97">0</div>
+            <div class="lbl">% Improved Practice</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-stack">
+          <div class="hero-main-card">
+            <div class="hero-pill">📊 2024–25 Impact Overview</div>
+            <h3 style="font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;">TLC Performance Dashboard</h3>
+            <p style="font-size:0.82rem;color:rgba(255,255,255,0.6);margin-bottom:4px;">Faculty & Student Engagement Metrics</p>
+            <div class="progress-list">
+              <div class="progress-item">
+                <div class="pi-header"><span class="pi-label">Faculty Engagement</span><span class="pi-value">97%</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="97"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="pi-header"><span class="pi-label">Nearpod Adoption</span><span class="pi-value">941 Lessons</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="85"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="pi-header"><span class="pi-label">AI for All Completion</span><span class="pi-value">1,275 Students</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="78"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="pi-header"><span class="pi-label">CoP Participation</span><span class="pi-value">400+ Members</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="72"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="floating-badge badge-1">
+            <div class="fb-icon">🏅</div>
+            <div class="fb-text"><div class="v">Gold Pathway</div><div class="l">Teaching Excellence</div></div>
+          </div>
+          <div class="floating-badge badge-2">
+            <div class="fb-icon" style="background:var(--blue);">🌍</div>
+            <div class="fb-text"><div class="v">3 UK Partners</div><div class="l">Global Collaboration</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Impact Strip Ticker -->
+<div id="impact-strip">
+  <div class="container-wide">
+    <div class="impact-strip-inner">
+      <div class="impact-ticker">
+        <div class="impact-ticker-item">🎯 93 Professional Development Sessions</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">👥 1,437 Faculty Attendances</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">🤝 400+ Community of Practice Members</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">📱 941 Nearpod Lessons</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">🎓 6,800 Student Engagements</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">🤖 AI for All: 1,275 Students + 103 Faculty</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">📈 97% Faculty Improved Practices</div>
+        <div class="impact-ticker-sep">•</div>
+        <!-- repeat for seamless loop -->
+        <div class="impact-ticker-item">🎯 93 Professional Development Sessions</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">👥 1,437 Faculty Attendances</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">🤝 400+ Community of Practice Members</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">📱 941 Nearpod Lessons</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">🎓 6,800 Student Engagements</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">🤖 AI for All: 1,275 Students + 103 Faculty</div>
+        <div class="impact-ticker-sep">•</div>
+        <div class="impact-ticker-item">📈 97% Faculty Improved Practices</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     ABOUT
+     ==================================================== -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-inner">
+      <div class="fade-left">
+        <div class="about-graphic">
+          <span class="label" style="color:rgba(255,255,255,0.6);">Our Mission</span>
+          <h3 style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;margin-top:12px;position:relative;">Institutional Architecture for Excellence</h3>
+          <p style="font-size:0.9rem;color:rgba(255,255,255,0.75);margin-top:12px;line-height:1.7;position:relative;">The TLC is the strategic nerve center that connects every dimension of Ajman University's academic quality ecosystem — from faculty growth to student success.</p>
+          <div class="about-pillars" style="position:relative;">
+            <div class="pillar-chip">
+              <div class="icon">🎓</div>
+              <div class="name">Faculty Development</div>
+            </div>
+            <div class="pillar-chip">
+              <div class="icon">💡</div>
+              <div class="name">Pedagogical Innovation</div>
+            </div>
+            <div class="pillar-chip">
+              <div class="icon">🌐</div>
+              <div class="name">Digital Learning</div>
+            </div>
+            <div class="pillar-chip">
+              <div class="icon">🤝</div>
+              <div class="name">Global Partnerships</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-right">
+        <span class="label">About TLC</span>
+        <div class="section-divider" style="margin-top:12px;"></div>
+        <h2 class="display-md" style="margin-top:20px;">More Than a Center — A Movement for Teaching Excellence</h2>
+        <p class="body-lg" style="margin-top:16px;">The Teaching and Learning Center at Ajman University operates at the intersection of pedagogical science, digital innovation, and institutional strategy. Fully aligned with the AU RISE strategic plan, we drive measurable impact across the university's academic ecosystem.</p>
+        <div class="value-list">
+          <div class="value-item">
+            <div class="value-dot">🎯</div>
+            <div class="value-text">
+              <div class="vt-title">AU RISE Strategy Integration</div>
+              <div class="vt-desc">Every TLC initiative is mapped to AU's strategic objectives — ensuring institutional coherence and long-term impact.</div>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-dot">📊</div>
+            <div class="value-text">
+              <div class="vt-title">Evidence-Based Approach</div>
+              <div class="vt-desc">We don't just run programs — we measure transformation. 97% of participating faculty demonstrate improved assessment practices.</div>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-dot">🌍</div>
+            <div class="value-text">
+              <div class="vt-title">Global Standards, Local Excellence</div>
+              <div class="vt-desc">Partnerships with UK universities (UEA, Queen's, Ulster) bring world-class pedagogical frameworks to Ajman.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:32px;">
+          <a href="#tef" class="btn btn-primary">Explore Our Framework →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     IMPACT DASHBOARD
+     ==================================================== -->
+<section id="impact" class="section" style="background:var(--gray-50);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="label">Impact Dashboard</span>
+      <div class="section-divider"></div>
+      <h2 class="display-lg">Measuring What Matters</h2>
+      <p class="body-lg">Real data. Real transformation. Every number represents a faculty member empowered, a student engaged, or a practice improved.</p>
+    </div>
+    <div class="impact-dashboard fade-up stagger-1">
+      <div class="impact-title-row">
+        <div>
+          <span class="label" style="color:rgba(255,255,255,0.5);">2024–2025 Academic Year</span>
+          <h3 style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:#fff;margin-top:8px;">TLC Impact at a Glance</h3>
+        </div>
+        <a href="#contact" class="btn btn-primary">Download Full Report</a>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="sc-icon">🎓</div>
+          <div class="sc-num" data-target="93">0</div>
+          <div class="sc-label">Professional Development Sessions Delivered</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon">👥</div>
+          <div class="sc-num" data-target="1437">0</div>
+          <div class="sc-label">Total Faculty Attendances</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon">🤝</div>
+          <div class="sc-num" data-target="400">0+</div>
+          <div class="sc-label">Community of Practice Members</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon">📱</div>
+          <div class="sc-num" data-target="941">0</div>
+          <div class="sc-label">Nearpod Lessons Delivered</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon">🎯</div>
+          <div class="sc-num" data-target="6800">0</div>
+          <div class="sc-label">Student Engagements</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon">⚡</div>
+          <div class="sc-num" data-target="4213">0</div>
+          <div class="sc-label">Learning Activities Designed</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon">🤖</div>
+          <div class="sc-num" data-target="1275">0</div>
+          <div class="sc-label">Students in AI for All AU</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon">📈</div>
+          <div class="sc-num" data-target="97">0%</div>
+          <div class="sc-label">Faculty Improved Assessment Practices</div>
+        </div>
+      </div>
+      <div class="impact-chart-row" style="margin-top:24px;">
+        <div class="bar-chart-card">
+          <div class="bcc-title">Quarterly Faculty Engagement Trend</div>
+          <div class="bar-chart" id="barChart">
+            <div class="bar-item"><div class="bar" data-height="55" style="height:4px;"></div><div class="bar-label">Q1</div></div>
+            <div class="bar-item"><div class="bar" data-height="72" style="height:4px;"></div><div class="bar-label">Q2</div></div>
+            <div class="bar-item"><div class="bar" data-height="88" style="height:4px;"></div><div class="bar-label">Q3</div></div>
+            <div class="bar-item"><div class="bar" data-height="95" style="height:4px;"></div><div class="bar-label">Q4</div></div>
+            <div class="bar-item"><div class="bar" data-height="100" style="height:4px;"></div><div class="bar-label">Q5</div></div>
+            <div class="bar-item"><div class="bar" data-height="78" style="height:4px;"></div><div class="bar-label">Q6</div></div>
+          </div>
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <div>
+              <div class="ms-label">AI for All — Faculty</div>
+              <div class="ms-value">103</div>
+              <div class="ms-bar"><div class="ms-fill" style="width:82%;"></div></div>
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div>
+              <div class="ms-label">Avg. Sessions per Faculty</div>
+              <div class="ms-value">4.2</div>
+              <div class="ms-bar"><div class="ms-fill" style="width:64%;"></div></div>
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div>
+              <div class="ms-label">Course Transformation Rate</div>
+              <div class="ms-value">78%</div>
+              <div class="ms-bar"><div class="ms-fill" style="width:78%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     TEF — TEACHING EXCELLENCE FRAMEWORK
+     ==================================================== -->
+<section id="tef" class="section" style="background:var(--off-white);">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <span class="label">Teaching Excellence Framework</span>
+      <div class="section-divider centered"></div>
+      <h2 class="display-lg">A Pathway to Professional Mastery</h2>
+      <p class="body-lg">TEF provides a structured, evidence-based progression for faculty to develop, demonstrate, and be recognized for teaching excellence at Ajman University.</p>
+    </div>
+    <div class="pathway-cards fade-up stagger-1">
+      <div class="pathway-card pathway-bronze">
+        <div class="pathway-medal">🥉</div>
+        <h3 class="pathway-title">Bronze</h3>
+        <p class="pathway-desc">Foundational level for faculty beginning their excellence journey. Establishes core competencies in learner-centered pedagogy.</p>
+        <ul class="pathway-criteria">
+          <li>Complete TLC Orientation Programme</li>
+          <li>Attend 3+ core PD workshops</li>
+          <li>Peer observation & reflection</li>
+          <li>Teaching portfolio initiation</li>
+          <li>Student feedback analysis</li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="#contact" class="btn btn-sm" style="background:rgba(200,134,10,0.12);color:#C8860A;border-radius:50px;font-weight:600;">Apply for Bronze →</a>
+        </div>
+      </div>
+      <div class="pathway-card pathway-silver">
+        <div class="pathway-medal">🥈</div>
+        <h3 class="pathway-title">Silver</h3>
+        <p class="pathway-desc">Intermediate recognition for faculty demonstrating sustained improvement, innovation, and leadership in teaching practice.</p>
+        <ul class="pathway-criteria">
+          <li>Bronze certification required</li>
+          <li>Lead a Community of Practice session</li>
+          <li>Integrate digital learning tools</li>
+          <li>Course redesign with evidence</li>
+          <li>Mentor a junior colleague</li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="#contact" class="btn btn-secondary btn-sm">Apply for Silver →</a>
+        </div>
+      </div>
+      <div class="pathway-card pathway-gold">
+        <div class="pathway-medal">🥇</div>
+        <h3 class="pathway-title">Gold</h3>
+        <p class="pathway-desc">The highest recognition for faculty who shape the institution's teaching culture and contribute to global knowledge.</p>
+        <ul class="pathway-criteria">
+          <li>Silver certification required</li>
+          <li>Published SoTL research</li>
+          <li>University-wide workshop leadership</li>
+          <li>International collaboration</li>
+          <li>Systemic curriculum impact</li>
+        </ul>
+        <div style="margin-top:24px;">
+          <a href="#contact" class="btn btn-primary btn-sm">Apply for Gold →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Outcome Chain -->
+    <div class="outcome-chain fade-up stagger-2">
+      <div class="chain-title">📊 Outcome Chain: From Practice to Impact</div>
+      <div class="chain-flow">
+        <div class="chain-node">
+          <div class="cn-icon">📚</div>
+          <div class="cn-title">Faculty Development</div>
+          <div class="cn-desc">PD sessions, workshops</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">
+          <div class="cn-icon">💡</div>
+          <div class="cn-title">Pedagogical Innovation</div>
+          <div class="cn-desc">New teaching approaches</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">
+          <div class="cn-icon">🎓</div>
+          <div class="cn-title">Improved Courses</div>
+          <div class="cn-desc">Redesigned curriculum</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">
+          <div class="cn-icon">📈</div>
+          <div class="cn-title">Student Engagement</div>
+          <div class="cn-desc">6,800+ engagements</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">
+          <div class="cn-icon">🌟</div>
+          <div class="cn-title">Student Success</div>
+          <div class="cn-desc">Outcomes & retention</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node" style="background:linear-gradient(135deg,var(--orange-dark),var(--orange));">
+          <div class="cn-icon">🏆</div>
+          <div class="cn-title">Institutional Excellence</div>
+          <div class="cn-desc">Rankings & reputation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     PROGRAMS & SERVICES
+     ==================================================== -->
+<section id="programs" class="section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="label">Programs & Services</span>
+      <div class="section-divider"></div>
+      <h2 class="display-lg">Built for Every Faculty Journey</h2>
+      <p class="body-lg">From foundational pedagogy to cutting-edge digital integration, TLC's portfolio serves every stage of faculty development.</p>
+    </div>
+    <div class="program-grid">
+      <div class="program-card pc-blue fade-up stagger-1">
+        <div class="program-card-header">
+          <div class="program-icon">🎓</div>
+          <div class="program-title">Core Faculty Development</div>
+          <div class="program-sub">Structured learning pathways</div>
+        </div>
+        <div class="program-card-body">
+          <div class="program-features">
+            <div class="program-feature">Learner-Centered Teaching Workshops</div>
+            <div class="program-feature">Assessment Design & Feedback Masterclasses</div>
+            <div class="program-feature">Curriculum Mapping Intensives</div>
+            <div class="program-feature">Reflective Teaching Practices</div>
+            <div class="program-feature">New Faculty Onboarding Programme</div>
+          </div>
+          <div style="margin-top:24px;"><a href="#contact" class="btn btn-secondary btn-sm">Enroll Now →</a></div>
+        </div>
+      </div>
+      <div class="program-card pc-orange fade-up stagger-2">
+        <div class="program-card-header">
+          <div class="program-icon">🤖</div>
+          <div class="program-title">AI & Digital Integration</div>
+          <div class="program-sub">Future-ready pedagogy</div>
+        </div>
+        <div class="program-card-body">
+          <div class="program-features">
+            <div class="program-feature">AI for All AU — Faculty Track</div>
+            <div class="program-feature">Nearpod Interactive Lesson Design</div>
+            <div class="program-feature">Learning Management System (LMS) Excellence</div>
+            <div class="program-feature">Blended & Hybrid Learning Models</div>
+            <div class="program-feature">EdTech Tools Certification</div>
+          </div>
+          <div style="margin-top:24px;"><a href="#innovation" class="btn btn-primary btn-sm">Explore AI Programs →</a></div>
+        </div>
+      </div>
+      <div class="program-card pc-deep fade-up stagger-3">
+        <div class="program-card-header">
+          <div class="program-icon">🔬</div>
+          <div class="program-title">Research & Scholarship</div>
+          <div class="program-sub">SoTL & academic inquiry</div>
+        </div>
+        <div class="program-card-body">
+          <div class="program-features">
+            <div class="program-feature">Scholarship of Teaching & Learning (SoTL)</div>
+            <div class="program-feature">Action Research in the Classroom</div>
+            <div class="program-feature">International Publication Support</div>
+            <div class="program-feature">Teaching-Focused Grant Writing</div>
+            <div class="program-feature">Cross-disciplinary CoP Research Groups</div>
+          </div>
+          <div style="margin-top:24px;"><a href="#research" class="btn btn-outline btn-sm">View Research →</a></div>
+        </div>
+      </div>
+      <div class="program-card pc-blue fade-up stagger-1">
+        <div class="program-card-header">
+          <div class="program-icon">🌐</div>
+          <div class="program-title">Community of Practice</div>
+          <div class="program-sub">400+ member ecosystem</div>
+        </div>
+        <div class="program-card-body">
+          <div class="program-features">
+            <div class="program-feature">Discipline-specific CoP Clusters</div>
+            <div class="program-feature">Monthly Teaching Showcases</div>
+            <div class="program-feature">Peer Learning Partnerships</div>
+            <div class="program-feature">International CoP Exchange</div>
+            <div class="program-feature">Annual TLC Symposium</div>
+          </div>
+          <div style="margin-top:24px;"><a href="#contact" class="btn btn-secondary btn-sm">Join CoP →</a></div>
+        </div>
+      </div>
+      <div class="program-card pc-orange fade-up stagger-2">
+        <div class="program-card-header">
+          <div class="program-icon">🏆</div>
+          <div class="program-title">Recognition & Awards</div>
+          <div class="program-sub">Celebrating excellence</div>
+        </div>
+        <div class="program-card-body">
+          <div class="program-features">
+            <div class="program-feature">Annual TLC Excellence Awards</div>
+            <div class="program-feature">Bronze/Silver/Gold Certification</div>
+            <div class="program-feature">Innovation in Teaching Prize</div>
+            <div class="program-feature">Student Choice Teaching Award</div>
+            <div class="program-feature">International Best Practice Recognition</div>
+          </div>
+          <div style="margin-top:24px;"><a href="#showcase" class="btn btn-primary btn-sm">View Awards →</a></div>
+        </div>
+      </div>
+      <div class="program-card pc-deep fade-up stagger-3">
+        <div class="program-card-header">
+          <div class="program-icon">🤝</div>
+          <div class="program-title">Consultancy & Support</div>
+          <div class="program-sub">Personalized guidance</div>
+        </div>
+        <div class="program-card-body">
+          <div class="program-features">
+            <div class="program-feature">1-on-1 Pedagogical Consultations</div>
+            <div class="program-feature">Department-level Teaching Reviews</div>
+            <div class="program-feature">Accreditation Support (AACSB, ABET)</div>
+            <div class="program-feature">Programme Review & QA Support</div>
+            <div class="program-feature">Bespoke Faculty Retreat Design</div>
+          </div>
+          <div style="margin-top:24px;"><a href="#contact" class="btn btn-outline btn-sm">Book Consultation →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     INNOVATION & DIGITAL LEARNING
+     ==================================================== -->
+<section id="innovation" class="section" style="background:var(--off-white);">
+  <div class="container">
+    <div class="innovation-header-row">
+      <div class="fade-left">
+        <span class="label">Innovation & Digital Learning</span>
+        <div class="section-divider" style="margin-top:12px;"></div>
+        <h2 class="display-md" style="margin-top:20px;">Powering Ajman University's Digital Pedagogy Revolution</h2>
+        <p class="body-lg" style="margin-top:16px;">From AI integration to interactive digital platforms, TLC is building the infrastructure for 21st-century education at AU. We don't adapt to technology — we lead with it.</p>
+        <div style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;">
+          <a href="#contact" class="btn btn-primary">Join AI for All AU</a>
+          <a href="#contact" class="btn btn-outline">Nearpod Access</a>
+        </div>
+      </div>
+      <div class="fade-right">
+        <div class="ai-highlight-box">
+          <span class="label" style="color:rgba(255,255,255,0.5);">Flagship Initiative</span>
+          <h3 style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;margin-top:10px;position:relative;">AI for All AU</h3>
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.7);margin-top:10px;line-height:1.65;position:relative;">A transformative university-wide initiative equipping every student and faculty member with practical AI literacy for the knowledge economy.</p>
+          <div class="ai-stat-row" style="position:relative;">
+            <div class="ai-stat">
+              <div class="asn" data-target="1275">0</div>
+              <div class="asl">Students Trained</div>
+            </div>
+            <div class="ai-stat">
+              <div class="asn" data-target="103">0</div>
+              <div class="asl">Faculty Trained</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="innovation-cards">
+      <div class="innov-card fade-up stagger-1">
+        <div class="ic-icon">🤖</div>
+        <div class="ic-title">Generative AI in Teaching</div>
+        <div class="ic-desc">Practical integration of AI tools into course design, assessment creation, and student feedback processes.</div>
+      </div>
+      <div class="innov-card fade-up stagger-2">
+        <div class="ic-icon">📱</div>
+        <div class="ic-title">Nearpod Interactive Learning</div>
+        <div class="ic-desc">941 lessons delivered through Nearpod, transforming passive lectures into real-time interactive learning experiences.</div>
+      </div>
+      <div class="innov-card fade-up stagger-3">
+        <div class="ic-icon">🎬</div>
+        <div class="ic-title">Course Transformation Studio</div>
+        <div class="ic-desc">End-to-end redesign support — from learning outcomes to assessment strategy — using evidence-based frameworks.</div>
+      </div>
+      <div class="innov-card fade-up stagger-4">
+        <div class="ic-icon">📊</div>
+        <div class="ic-title">Learning Analytics</div>
+        <div class="ic-desc">Data-driven insights from LMS and engagement platforms to continuously refine teaching approaches.</div>
+      </div>
+      <div class="innov-card fade-up stagger-1">
+        <div class="ic-icon">🌐</div>
+        <div class="ic-title">Blended Learning Design</div>
+        <div class="ic-desc">Hybrid models that combine the best of face-to-face engagement with digital flexibility and accessibility.</div>
+      </div>
+      <div class="innov-card fade-up stagger-2">
+        <div class="ic-icon">🎯</div>
+        <div class="ic-title">Competency-Based Education</div>
+        <div class="ic-desc">Redesigning programmes around measurable competencies aligned to industry and accreditation standards.</div>
+      </div>
+      <div class="innov-card fade-up stagger-3">
+        <div class="ic-icon">🔧</div>
+        <div class="ic-title">EdTech Sandbox</div>
+        <div class="ic-desc">A dedicated space for faculty to pilot emerging educational technologies with TLC support before full deployment.</div>
+      </div>
+      <div class="innov-card fade-up stagger-4">
+        <div class="ic-icon">📋</div>
+        <div class="ic-title">Digital Assessment Design</div>
+        <div class="ic-desc">From e-portfolios to authentic digital assessments — moving beyond traditional exams to meaningful evaluation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     SHOWCASE & RECOGNITION
+     ==================================================== -->
+<section id="showcase" class="section">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <span class="label">Showcase & Recognition</span>
+      <div class="section-divider centered"></div>
+      <h2 class="display-lg">Celebrating Teaching Excellence</h2>
+      <p class="body-lg">Real voices, real impact. Meet the faculty transforming education at Ajman University.</p>
+    </div>
+    <div class="testimonials">
+      <div class="testimonial-card fade-up stagger-1">
+        <p class="tc-quote">The TLC Bronze pathway changed how I approach every class. The reflective practice framework gave me tools I use daily — my students' engagement has never been higher.</p>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background:var(--blue);">SA</div>
+          <div class="tc-info">
+            <div class="tc-name">Dr. Sara Al-Mansoori</div>
+            <div class="tc-role">Associate Professor, College of Engineering</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up stagger-2">
+        <p class="tc-quote">AI for All AU was a game-changer. I went from being anxious about AI in education to confidently integrating it into my courses. The TLC team made it practical and accessible.</p>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background:var(--orange);">MK</div>
+          <div class="tc-info">
+            <div class="tc-name">Prof. Mohammed Khalifa</div>
+            <div class="tc-role">Senior Lecturer, Business School</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up stagger-3">
+        <p class="tc-quote">The Community of Practice sessions are where real innovation happens. Connecting with colleagues across disciplines opened my mind to approaches I'd never considered before.</p>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background:var(--blue-deep);">RA</div>
+          <div class="tc-info">
+            <div class="tc-name">Dr. Rania Abdulrahman</div>
+            <div class="tc-role">Assistant Professor, Health Sciences</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Awards -->
+    <div style="margin-top:64px;">
+      <div class="section-header fade-up">
+        <span class="label">Annual TLC Awards</span>
+        <h3 class="display-md" style="margin-top:8px;">Honoring Teaching Champions</h3>
+      </div>
+      <div class="awards-row">
+        <div class="award-card fade-up stagger-1">
+          <div class="aw-icon">🏆</div>
+          <div class="aw-title">Excellence in Teaching Award</div>
+          <div class="aw-year">Gold Standard Recognition</div>
+        </div>
+        <div class="award-card fade-up stagger-2">
+          <div class="aw-icon">💡</div>
+          <div class="aw-title">Innovation in Pedagogy Prize</div>
+          <div class="aw-year">Pioneering New Methods</div>
+        </div>
+        <div class="award-card fade-up stagger-3">
+          <div class="aw-icon">🌟</div>
+          <div class="aw-title">Student Choice Teaching Award</div>
+          <div class="aw-year">Faculty Voted by Students</div>
+        </div>
+        <div class="award-card fade-up stagger-4">
+          <div class="aw-icon">🌍</div>
+          <div class="aw-title">Global Impact Award</div>
+          <div class="aw-year">International Collaboration</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TLC Ceremony Highlight -->
+    <div style="margin-top:48px;background:linear-gradient(135deg,var(--blue-deeper),var(--blue));border-radius:var(--radius-xl);padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;" class="fade-up">
+      <div style="color:#fff;">
+        <span class="label" style="color:rgba(255,255,255,0.5);">Annual Event</span>
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;margin-top:12px;">TLC Excellence Ceremony</h3>
+        <p style="font-size:0.9rem;color:rgba(255,255,255,0.7);margin-top:12px;line-height:1.7;">The flagship annual event bringing together AU's teaching community to celebrate excellence, share innovations, and forge new collaborations. A hallmark of Ajman University's commitment to academic quality.</p>
+        <a href="#contact" class="btn btn-primary" style="margin-top:24px;">Register Your Interest →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:rgba(255,255,255,0.1);border-radius:var(--radius-md);padding:24px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
+          <div style="font-size:2rem;margin-bottom:8px;">🎤</div>
+          <div style="font-weight:700;color:#fff;font-size:0.9rem;">Keynote Speakers</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:4px;">Global education leaders</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:var(--radius-md);padding:24px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
+          <div style="font-size:2rem;margin-bottom:8px;">🎖️</div>
+          <div style="font-weight:700;color:#fff;font-size:0.9rem;">Award Gala</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:4px;">8 award categories</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:var(--radius-md);padding:24px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
+          <div style="font-size:2rem;margin-bottom:8px;">📽️</div>
+          <div style="font-weight:700;color:#fff;font-size:0.9rem;">Teaching Showcase</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:4px;">Live demos & posters</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:var(--radius-md);padding:24px;text-align:center;border:1px solid rgba(255,255,255,0.15);">
+          <div style="font-size:2rem;margin-bottom:8px;">🤝</div>
+          <div style="font-weight:700;color:#fff;font-size:0.9rem;">Networking</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:4px;">Faculty & partners</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     RESEARCH & INSIGHTS
+     ==================================================== -->
+<section id="research" class="section" style="background:var(--off-white);">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="label">Research & Insights</span>
+      <div class="section-divider"></div>
+      <h2 class="display-lg">Scholarship of Teaching & Learning</h2>
+      <p class="body-lg">TLC faculty and partners generate rigorous research that advances pedagogical knowledge locally and globally.</p>
+    </div>
+    <div class="research-grid">
+      <div class="research-card fade-up stagger-1">
+        <div class="rc-tag">Active Learning</div>
+        <div class="rc-title">Impact of Interactive Digital Tools on Student Engagement in HE Settings</div>
+        <div class="rc-desc">A mixed-methods study examining how Nearpod and AI-assisted pedagogy transform participation rates and learning depth across disciplines at Ajman University.</div>
+        <div class="rc-footer">
+          <div class="rc-authors">Al-Mansoori, S. et al. | 2025</div>
+          <a href="#" class="rc-cta">Read More →</a>
+        </div>
+      </div>
+      <div class="research-card fade-up stagger-2">
+        <div class="rc-tag">Assessment Design</div>
+        <div class="rc-title">Authentic Assessment Practices and Their Effect on Graduate Employability</div>
+        <div class="rc-desc">Longitudinal study tracking the correlation between authentic assessment adoption post-TLC training and graduate skill readiness in UAE industry contexts.</div>
+        <div class="rc-footer">
+          <div class="rc-authors">Khalifa, M. & Rahman, T. | 2024</div>
+          <a href="#" class="rc-cta">Read More →</a>
+        </div>
+      </div>
+      <div class="research-card fade-up stagger-1">
+        <div class="rc-tag">AI in Education</div>
+        <div class="rc-title">AI Literacy as a Core Competency: Lessons from the AI for All AU Initiative</div>
+        <div class="rc-desc">Case study analysis of the university-wide AI for All programme, documenting implementation challenges, successes, and scalability pathways for HE institutions.</div>
+        <div class="rc-footer">
+          <div class="rc-authors">TLC Research Team | 2025</div>
+          <a href="#" class="rc-cta">Read More →</a>
+        </div>
+      </div>
+      <div class="research-card fade-up stagger-2">
+        <div class="rc-tag">Faculty Development</div>
+        <div class="rc-title">Community of Practice as a Catalyst for Institutional Change in Teaching Culture</div>
+        <div class="rc-desc">Examining how structured CoP ecosystems with 400+ members drive bottom-up pedagogical transformation and contribute to AU's strategic excellence agenda.</div>
+        <div class="rc-footer">
+          <div class="rc-authors">Abdulrahman, R. et al. | 2025</div>
+          <a href="#" class="rc-cta">Read More →</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="#contact" class="btn btn-secondary">View All Publications →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     PARTNERSHIPS
+     ==================================================== -->
+<section id="partnerships" class="section">
+  <div class="container">
+    <div class="partners-hero fade-up">
+      <div style="position:relative;z-index:1;">
+        <span class="label" style="color:rgba(255,255,255,0.5);">Global Engagement</span>
+        <h2 style="font-family:var(--font-display);font-size:2.4rem;font-weight:700;color:#fff;margin-top:12px;">Partnerships & Global Engagement</h2>
+        <p style="font-size:1rem;color:rgba(255,255,255,0.75);margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;">TLC connects Ajman University to world-class pedagogical expertise through strategic UK and international partnerships, elevating our teaching standards to global levels.</p>
+      </div>
+    </div>
+    <div class="partner-cards">
+      <div class="partner-card fade-up stagger-1">
+        <div class="partner-logo-box">UEA</div>
+        <div class="partner-name">University of East Anglia</div>
+        <div class="partner-country">🇬🇧 Norwich, United Kingdom</div>
+        <div class="partner-desc">Collaboration on academic professional development frameworks, SoTL methodologies, and student-centered learning approaches. UEA's Centre for Excellence in Learning & Teaching directly informs AU's TEF design.</div>
+        <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="tag">Faculty Exchange</span>
+          <span class="tag orange">Joint Research</span>
+        </div>
+      </div>
+      <div class="partner-card fade-up stagger-2">
+        <div class="partner-logo-box" style="background:linear-gradient(135deg,#8B0000,#C01515);">QUB</div>
+        <div class="partner-name">Queen's University Belfast</div>
+        <div class="partner-country">🇬🇧 Belfast, United Kingdom</div>
+        <div class="partner-desc">Partnership focused on educational technology integration, blended learning design, and quality enhancement frameworks. Queen's expertise in digital pedagogy directly underpins TLC's innovation agenda.</div>
+        <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="tag">Digital Pedagogy</span>
+          <span class="tag orange">QA Frameworks</span>
+        </div>
+      </div>
+      <div class="partner-card fade-up stagger-3">
+        <div class="partner-logo-box" style="background:linear-gradient(135deg,#00529B,#0070CC);">UU</div>
+        <div class="partner-name">Ulster University</div>
+        <div class="partner-country">🇬🇧 Coleraine, United Kingdom</div>
+        <div class="partner-desc">Collaboration on employability-focused curriculum design, authentic assessment practices, and graduate outcomes research. Ulster's applied learning philosophy shapes AU's competency-based education approach.</div>
+        <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="tag">Curriculum Design</span>
+          <span class="tag orange">Graduate Outcomes</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:48px;background:var(--off-white);border-radius:var(--radius-xl);padding:40px;border:1px solid var(--gray-100);" class="fade-up">
+      <div style="text-align:center;margin-bottom:36px;">
+        <h3 class="display-md">Interested in Partnering with TLC?</h3>
+        <p class="body-lg" style="margin-top:12px;">We actively seek global collaborations with universities, research centers, and educational organizations committed to teaching excellence.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+        <div style="text-align:center;padding:24px 16px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--gray-100);">
+          <div style="font-size:2rem;margin-bottom:8px;">🎓</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--gray-900);">Joint Programmes</div>
+          <div style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">Collaborative degrees & certificates</div>
+        </div>
+        <div style="text-align:center;padding:24px 16px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--gray-100);">
+          <div style="font-size:2rem;margin-bottom:8px;">🔬</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--gray-900);">Research Collaboration</div>
+          <div style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">SoTL & pedagogical research</div>
+        </div>
+        <div style="text-align:center;padding:24px 16px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--gray-100);">
+          <div style="font-size:2rem;margin-bottom:8px;">✈️</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--gray-900);">Faculty Exchange</div>
+          <div style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">Visiting scholars & experts</div>
+        </div>
+        <div style="text-align:center;padding:24px 16px;background:#fff;border-radius:var(--radius-md);border:1px solid var(--gray-100);">
+          <div style="font-size:2rem;margin-bottom:8px;">🤝</div>
+          <div style="font-weight:700;font-size:0.9rem;color:var(--gray-900);">Knowledge Transfer</div>
+          <div style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">Best practice sharing</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:28px;">
+        <a href="#contact" class="btn btn-primary btn-lg">Propose a Partnership →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     RESOURCES
+     ==================================================== -->
+<section id="resources" class="section" style="background:var(--off-white);">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <span class="label">Resources</span>
+      <div class="section-divider centered"></div>
+      <h2 class="display-lg">Tools for Teaching Excellence</h2>
+      <p class="body-lg">Access TLC's curated library of teaching resources, toolkits, and guides — all designed for Ajman University's faculty.</p>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card fade-up stagger-1">
+        <div class="rc-icon-box">📖</div>
+        <div class="rc-name">Teaching Toolkit</div>
+        <div class="rc-count">24 resources available</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Practical guides for lesson design, active learning strategies, and classroom management.</p>
+        <a href="#" class="rc-download">📥 Download Toolkit</a>
+      </div>
+      <div class="resource-card fade-up stagger-2">
+        <div class="rc-icon-box">🤖</div>
+        <div class="rc-name">AI Teaching Guides</div>
+        <div class="rc-count">12 guides & templates</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Practical AI integration guides for different disciplines and course types.</p>
+        <a href="#" class="rc-download">📥 Access AI Guides</a>
+      </div>
+      <div class="resource-card fade-up stagger-3">
+        <div class="rc-icon-box">📊</div>
+        <div class="rc-name">Assessment Design Library</div>
+        <div class="rc-count">30+ templates</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Rubrics, feedback frameworks, and authentic assessment templates ready to use.</p>
+        <a href="#" class="rc-download">📥 Access Library</a>
+      </div>
+      <div class="resource-card fade-up stagger-4">
+        <div class="rc-icon-box">🎓</div>
+        <div class="rc-name">TEF Application Pack</div>
+        <div class="rc-count">Bronze / Silver / Gold</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Full application guidelines, portfolio templates, and assessment criteria for each TEF level.</p>
+        <a href="#" class="rc-download">📥 Download Pack</a>
+      </div>
+      <div class="resource-card fade-up stagger-1">
+        <div class="rc-icon-box">📱</div>
+        <div class="rc-name">Nearpod Resources</div>
+        <div class="rc-count">15 ready-to-use lessons</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Pre-built interactive lesson templates for common AU disciplines and course types.</p>
+        <a href="#" class="rc-download">📥 Get Templates</a>
+      </div>
+      <div class="resource-card fade-up stagger-2">
+        <div class="rc-icon-box">🔬</div>
+        <div class="rc-name">SoTL Research Guides</div>
+        <div class="rc-count">8 methodology guides</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Step-by-step guides for conducting scholarship of teaching & learning research.</p>
+        <a href="#" class="rc-download">📥 Download Guides</a>
+      </div>
+      <div class="resource-card fade-up stagger-3">
+        <div class="rc-icon-box">🌐</div>
+        <div class="rc-name">CoP Facilitation Kit</div>
+        <div class="rc-count">10 session designs</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Ready-to-run Community of Practice session formats and facilitation guides.</p>
+        <a href="#" class="rc-download">📥 Access Kit</a>
+      </div>
+      <div class="resource-card fade-up stagger-4">
+        <div class="rc-icon-box">📋</div>
+        <div class="rc-name">TLC Annual Reports</div>
+        <div class="rc-count">2022 — 2025</div>
+        <p style="font-size:0.83rem;color:var(--gray-500);margin-top:8px;line-height:1.5;">Full institutional impact reports documenting TLC achievements and outcomes.</p>
+        <a href="#" class="rc-download">📥 Read Reports</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     CONTACT
+     ==================================================== -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-content fade-left">
+        <span class="label" style="color:rgba(255,255,255,0.5);">Get Involved</span>
+        <div class="section-divider" style="background:var(--orange);margin:12px 0;"></div>
+        <h2 class="display-md" style="margin-top:8px;">Ready to Elevate Your Teaching?</h2>
+        <p style="font-size:1rem;color:rgba(255,255,255,0.75);margin-top:16px;line-height:1.75;">Whether you're a faculty member at AU, a partner institution, or a student eager to engage — TLC has a pathway for you. Join us in building a culture of teaching excellence.</p>
+        <div class="contact-info-list">
+          <div class="ci-item">
+            <div class="ci-icon">📍</div>
+            <div class="ci-text">
+              <div class="cit-label">Location</div>
+              <div class="cit-value">Teaching & Learning Center, Ajman University<br>Main Campus, Ajman, UAE</div>
+            </div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon">📧</div>
+            <div class="ci-text">
+              <div class="cit-label">Email</div>
+              <div class="cit-value">tlc@ajman.ac.ae</div>
+            </div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon">📞</div>
+            <div class="ci-text">
+              <div class="cit-label">Phone</div>
+              <div class="cit-value">+971 6 748 2222 ext. TLC</div>
+            </div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon">🕐</div>
+            <div class="ci-text">
+              <div class="cit-label">Office Hours</div>
+              <div class="cit-value">Sunday – Thursday: 8:00 AM – 4:00 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-right">
+        <div class="contact-form-box">
+          <h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:24px;">Send Us a Message</h3>
+          <div class="form-field">
+            <label>Full Name</label>
+            <input type="text" placeholder="Dr. / Prof. Your Name">
+          </div>
+          <div class="form-field">
+            <label>Email Address</label>
+            <input type="email" placeholder="your.email@ajman.ac.ae">
+          </div>
+          <div class="form-field">
+            <label>I am a...</label>
+            <select>
+              <option value="">Select your role</option>
+              <option>AU Faculty Member</option>
+              <option>AU Student</option>
+              <option>AU Administrator</option>
+              <option>Partner University Representative</option>
+              <option>External Researcher</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>How can TLC help?</label>
+            <select>
+              <option value="">Select an area</option>
+              <option>TEF Application (Bronze/Silver/Gold)</option>
+              <option>Professional Development Workshop</option>
+              <option>AI for All AU Programme</option>
+              <option>Community of Practice</option>
+              <option>Research Collaboration</option>
+              <option>Partnership Inquiry</option>
+              <option>General Information</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Message</label>
+            <textarea placeholder="Tell us about your teaching excellence goals..."></textarea>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="handleSubmit()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     FOOTER
+     ==================================================== -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="fb-logo">
+          <div class="fb-mark">TLC</div>
+          <div>
+            <div class="fb-name">Teaching & Learning Center</div>
+            <div class="fb-sub">Ajman University</div>
+          </div>
+        </div>
+        <p>The institutional architecture enabling teaching excellence, pedagogical innovation, and student success at Ajman University. Aligned with the AU RISE Strategy.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">𝕏</a>
+          <a href="#" class="social-btn">f</a>
+          <a href="#" class="social-btn">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#tef">Teaching Excellence Framework</a></li>
+          <li><a href="#programs">Faculty Development</a></li>
+          <li><a href="#innovation">AI for All AU</a></li>
+          <li><a href="#programs">Community of Practice</a></li>
+          <li><a href="#programs">Nearpod Integration</a></li>
+          <li><a href="#research">SoTL Research</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#about">About TLC</a></li>
+          <li><a href="#impact">Impact Dashboard</a></li>
+          <li><a href="#showcase">Faculty Showcase</a></li>
+          <li><a href="#partnerships">UK Partnerships</a></li>
+          <li><a href="#research">Publications</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#resources">Resource Library</a></li>
+          <li><a href="#tef">TEF Application</a></li>
+          <li><a href="#contact">Book Consultation</a></li>
+          <li><a href="https://www.ajman.ac.ae" target="_blank">Ajman University</a></li>
+          <li><a href="#contact">Newsletter</a></li>
+          <li><a href="#contact">Annual Report 2025</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Teaching & Learning Center, Ajman University. All rights reserved.</span>
+      <span style="display:flex;gap:16px;font-size:0.78rem;">
+        <a href="#" style="color:rgba(255,255,255,0.4);">Privacy Policy</a>
+        <a href="#" style="color:rgba(255,255,255,0.4);">Terms of Use</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ====================================================
+     JAVASCRIPT
+     ==================================================== -->
+<script>
+// ============ NAV SCROLL ============
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+});
+
+// ============ MOBILE MENU ============
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  ham.classList.toggle('open');
+}
+
+// ============ ANIMATED COUNTERS ============
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.textContent.includes('%') ? '%' : (el.textContent.includes('+') ? '+' : '');
+  const duration = 2000;
+  const steps = 60;
+  const increment = target / steps;
+  let current = 0;
+  let step = 0;
+  const timer = setInterval(() => {
+    step++;
+    current = Math.min(Math.round(increment * step), target);
+    el.textContent = current.toLocaleString() + suffix;
+    if (step >= steps) clearInterval(timer);
+  }, duration / steps);
+}
+
+// ============ PROGRESS BARS ============
+function animateProgressBars() {
+  document.querySelectorAll('.progress-fill').forEach(bar => {
+    const width = bar.dataset.width;
+    setTimeout(() => { bar.style.width = width + '%'; }, 200);
+  });
+}
+
+// ============ BAR CHART ============
+function animateBarChart() {
+  const bars = document.querySelectorAll('.bar');
+  bars.forEach((bar, i) => {
+    const height = bar.dataset.height;
+    setTimeout(() => {
+      bar.style.height = height + 'px';
+    }, i * 100 + 300);
+  });
+}
+
+// ============ SCROLL ANIMATIONS ============
+const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Counters
+      entry.target.querySelectorAll('[data-target]').forEach(animateCounter);
+      // Progress bars
+      if (entry.target.querySelector('.progress-fill')) animateProgressBars();
+      // Bar chart
+      if (entry.target.querySelector('.bar[data-height]')) animateBarChart();
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.fade-up, .fade-left, .fade-right').forEach(el => observer.observe(el));
+
+// Also observe stat cards individually for counter animation
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const counter = entry.target.querySelector('[data-target]');
+      if (counter && counter.textContent === '0' || counter && counter.textContent === '0%') {
+        animateCounter(counter);
+      }
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-card, .hero-stat, .ai-stat').forEach(el => counterObserver.observe(el));
+
+// ============ HERO PROGRESS BARS (immediate) ============
+setTimeout(() => {
+  document.querySelectorAll('.progress-fill').forEach(bar => {
+    const width = bar.dataset.width;
+    bar.style.width = width + '%';
+  });
+}, 800);
+
+// ============ HERO COUNTERS ============
+setTimeout(() => {
+  document.querySelectorAll('.hero-stat .num').forEach(animateCounter);
+}, 500);
+
+// ============ SMOOTH ANCHOR SCROLL ============
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'));
+      const y = target.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  });
+});
+
+// ============ FORM SUBMIT ============
+function handleSubmit() {
+  const btn = event.currentTarget;
+  btn.innerHTML = '✓ Message Sent! We\'ll be in touch soon.';
+  btn.style.background = '#27AE60';
+  setTimeout(() => {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message';
+    btn.style.background = '';
+  }, 4000);
+}
+
+// ============ BAR CHART INIT ON LOAD ============
+const barChartObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateBarChart();
+      barChartObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+const barChart = document.getElementById('barChart');
+if (barChart) barChartObserver.observe(barChart);
+
+// ============ ACTIVE NAV LINK ============
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 100) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
