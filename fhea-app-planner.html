@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FHEA APP Planner Template</title>
+
+  <!-- Google Fonts: Playfair Display (headings) + Source Serif 4 (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+
+  <!-- html2pdf CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES
+    ============================================= */
+    :root {
+      --clr-bg:          #f5f4f0;
+      --clr-paper:       #ffffff;
+      --clr-border:      #c8c2b6;
+      --clr-border-dark: #8a7f70;
+      --clr-accent:      #2c4a6e;       /* deep navy */
+      --clr-accent-2:    #5a7d9a;       /* mid blue  */
+      --clr-rule:        #ddd8cf;
+      --clr-header-bg:   #2c4a6e;
+      --clr-header-text: #ffffff;
+      --clr-section-bg:  #eef1f6;
+      --clr-label-bg:    #dce3ec;
+      --clr-text:        #1e1e1e;
+      --clr-muted:       #6b6357;
+      --clr-highlight:   #f0ede7;
+      --font-display:    'Playfair Display', Georgia, serif;
+      --font-body:       'Source Serif 4', Georgia, serif;
+      --radius:          3px;
+      --shadow:          0 1px 4px rgba(0,0,0,.08);
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: var(--clr-text);
+      background: var(--clr-bg);
+      line-height: 1.6;
+    }
+
+    /* =============================================
+       PAGE WRAPPER
+    ============================================= */
+    .page-shell {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* =============================================
+       TOOLBAR (hidden on print)
+    ============================================= */
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .18s, transform .12s;
+      letter-spacing: .3px;
+    }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-print  { background: var(--clr-accent); color: #fff; }
+    .btn-pdf    { background: #7a4419;           color: #fff; }
+    .btn-save   { background: #2a6647;           color: #fff; }
+    .btn-load   { background: var(--clr-muted);  color: #fff; }
+
+    .btn svg { width: 15px; height: 15px; fill: currentColor; }
+
+    /* autosave indicator */
+    #autosave-msg {
+      font-size: 11.5px;
+      color: var(--clr-muted);
+      margin-right: auto;
+      font-style: italic;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+    #autosave-msg.visible { opacity: 1; }
+
+    /* =============================================
+       DOCUMENT CARD
+    ============================================= */
+    .doc-card {
+      background: var(--clr-paper);
+      border: 1px solid var(--clr-border);
+      border-radius: 2px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    /* =============================================
+       HEADER BAND
+    ============================================= */
+    .doc-header {
+      background: var(--clr-header-bg);
+      color: var(--clr-header-text);
+      padding: 26px 30px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .doc-header__titles h1 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      line-height: 1.15;
+    }
+    .doc-header__titles h2 {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      opacity: .75;
+      margin-top: 5px;
+    }
+
+    /* Meta fields (name / dept / date) */
+    .doc-header__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 220px;
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .meta-row label {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: .65;
+      white-space: nowrap;
+      width: 82px;
+    }
+    .meta-row input {
+      flex: 1;
+      background: rgba(255,255,255,.12);
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,.4);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 3px 4px;
+      outline: none;
+      border-radius: 0;
+      transition: border-color .2s;
+    }
+    .meta-row input::placeholder { color: rgba(255,255,255,.45); }
+    .meta-row input:focus        { border-bottom-color: rgba(255,255,255,.9); }
+
+    /* =============================================
+       LEGEND BAR
+    ============================================= */
+    .legend-bar {
+      background: var(--clr-label-bg);
+      border-bottom: 1px solid var(--clr-border);
+      padding: 8px 30px;
+      display: flex;
+      gap: 28px;
+      font-size: 12px;
+      color: var(--clr-accent);
+      font-weight: 600;
+      flex-wrap: wrap;
+    }
+    .legend-bar span { display: flex; align-items: center; gap: 6px; }
+    .legend-bar .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .badge-k { background: var(--clr-accent); }
+    .badge-v { background: #7a4419; }
+
+    /* =============================================
+       MAIN GRID TABLE
+    ============================================= */
+    .planner-body { padding: 0; }
+
+    /* A full-width bordered table */
+    .plan-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .plan-table td,
+    .plan-table th {
+      border: 1px solid var(--clr-border);
+      padding: 0;
+      vertical-align: top;
+    }
+
+    /* =============================================
+       SECTION DIVIDER ROW
+    ============================================= */
+    .section-divider td {
+      background: var(--clr-accent);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-color: var(--clr-accent);
+    }
+
+    /* =============================================
+       CELL HEADERS / LABELS
+    ============================================= */
+    .cell-header {
+      background: var(--clr-section-bg);
+      border-bottom: 1px solid var(--clr-border);
+      padding: 9px 12px 7px;
+    }
+    .cell-header .cell-title {
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--clr-accent);
+      line-height: 1.25;
+    }
+    .cell-header .cell-sub {
+      font-size: 11.5px;
+      color: var(--clr-muted);
+      font-style: italic;
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    /* =============================================
+       CONTEXT CELL
+    ============================================= */
+    .context-cell { width: 22%; border-right: 2px solid var(--clr-border-dark) !important; }
+
+    .context-desc {
+      padding: 10px 12px;
+      font-size: 11.5px;
+      color: var(--clr-muted);
+      font-style: italic;
+      border-bottom: 1px solid var(--clr-rule);
+      line-height: 1.5;
+    }
+
+    /* =============================================
+       TEXTAREAS (all)
+    ============================================= */
+    textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: vertical;
+      font-family: var(--font-body);
+      font-size: 12.5px;
+      color: var(--clr-text);
+      background: transparent;
+      padding: 10px 12px;
+      line-height: 1.6;
+      min-height: 68px;
+    }
+    textarea::placeholder { color: #b5afa6; font-style: italic; }
+    textarea:focus { background: #fafcff; }
+
+    /* Context textarea - taller */
+    .context-textarea { min-height: 380px; }
+
+    /* =============================================
+       ACTIVITY ROWS (example rows)
+    ============================================= */
+    .activity-section { }
+
+    /* Row of one activity example */
+    .activity-row {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid var(--clr-rule);
+    }
+    .activity-row:last-child { border-bottom: none; }
+
+    .activity-row .row-num {
+      min-width: 26px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 10px 0 0;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--clr-muted);
+      opacity: .55;
+      border-right: 1px solid var(--clr-rule);
+    }
+
+    .activity-row .row-text {
+      flex: 1;
+      border-right: 1px solid var(--clr-rule);
+    }
+
+    /* K / V checkbox columns */
+    .chk-col {
+      width: 38px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 6px 0;
+      border-right: 1px solid var(--clr-rule);
+    }
+    .chk-col:last-child { border-right: none; }
+
+    .chk-col label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+    .chk-col label span {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: var(--clr-muted);
+    }
+    .chk-col input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--clr-accent);
+      cursor: pointer;
+    }
+
+    /* K badge in header */
+    .kv-header-row {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0;
+    }
+    .kv-header-cell {
+      width: 38px;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      padding: 5px 0 4px;
+      color: #fff;
+      border-left: 1px solid var(--clr-border);
+    }
+    .kv-k { background: var(--clr-accent); }
+    .kv-v { background: #7a4419; }
+
+    /* =============================================
+       RIGHT SIDE SPLIT (A1 top / A2 bottom inside 1 td)
+    ============================================= */
+    .split-cell {
+      padding: 0;
+    }
+    .split-top {
+      border-bottom: 2px solid var(--clr-border-dark);
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .doc-footer {
+      background: var(--clr-highlight);
+      border-top: 1px solid var(--clr-border);
+      padding: 12px 30px;
+      font-size: 11px;
+      color: var(--clr-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* =============================================
+       PRINT STYLES
+    ============================================= */
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm 14mm;
+      }
+
+      body {
+        background: #fff;
+        font-size: 11px;
+      }
+
+      .toolbar, .legend-bar { display: none !important; }
+
+      .page-shell {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .doc-card {
+        box-shadow: none;
+        border: none;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      /* Avoid row breaks */
+      .activity-row, .cell-header, tr { page-break-inside: avoid; }
+
+      .split-top { page-break-inside: avoid; }
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      .doc-header { flex-direction: column; align-items: flex-start; }
+      .doc-header__meta { min-width: 100%; }
+      .context-cell { width: 100%; display: block; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page-shell">
+
+  <!-- ============================================
+       TOOLBAR
+  ============================================= -->
+  <div class="toolbar" aria-label="Document actions">
+    <span id="autosave-msg">✓ Autosaved</span>
+
+    <!-- Print -->
+    <button class="btn btn-print" onclick="window.print()" title="Print document">
+      <svg viewBox="0 0 24 24"><path d="M6 9V2h12v7H6zm0 5H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2v5H6v-5zm2 3h8v-5H8v5zm-2-6h1v-1H6v1zm3 0h1v-1H9v1z"/></svg>
+      Print
+    </button>
+
+    <!-- Export PDF -->
+    <button class="btn btn-pdf" onclick="exportPDF()" title="Export as PDF">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM9 13h2v5H9zm4 2h2v3h-2zm-6 1h1v2H7z"/></svg>
+      Export PDF
+    </button>
+  </div>
+
+  <!-- ============================================
+       DOCUMENT CARD
+  ============================================= -->
+  <div class="doc-card" id="planner-doc">
+
+    <!-- HEADER -->
+    <header class="doc-header">
+      <div class="doc-header__titles">
+        <h1>FHEA APP Planner</h1>
+        <h2>Reflective Teaching Practice Planner</h2>
+      </div>
+
+      <div class="doc-header__meta">
+        <div class="meta-row">
+          <label for="meta-name">Name</label>
+          <input type="text" id="meta-name" placeholder="Your full name" data-field="meta-name" />
+        </div>
+        <div class="meta-row">
+          <label for="meta-dept">Department</label>
+          <input type="text" id="meta-dept" placeholder="Department / School" data-field="meta-dept" />
+        </div>
+        <div class="meta-row">
+          <label for="meta-date">Date</label>
+          <input type="date" id="meta-date" data-field="meta-date" />
+        </div>
+      </div>
+    </header>
+
+    <!-- LEGEND -->
+    <div class="legend-bar">
+      <span><span class="badge badge-k">K</span> Knowledge &amp; Understanding</span>
+      <span><span class="badge badge-v">V</span> Professional Values</span>
+    </div>
+
+    <!-- PLANNER BODY -->
+    <div class="planner-body">
+      <table class="plan-table">
+        <colgroup>
+          <col style="width:22%">  <!-- Context -->
+          <col style="width:56%">  <!-- A1 / A2 / A3-A5 -->
+          <col style="width:22%">  <!-- reserved for future right col if needed -->
+        </colgroup>
+
+        <!-- ====== SECTION 1 DIVIDER ====== -->
+        <tr class="section-divider">
+          <td colspan="3">Section 1 — Context &amp; Core Activities</td>
+        </tr>
+
+        <!-- ====== ROW: Context | A1 + A2 ====== -->
+        <tr>
+          <!-- CONTEXT CELL -->
+          <td class="context-cell" rowspan="1">
+            <div class="cell-header">
+              <div class="cell-title">Context</div>
+            </div>
+            <div class="context-desc">
+              What you teach, who you teach, and the sources of your expertise
+              (e.g., degrees, industry experience).
+            </div>
+            <textarea
+              class="context-textarea"
+              id="context"
+              data-field="context"
+              placeholder="Describe your teaching context here…&#10;&#10;• Subject(s) you teach&#10;• Student profile (level, background)&#10;• Your professional background &amp; expertise&#10;• Institutional context"></textarea>
+          </td>
+
+          <!-- A1 + A2 SPLIT CELL -->
+          <td colspan="2" class="split-cell" style="padding:0">
+
+            <!-- A1: Design and Plan Learning Activities -->
+            <div class="split-top">
+              <div class="cell-header">
+                <div class="cell-title">A1: Design and Plan Learning Activities</div>
+                <div class="cell-sub">Identify three examples from your practice that evidence A1</div>
+              </div>
+              <!-- K/V column headers -->
+              <div class="kv-header-row">
+                <div class="kv-header-cell kv-k">K</div>
+                <div class="kv-header-cell kv-v">V</div>
+              </div>
+              <!-- 3 Example rows -->
+              <div class="activity-section" id="a1-section">
+                <!-- Row 1 -->
+                <div class="activity-row">
+                  <div class="row-num">1</div>
+                  <div class="row-text">
+                    <textarea data-field="a1-1-text" placeholder="Describe example 1…"></textarea>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>K</span><input type="checkbox" data-field="a1-1-k" /></label>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>V</span><input type="checkbox" data-field="a1-1-v" /></label>
+                  </div>
+                </div>
+                <!-- Row 2 -->
+                <div class="activity-row">
+                  <div class="row-num">2</div>
+                  <div class="row-text">
+                    <textarea data-field="a1-2-text" placeholder="Describe example 2…"></textarea>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>K</span><input type="checkbox" data-field="a1-2-k" /></label>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>V</span><input type="checkbox" data-field="a1-2-v" /></label>
+                  </div>
+                </div>
+                <!-- Row 3 -->
+                <div class="activity-row">
+                  <div class="row-num">3</div>
+                  <div class="row-text">
+                    <textarea data-field="a1-3-text" placeholder="Describe example 3…"></textarea>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>K</span><input type="checkbox" data-field="a1-3-k" /></label>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>V</span><input type="checkbox" data-field="a1-3-v" /></label>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /split-top (A1) -->
+
+            <!-- A2: Teach and Support Learning -->
+            <div>
+              <div class="cell-header">
+                <div class="cell-title">A2: Teach and Support Learning</div>
+                <div class="cell-sub">Identify three examples from your practice that evidence A2</div>
+              </div>
+              <div class="kv-header-row">
+                <div class="kv-header-cell kv-k">K</div>
+                <div class="kv-header-cell kv-v">V</div>
+              </div>
+              <div class="activity-section" id="a2-section">
+                <div class="activity-row">
+                  <div class="row-num">1</div>
+                  <div class="row-text">
+                    <textarea data-field="a2-1-text" placeholder="Describe example 1…"></textarea>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>K</span><input type="checkbox" data-field="a2-1-k" /></label>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>V</span><input type="checkbox" data-field="a2-1-v" /></label>
+                  </div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">2</div>
+                  <div class="row-text">
+                    <textarea data-field="a2-2-text" placeholder="Describe example 2…"></textarea>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>K</span><input type="checkbox" data-field="a2-2-k" /></label>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>V</span><input type="checkbox" data-field="a2-2-v" /></label>
+                  </div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">3</div>
+                  <div class="row-text">
+                    <textarea data-field="a2-3-text" placeholder="Describe example 3…"></textarea>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>K</span><input type="checkbox" data-field="a2-3-k" /></label>
+                  </div>
+                  <div class="chk-col">
+                    <label><span>V</span><input type="checkbox" data-field="a2-3-v" /></label>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /A2 -->
+
+          </td><!-- /A1+A2 split cell -->
+        </tr>
+
+        <!-- ====== SECTION 2 DIVIDER ====== -->
+        <tr class="section-divider">
+          <td colspan="3">Section 2 — Assessment, Guidance &amp; Professional Development</td>
+        </tr>
+
+        <!-- ====== ROW: Context placeholder | A3 + A4 + A5 stacked vertically ====== -->
+        <tr>
+
+          <!-- LEFT: Section 2 context label cell (mirrors Section 1 context column) -->
+          <td class="context-cell">
+            <div class="cell-header">
+              <div class="cell-title">Further Activities</div>
+            </div>
+            <div class="context-desc">
+              Evidence your practice across assessment, learner guidance, and your own
+              continuing professional development.
+            </div>
+            <textarea
+              class="context-textarea"
+              id="context-s2"
+              data-field="context-s2"
+              placeholder="Add any additional notes or reflections for Section 2 here…&#10;&#10;• Assessment approaches used&#10;• How you support individual learners&#10;• CPD activities undertaken&#10;• Future development goals"></textarea>
+          </td>
+
+          <!-- RIGHT: A3, A4, A5 stacked vertically (same pattern as A1/A2 in Section 1) -->
+          <td colspan="2" class="split-cell" style="padding:0">
+
+            <!-- A3: Assess and Give Feedback -->
+            <div class="split-top">
+              <div class="cell-header">
+                <div class="cell-title">A3: Assess and Give Feedback</div>
+                <div class="cell-sub">Identify three examples from your practice that evidence A3</div>
+              </div>
+              <div class="kv-header-row">
+                <div class="kv-header-cell kv-k">K</div>
+                <div class="kv-header-cell kv-v">V</div>
+              </div>
+              <div class="activity-section" id="a3-section">
+                <div class="activity-row">
+                  <div class="row-num">1</div>
+                  <div class="row-text">
+                    <textarea data-field="a3-1-text" placeholder="Describe example 1…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a3-1-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a3-1-v" /></label></div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">2</div>
+                  <div class="row-text">
+                    <textarea data-field="a3-2-text" placeholder="Describe example 2…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a3-2-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a3-2-v" /></label></div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">3</div>
+                  <div class="row-text">
+                    <textarea data-field="a3-3-text" placeholder="Describe example 3…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a3-3-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a3-3-v" /></label></div>
+                </div>
+              </div>
+            </div><!-- /A3 -->
+
+            <!-- A4: Support and Guide Learners -->
+            <div class="split-top">
+              <div class="cell-header">
+                <div class="cell-title">A4: Support and Guide Learners</div>
+                <div class="cell-sub">Identify three examples from your practice that evidence A4</div>
+              </div>
+              <div class="kv-header-row">
+                <div class="kv-header-cell kv-k">K</div>
+                <div class="kv-header-cell kv-v">V</div>
+              </div>
+              <div class="activity-section" id="a4-section">
+                <div class="activity-row">
+                  <div class="row-num">1</div>
+                  <div class="row-text">
+                    <textarea data-field="a4-1-text" placeholder="Describe example 1…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a4-1-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a4-1-v" /></label></div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">2</div>
+                  <div class="row-text">
+                    <textarea data-field="a4-2-text" placeholder="Describe example 2…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a4-2-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a4-2-v" /></label></div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">3</div>
+                  <div class="row-text">
+                    <textarea data-field="a4-3-text" placeholder="Describe example 3…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a4-3-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a4-3-v" /></label></div>
+                </div>
+              </div>
+            </div><!-- /A4 -->
+
+            <!-- A5: Professional Development -->
+            <div>
+              <div class="cell-header">
+                <div class="cell-title">A5: Professional Development</div>
+                <div class="cell-sub">Identify three examples from your practice that evidence A5</div>
+              </div>
+              <div class="kv-header-row">
+                <div class="kv-header-cell kv-k">K</div>
+                <div class="kv-header-cell kv-v">V</div>
+              </div>
+              <div class="activity-section" id="a5-section">
+                <div class="activity-row">
+                  <div class="row-num">1</div>
+                  <div class="row-text">
+                    <textarea data-field="a5-1-text" placeholder="Describe example 1…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a5-1-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a5-1-v" /></label></div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">2</div>
+                  <div class="row-text">
+                    <textarea data-field="a5-2-text" placeholder="Describe example 2…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a5-2-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a5-2-v" /></label></div>
+                </div>
+                <div class="activity-row">
+                  <div class="row-num">3</div>
+                  <div class="row-text">
+                    <textarea data-field="a5-3-text" placeholder="Describe example 3…"></textarea>
+                  </div>
+                  <div class="chk-col"><label><span>K</span><input type="checkbox" data-field="a5-3-k" /></label></div>
+                  <div class="chk-col"><label><span>V</span><input type="checkbox" data-field="a5-3-v" /></label></div>
+                </div>
+              </div>
+            </div><!-- /A5 -->
+
+          </td><!-- /A3+A4+A5 stacked cell -->
+
+        </tr><!-- /Section 2 row -->
+
+      </table><!-- /plan-table -->
+    </div><!-- /planner-body -->
+
+    <!-- FOOTER -->
+    <footer class="doc-footer">
+      <span>FHEA APP Planner — Advance HE Framework for Teaching &amp; Supporting Learning</span>
+      <span id="footer-date"></span>
+    </footer>
+
+  </div><!-- /doc-card -->
+</div><!-- /page-shell -->
+
+
+<!-- ============================================
+     JAVASCRIPT
+============================================= -->
+<script>
+  /* -----------------------------------------------
+     1. SET TODAY'S DATE IN FOOTER
+  ----------------------------------------------- */
+  (function() {
+    const d = new Date();
+    document.getElementById('footer-date').textContent =
+      'Generated: ' + d.toLocaleDateString('en-GB', { year:'numeric', month:'long', day:'numeric' });
+  })();
+
+  /* -----------------------------------------------
+     2. COLLECT ALL FORM FIELDS
+  ----------------------------------------------- */
+  function getAllFields() {
+    const data = {};
+    // Text inputs & date
+    document.querySelectorAll('[data-field]').forEach(el => {
+      if (el.type === 'checkbox') {
+        data[el.dataset.field] = el.checked;
+      } else {
+        data[el.dataset.field] = el.value;
+      }
+    });
+    return data;
+  }
+
+  /* Set all fields from a data object */
+  function setAllFields(data) {
+    Object.entries(data).forEach(([key, val]) => {
+      const el = document.querySelector(`[data-field="${key}"]`);
+      if (!el) return;
+      if (el.type === 'checkbox') {
+        el.checked = !!val;
+      } else {
+        el.value = val;
+      }
+    });
+  }
+
+  /* -----------------------------------------------
+     3. LOCALSTORAGE AUTOSAVE
+  ----------------------------------------------- */
+  const LS_KEY = 'fhea_planner_v1';
+  const autoMsg = document.getElementById('autosave-msg');
+  let saveTimer = null;
+
+  function flashSaved() {
+    autoMsg.classList.add('visible');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => autoMsg.classList.remove('visible'), 2200);
+  }
+
+  function autosave() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(getAllFields()));
+      flashSaved();
+    } catch(e) { /* storage unavailable */ }
+  }
+
+  /* Restore on page load */
+  (function restoreFromStorage() {
+    try {
+      const saved = localStorage.getItem(LS_KEY);
+      if (saved) setAllFields(JSON.parse(saved));
+    } catch(e) {}
+  })();
+
+  /* Listen for any change on any input/textarea/checkbox */
+  document.querySelectorAll('[data-field]').forEach(el => {
+    el.addEventListener(el.type === 'checkbox' ? 'change' : 'input', autosave);
+  });
+
+  /* -----------------------------------------------
+     4. EXPORT PDF
+  ----------------------------------------------- */
+  function exportPDF() {
+    const toolbar = document.querySelector('.toolbar');
+    const legend  = document.querySelector('.legend-bar');
+
+    // Temporarily hide UI elements not needed in PDF
+    toolbar.style.display = 'none';
+    legend.style.display  = 'none';
+
+    const opt = {
+      margin:       [8, 8, 8, 8],          // mm: top, right, bottom, left
+      filename:     'FHEA-APP-Planner.pdf',
+      image:        { type: 'jpeg', quality: 0.97 },
+      html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+
+    html2pdf()
+      .set(opt)
+      .from(document.getElementById('planner-doc'))
+      .save()
+      .then(() => {
+        toolbar.style.display = '';
+        legend.style.display  = '';
+      });
+  }
+
+  /* -----------------------------------------------
+     5. SAVE AS JSON
+  ----------------------------------------------- */
+  function saveJSON() {
+    const data = getAllFields();
+    data._savedAt = new Date().toISOString();
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'fhea-planner-data.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  /* -----------------------------------------------
+     6. LOAD FROM JSON
+  ----------------------------------------------- */
+  function loadJSON() {
+    const input = document.createElement('input');
+    input.type  = 'file';
+    input.accept = '.json,application/json';
+
+    input.onchange = function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          const data = JSON.parse(ev.target.result);
+          setAllFields(data);
+          autosave();
+          alert('Data loaded successfully!');
+        } catch(err) {
+          alert('Error reading JSON file. Please check the file format.');
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    input.click();
+  }
+</script>
+
+</body>
+</html>
