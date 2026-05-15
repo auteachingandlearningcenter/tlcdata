@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Program Survey — Ajman University</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --au-blue:      #003b7a;
+  --au-blue-mid:  #0057b8;
+  --au-blue-lt:   #deeaf8;
+  --teal:         #009B8D;
+  --teal-lt:      #ccf0ed;
+  --orange:       #f47920;
+  --orange-lt:    #fdebd8;
+  --red:          #d94040;
+  --red-lt:       #fde8e8;
+  --gold:         #f5b400;
+  --gold-lt:      #fff5cc;
+  --violet:       #6c3fa5;
+  --violet-lt:    #ece4f7;
+  --sky:          #38b6ff;
+  --sky-lt:       #dff3ff;
+  --surface:      #f0f4f9;
+  --card:         #ffffff;
+  --ink:          #0e1c2f;
+  --ink-soft:     #3d5166;
+  --ink-muted:    #7a8fa8;
+  --border:       #dde4ef;
+  --r:            16px;
+  --r-lg:         22px;
+  --shadow:       0 2px 16px rgba(0,59,122,0.08);
+  --shadow-lg:    0 8px 40px rgba(0,59,122,0.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════
+   HEADER
+═══════════════════════════════ */
+header {
+  background: var(--au-blue);
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.header-mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 80% 50%, rgba(0,87,184,0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 300px 300px at 10% 80%, rgba(0,155,141,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse 200px 200px at 60% 10%, rgba(244,121,32,0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.header-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 24px,
+      rgba(255,255,255,0.025) 24px,
+      rgba(255,255,255,0.025) 25px
+    );
+  pointer-events: none;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px 52px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.header-left {}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 40px;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+}
+
+.header-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 5.5vw, 60px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+header h1 em {
+  font-style: normal;
+  color: var(--sky);
+}
+
+header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+  max-width: 420px;
+}
+
+.header-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hstat {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 14px;
+  padding: 16px 20px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.hstat-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 4px;
+}
+
+.hstat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.hstat-val span {
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════ */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+/* ═══════════════════════════════
+   SECTION HEADER
+═══════════════════════════════ */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.sec-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+
+.sec-pill {
+  margin-left: auto;
+  background: var(--au-blue-lt);
+  color: var(--au-blue-mid);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════
+   SECTION 1 — GENERAL RATINGS
+═══════════════════════════════ */
+.ratings-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Tags panel */
+.ratings-tags-card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  padding: 28px 26px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.ratings-tags-card h3 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 18px;
+}
+
+.rating-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rbadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.rbadge:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+
+.rbadge-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+
+.rb1 { background: #deeaf8; color: #003b7a; }
+.rb2 { background: #dff3ff; color: #0069b4; }
+.rb3 { background: #ccf0ed; color: #006d64; }
+.rb4 { background: #ece4f7; color: #5b21b6; }
+.rb5 { background: #fff5cc; color: #946a00; }
+.rb6 { background: #fdebd8; color: #c05a00; }
+
+/* Equal bars infographic */
+.bars-card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  padding: 28px 26px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bars-card h3 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-label {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+
+.bar-track {
+  flex: 1;
+  height: 10px;
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  width: 100%;
+  animation: barGrow 0.8s ease both;
+}
+
+@keyframes barGrow {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.bar-row:nth-child(2) .bar-fill { background: linear-gradient(90deg, #003b7a, #0057b8); animation-delay: 0.05s; }
+.bar-row:nth-child(3) .bar-fill { background: linear-gradient(90deg, #0069b4, #38b6ff); animation-delay: 0.10s; }
+.bar-row:nth-child(4) .bar-fill { background: linear-gradient(90deg, #009B8D, #34d9cc); animation-delay: 0.15s; }
+.bar-row:nth-child(5) .bar-fill { background: linear-gradient(90deg, #6c3fa5, #a76dde); animation-delay: 0.20s; }
+.bar-row:nth-child(6) .bar-fill { background: linear-gradient(90deg, #f5b400, #ffd84a); animation-delay: 0.25s; }
+.bar-row:nth-child(7) .bar-fill { background: linear-gradient(90deg, #f47920, #ffaa5e); animation-delay: 0.30s; }
+
+/* Radial / donut */
+.radial-card {
+  background: linear-gradient(135deg, var(--au-blue) 0%, #004fa3 100%);
+  border-radius: var(--r-lg);
+  padding: 28px 26px;
+  box-shadow: var(--shadow-lg);
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.radial-card h3 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.radial-wrap {
+  position: relative;
+  width: 160px; height: 160px;
+  flex-shrink: 0;
+}
+
+.radial-wrap svg {
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.radial-center-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.radial-center-text .rc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+.radial-center-text .rc-sub {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.radial-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 420px;
+}
+
+.rleg-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.8);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.rleg-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════
+   SECTION 2 — VALUE ELEMENTS
+═══════════════════════════════ */
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.value-card {
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 24px 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 0.22s, box-shadow 0.22s;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.value-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 0 0 var(--r) var(--r);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+
+.value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.value-card:hover::after { opacity: 1; }
+
+.vc1::after { background: linear-gradient(90deg, #003b7a, #38b6ff); }
+.vc2::after { background: linear-gradient(90deg, #009B8D, #34d9cc); }
+.vc3::after { background: linear-gradient(90deg, #6c3fa5, #a76dde); }
+.vc4::after { background: linear-gradient(90deg, #f47920, #ffaa5e); }
+.vc5::after { background: linear-gradient(90deg, #f5b400, #ffd84a); }
+.vc6::after { background: linear-gradient(90deg, #d94040, #ff7b7b); }
+
+.vc-icon-wrap {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.vc-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+/* Tile infographic row */
+.value-tiles {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.vtile {
+  border-radius: 10px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: transform 0.18s, filter 0.18s;
+  cursor: default;
+}
+.vtile:hover { transform: scale(1.1); filter: brightness(1.08); }
+
+/* ═══════════════════════════════
+   SECTION 3 — PROGRAM FEEDBACK
+═══════════════════════════════ */
+.feedback-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+}
+
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fb-item {
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: transform 0.18s;
+}
+.fb-item:hover { transform: translateX(4px); }
+
+.fb-item.fb-warn {
+  background: #fff8f5;
+  border-color: #fad8c8;
+  border-left: 3px solid var(--orange);
+}
+
+.fb-item.fb-urgent {
+  background: var(--red-lt);
+  border-color: #f5b8b8;
+  border-left: 3px solid var(--red);
+}
+
+.fb-icon {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.fb-text {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+  padding-top: 4px;
+}
+
+/* Stacked block infographic */
+.stacked-card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  padding: 24px 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stacked-card h3 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+
+.stack-block {
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.18s;
+  cursor: default;
+}
+.stack-block:hover { transform: scale(1.02); }
+
+.stack-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+}
+
+/* ═══════════════════════════════
+   SECTION 4 — FUTURE PROGRAMS
+═══════════════════════════════ */
+.future-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.future-card {
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 20px 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.future-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.fc-icon {
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.fc-text {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+/* Cluster visual */
+.clusters-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.cluster-bubble {
+  border-radius: 40px;
+  padding: 10px 22px;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: transform 0.18s, box-shadow 0.18s;
+  cursor: default;
+}
+.cluster-bubble:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+
+/* ═══════════════════════════════
+   SECTION 5 — TOPICS REQUESTED
+═══════════════════════════════ */
+.topics-flow {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.topic-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  transition: all 0.2s;
+  cursor: default;
+}
+.topic-chip:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(0,0,0,0.12); }
+
+.tc-arrow {
+  font-size: 10px;
+  opacity: 0.5;
+}
+
+.tc1 { background: #deeaf8; color: #003b7a; border-color: #b8d3f0; }
+.tc2 { background: #dff3ff; color: #0069b4; border-color: #a8ddff; }
+.tc3 { background: #ccf0ed; color: #005e57; border-color: #99e0da; }
+.tc4 { background: #ece4f7; color: #5b21b6; border-color: #cbb8ef; }
+.tc5 { background: #fdebd8; color: #c05a00; border-color: #f9ccaa; }
+.tc6 { background: #fff5cc; color: #946a00; border-color: #f5d85a; }
+.tc7 { background: #fde8e8; color: #b02020; border-color: #f5b0b0; }
+.tc8 { background: #e5f8ee; color: #1a6b3a; border-color: #99ddbb; }
+.tc9 { background: #f7f0ff; color: #6c3fa5; border-color: #d6baff; }
+
+/* Grid cluster visualization */
+.topic-grid-visual {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.tgv-cell {
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: transform 0.18s;
+  cursor: default;
+}
+.tgv-cell:hover { transform: scale(1.03); }
+
+.tgv-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════
+   SECTION 6 — ADDITIONAL
+═══════════════════════════════ */
+.additional-box {
+  background: linear-gradient(135deg, var(--teal) 0%, #007a6f 100%);
+  border-radius: var(--r-lg);
+  padding: 30px 28px;
+  box-shadow: 0 8px 32px rgba(0,155,141,0.3);
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.add-icon-wrap {
+  width: 54px; height: 54px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.add-content {}
+
+.add-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+
+.add-text {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.35;
+}
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+footer {
+  background: var(--au-blue);
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  padding: 22px 32px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════
+   ANIMATIONS
+═══════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+section {
+  animation: fadeUp 0.55s ease both;
+}
+section:nth-child(1) { animation-delay: 0.05s; }
+section:nth-child(2) { animation-delay: 0.12s; }
+section:nth-child(3) { animation-delay: 0.19s; }
+section:nth-child(4) { animation-delay: 0.26s; }
+section:nth-child(5) { animation-delay: 0.33s; }
+section:nth-child(6) { animation-delay: 0.40s; }
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media (max-width: 960px) {
+  .ratings-layout { grid-template-columns: 1fr; }
+  .radial-card { grid-column: auto; }
+  .value-grid { grid-template-columns: repeat(2, 1fr); }
+  .value-tiles { grid-template-columns: repeat(3, 1fr); }
+  .future-grid { grid-template-columns: repeat(2, 1fr); }
+  .topic-grid-visual { grid-template-columns: repeat(2, 1fr); }
+  .feedback-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  main { padding: 32px 20px 60px; gap: 44px; }
+  .header-inner { padding: 40px 22px 36px; }
+  .value-grid { grid-template-columns: 1fr; }
+  .value-tiles { grid-template-columns: repeat(2, 1fr); }
+  .future-grid { grid-template-columns: 1fr 1fr; }
+  .topic-grid-visual { grid-template-columns: 1fr; }
+  .bar-label { min-width: 100px; font-size: 11.5px; }
+  .header-stats { display: none; }
+  .sec-pill { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-mesh"></div>
+  <div class="header-pattern"></div>
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-badge">Ajman University · Executive Education</div>
+      <h1>Executive Program <em>Survey</em></h1>
+      <p class="subtitle">Survey Results Overview</p>
+    </div>
+    <div class="header-stats">
+      <div class="hstat">
+        <div class="hstat-label">Sections</div>
+        <div class="hstat-val">6 <span>areas</span></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-label">Topics</div>
+        <div class="hstat-val">9 <span>requested</span></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-label">Programs</div>
+        <div class="hstat-val">7 <span>future types</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ 1. GENERAL RATINGS ═══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-icon" style="background:#deeaf8; font-size:22px;">⭐</div>
+    <h2 class="sec-title">General Ratings</h2>
+    <span class="sec-pill">6 Responses</span>
+  </div>
+
+  <div class="ratings-layout">
+
+    <!-- Tags -->
+    <div class="ratings-tags-card">
+      <h3>Response Scale</h3>
+      <div class="rating-badges">
+        <span class="rbadge rb1"><span class="rbadge-dot"></span>Strongly Agree</span>
+        <span class="rbadge rb2"><span class="rbadge-dot"></span>Agree</span>
+        <span class="rbadge rb3"><span class="rbadge-dot"></span>To a large extent</span>
+        <span class="rbadge rb4"><span class="rbadge-dot"></span>To a very large extent</span>
+        <span class="rbadge rb5"><span class="rbadge-dot"></span>Excellent</span>
+        <span class="rbadge rb6"><span class="rbadge-dot"></span>Very good</span>
+      </div>
+    </div>
+
+    <!-- Equal bars -->
+    <div class="bars-card">
+      <h3>Equal-Weight Presence</h3>
+      <div class="bar-row"><span class="bar-label">Strongly Agree</span><div class="bar-track"><div class="bar-fill"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Agree</span><div class="bar-track"><div class="bar-fill"></div></div></div>
+      <div class="bar-row"><span class="bar-label">To a large extent</span><div class="bar-track"><div class="bar-fill"></div></div></div>
+      <div class="bar-row"><span class="bar-label">To a very large extent</span><div class="bar-track"><div class="bar-fill"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Excellent</span><div class="bar-track"><div class="bar-fill"></div></div></div>
+      <div class="bar-row"><span class="bar-label">Very good</span><div class="bar-track"><div class="bar-fill"></div></div></div>
+    </div>
+
+    <!-- Radial -->
+    <div class="radial-card">
+      <div>
+        <h3>Radial Distribution · All Ratings Equal</h3>
+        <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center;">
+          <div class="radial-wrap">
+            <svg viewBox="0 0 160 160" width="160" height="160">
+              <!-- 6 equal slices = 60° each, stroke-dasharray on r=62 circle = circumference ~389 -->
+              <!-- each slice = 389/6 ≈ 64.8 -->
+              <circle cx="80" cy="80" r="62" fill="none" stroke="#003b7a"  stroke-width="22" stroke-dasharray="64.8 324.2" stroke-dashoffset="0"/>
+              <circle cx="80" cy="80" r="62" fill="none" stroke="#0069b4"  stroke-width="22" stroke-dasharray="64.8 324.2" stroke-dashoffset="-64.8"/>
+              <circle cx="80" cy="80" r="62" fill="none" stroke="#009B8D"  stroke-width="22" stroke-dasharray="64.8 324.2" stroke-dashoffset="-129.6"/>
+              <circle cx="80" cy="80" r="62" fill="none" stroke="#6c3fa5"  stroke-width="22" stroke-dasharray="64.8 324.2" stroke-dashoffset="-194.4"/>
+              <circle cx="80" cy="80" r="62" fill="none" stroke="#f5b400"  stroke-width="22" stroke-dasharray="64.8 324.2" stroke-dashoffset="-259.2"/>
+              <circle cx="80" cy="80" r="62" fill="none" stroke="#f47920"  stroke-width="22" stroke-dasharray="64.8 324.2" stroke-dashoffset="-324.0"/>
+              <circle cx="80" cy="80" r="40" fill="rgba(255,255,255,0.06)"/>
+            </svg>
+            <div class="radial-center-text">
+              <span class="rc-title">6</span>
+              <span class="rc-sub">Ratings</span>
+            </div>
+          </div>
+          <div class="radial-legend">
+            <div class="rleg-item"><span class="rleg-dot" style="background:#003b7a;"></span>Strongly Agree</div>
+            <div class="rleg-item"><span class="rleg-dot" style="background:#0069b4;"></span>Agree</div>
+            <div class="rleg-item"><span class="rleg-dot" style="background:#009B8D;"></span>To a large extent</div>
+            <div class="rleg-item"><span class="rleg-dot" style="background:#6c3fa5;"></span>To a very large extent</div>
+            <div class="rleg-item"><span class="rleg-dot" style="background:#f5b400;"></span>Excellent</div>
+            <div class="rleg-item"><span class="rleg-dot" style="background:#f47920;"></span>Very good</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 2. VALUE ELEMENTS ═══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-icon" style="background:#ccf0ed;">💡</div>
+    <h2 class="sec-title">Value Elements</h2>
+    <span class="sec-pill">6 Elements</span>
+  </div>
+
+  <div class="value-grid">
+    <div class="value-card vc1">
+      <div class="vc-icon-wrap" style="background:#deeaf8;">💬</div>
+      <p class="vc-text">Interactive discussions</p>
+    </div>
+    <div class="value-card vc2">
+      <div class="vc-icon-wrap" style="background:#ccf0ed;">🔄</div>
+      <p class="vc-text">Exchange of experiences among participants</p>
+    </div>
+    <div class="value-card vc3">
+      <div class="vc-icon-wrap" style="background:#ece4f7;">🤖</div>
+      <p class="vc-text">Use of artificial intelligence in reputation and crisis management</p>
+    </div>
+    <div class="value-card vc4">
+      <div class="vc-icon-wrap" style="background:#fdebd8;">🧪</div>
+      <p class="vc-text">Practical cases and applications</p>
+    </div>
+    <div class="value-card vc5">
+      <div class="vc-icon-wrap" style="background:#fff5cc;">🛠️</div>
+      <p class="vc-text">Practical tools and applicable frameworks</p>
+    </div>
+    <div class="value-card vc6">
+      <div class="vc-icon-wrap" style="background:#fde8e8;">🎯</div>
+      <p class="vc-text">Strategic insights</p>
+    </div>
+  </div>
+
+  <!-- Tile infographic -->
+  <div class="value-tiles" style="margin-top:16px;">
+    <div class="vtile" style="background:linear-gradient(135deg,#003b7a,#0057b8);">💬</div>
+    <div class="vtile" style="background:linear-gradient(135deg,#009B8D,#34d9cc);">🔄</div>
+    <div class="vtile" style="background:linear-gradient(135deg,#6c3fa5,#a76dde);">🤖</div>
+    <div class="vtile" style="background:linear-gradient(135deg,#f47920,#ffaa5e);">🧪</div>
+    <div class="vtile" style="background:linear-gradient(135deg,#f5b400,#ffd84a);">🛠️</div>
+    <div class="vtile" style="background:linear-gradient(135deg,#d94040,#ff7b7b);">🎯</div>
+  </div>
+</section>
+
+<!-- ═══ 3. PROGRAM FEEDBACK ═══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-icon" style="background:#fdebd8;">📋</div>
+    <h2 class="sec-title">Program Feedback &amp; Improvements</h2>
+    <span class="sec-pill">5 Responses</span>
+  </div>
+
+  <div class="feedback-layout">
+    <div class="feedback-list">
+      <div class="fb-item fb-warn">
+        <div class="fb-icon" style="background:#fdebd8;">📅</div>
+        <p class="fb-text">Programs should be longer and extended over multiple days</p>
+      </div>
+      <div class="fb-item fb-warn">
+        <div class="fb-icon" style="background:#fdebd8;">📅</div>
+        <p class="fb-text">Program should be more than one day</p>
+      </div>
+      <div class="fb-item">
+        <div class="fb-icon" style="background:#deeaf8;">🏛️</div>
+        <p class="fb-text">Need real examples from the government sector</p>
+      </div>
+      <div class="fb-item fb-urgent">
+        <div class="fb-icon" style="background:#fde8e8;">⚠️</div>
+        <p class="fb-text">The COVID presentation was boring</p>
+      </div>
+      <div class="fb-item">
+        <div class="fb-icon" style="background:#ccf0ed;">🎓</div>
+        <p class="fb-text">Convert it into an accredited diploma</p>
+      </div>
+    </div>
+
+    <!-- Stacked infographic -->
+    <div class="stacked-card">
+      <h3>Segmented Block View</h3>
+      <div class="stack-block" style="background:#fff3e6;color:#c05a00;"><span class="stack-dot"></span>Programs should be longer and extended over multiple days</div>
+      <div class="stack-block" style="background:#fff3e6;color:#c05a00;"><span class="stack-dot"></span>Program should be more than one day</div>
+      <div class="stack-block" style="background:#deeaf8;color:#003b7a;"><span class="stack-dot"></span>Need real examples from the government sector</div>
+      <div class="stack-block" style="background:#fde8e8;color:#b02020;"><span class="stack-dot"></span>The COVID presentation was boring</div>
+      <div class="stack-block" style="background:#ccf0ed;color:#005e57;"><span class="stack-dot"></span>Convert it into an accredited diploma</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4. FUTURE PROGRAM TYPES ═══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-icon" style="background:#ece4f7;">🚀</div>
+    <h2 class="sec-title">Future Program Types</h2>
+    <span class="sec-pill">7 Types</span>
+  </div>
+
+  <div class="future-grid">
+    <div class="future-card" style="border-top:3px solid #003b7a;">
+      <div class="fc-icon" style="background:#deeaf8;">🎯</div>
+      <p class="fc-text">Advanced and specialized programs</p>
+    </div>
+    <div class="future-card" style="border-top:3px solid #009B8D;">
+      <div class="fc-icon" style="background:#ccf0ed;">🔒</div>
+      <p class="fc-text">Closed executive sessions for leadership</p>
+    </div>
+    <div class="future-card" style="border-top:3px solid #6c3fa5;">
+      <div class="fc-icon" style="background:#ece4f7;">🏢</div>
+      <p class="fc-text">Customized programs for organizations</p>
+    </div>
+    <div class="future-card" style="border-top:3px solid #f47920;">
+      <div class="fc-icon" style="background:#fdebd8;">🤝</div>
+      <p class="fc-text">Advisory sessions for leadership</p>
+    </div>
+    <div class="future-card" style="border-top:3px solid #f5b400;">
+      <div class="fc-icon" style="background:#fff5cc;">🌐</div>
+      <p class="fc-text">Communities of practice and knowledge exchange</p>
+    </div>
+    <div class="future-card" style="border-top:3px solid #38b6ff;">
+      <div class="fc-icon" style="background:#dff3ff;">🤖</div>
+      <p class="fc-text">Programs on artificial intelligence and decision-making</p>
+    </div>
+    <div class="future-card" style="border-top:3px solid #d94040;">
+      <div class="fc-icon" style="background:#fde8e8;">🔬</div>
+      <p class="fc-text">Applied labs and case studies</p>
+    </div>
+  </div>
+
+  <!-- Cluster bubbles -->
+  <div class="clusters-wrap">
+    <span class="cluster-bubble" style="background:#deeaf8;color:#003b7a;">Advanced &amp; Specialized</span>
+    <span class="cluster-bubble" style="background:#ccf0ed;color:#005e57;">Executive Sessions</span>
+    <span class="cluster-bubble" style="background:#ece4f7;color:#5b21b6;">Customized Programs</span>
+    <span class="cluster-bubble" style="background:#fdebd8;color:#c05a00;">Advisory Sessions</span>
+    <span class="cluster-bubble" style="background:#fff5cc;color:#946a00;">Communities of Practice</span>
+    <span class="cluster-bubble" style="background:#dff3ff;color:#0069b4;">AI &amp; Decision-Making</span>
+    <span class="cluster-bubble" style="background:#fde8e8;color:#b02020;">Applied Labs</span>
+  </div>
+</section>
+
+<!-- ═══ 5. TOPICS REQUESTED ═══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-icon" style="background:#dff3ff;">📌</div>
+    <h2 class="sec-title">Topics Requested</h2>
+    <span class="sec-pill">9 Topics</span>
+  </div>
+
+  <div class="topics-flow">
+    <span class="topic-chip tc1">Decision-making during crises <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc2">Strategic planning and media monitoring <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc3">Media simulation <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc4">Psychological operations <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc5">Strategic application of AI in crises <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc6">Use of AI tools in developing and analyzing government indicators <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc7">Development of AI tools in advertising and marketing <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc8">Geopolitical situations <span class="tc-arrow">›</span></span>
+    <span class="topic-chip tc9">Handling war crises <span class="tc-arrow">›</span></span>
+  </div>
+
+  <!-- Grid cluster visualization -->
+  <div class="topic-grid-visual">
+    <div class="tgv-cell" style="background:#deeaf8;color:#003b7a;"><span class="tgv-icon">⚡</span>Decision-making during crises</div>
+    <div class="tgv-cell" style="background:#dff3ff;color:#0069b4;"><span class="tgv-icon">📡</span>Strategic planning and media monitoring</div>
+    <div class="tgv-cell" style="background:#ccf0ed;color:#005e57;"><span class="tgv-icon">🎭</span>Media simulation</div>
+    <div class="tgv-cell" style="background:#ece4f7;color:#5b21b6;"><span class="tgv-icon">🧠</span>Psychological operations</div>
+    <div class="tgv-cell" style="background:#fdebd8;color:#c05a00;"><span class="tgv-icon">🤖</span>Strategic application of AI in crises</div>
+    <div class="tgv-cell" style="background:#fff5cc;color:#946a00;"><span class="tgv-icon">📊</span>Use of AI tools in developing and analyzing government indicators</div>
+    <div class="tgv-cell" style="background:#fde8e8;color:#b02020;"><span class="tgv-icon">📣</span>Development of AI tools in advertising and marketing</div>
+    <div class="tgv-cell" style="background:#e5f8ee;color:#1a6b3a;"><span class="tgv-icon">🌍</span>Geopolitical situations</div>
+    <div class="tgv-cell" style="background:#f7f0ff;color:#6c3fa5;"><span class="tgv-icon">🛡️</span>Handling war crises</div>
+  </div>
+</section>
+
+<!-- ═══ 6. ADDITIONAL FEEDBACK ═══ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-icon" style="background:#ccf0ed;">📝</div>
+    <h2 class="sec-title">Additional Feedback</h2>
+  </div>
+  <div class="additional-box">
+    <div class="add-icon-wrap">🎓</div>
+    <div class="add-content">
+      <p class="add-label">Single-occurrence improvement request</p>
+      <p class="add-text">Convert it into an accredited diploma</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Executive Program Survey &nbsp;·&nbsp; Survey Results Overview &nbsp;·&nbsp; Ajman University
+</footer>
+
+</body>
+</html>
