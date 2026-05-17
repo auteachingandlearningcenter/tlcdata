@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة نتائج الاستبيان</title>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-base:       #0a0a0b;
+  --bg-primary:    #111114;
+  --bg-secondary:  #18181d;
+  --bg-tertiary:   #222228;
+  --bg-hover:      #2a2a32;
+
+  --text-primary:  #e5e5e5;
+  --text-secondary:#b0b0b0;
+  --text-tertiary: #8a8a8a;
+
+  --border:        rgba(255,255,255,0.07);
+  --border-hover:  rgba(255,255,255,0.13);
+
+  --blue:     #5aa0ff;
+  --blue-dim: rgba(90,160,255,0.15);
+  --green:    #36c28a;
+  --green-dim:rgba(54,194,138,0.15);
+  --violet:   #9b8eff;
+  --violet-dim:rgba(155,142,255,0.15);
+  --amber:    #f0a429;
+  --amber-dim:rgba(240,164,41,0.15);
+  --coral:    #e06a4a;
+  --teal:     #29b8b8;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --font: "Segoe UI", "Tahoma", "Arial", sans-serif;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  direction: rtl;
+}
+
+/* ── Layout ───────────────────────────────────────────────── */
+.container  { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+.db         { padding: 1.5rem 0 2.5rem; }
+
+.kpi-row    { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+.grid2      { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.section-full { margin-bottom: 12px; }
+
+/* ── Cards ────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.4rem;
+  transition: border-color .2s;
+}
+.card:hover { border-color: var(--border-hover); }
+
+/* ── KPI Cards ────────────────────────────────────────────── */
+.kpi {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .15s;
+}
+.kpi:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+
+.kpi-icon-wrap {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px;
+}
+.kpi-n   { font-size: 32px; font-weight: 600; line-height: 1; }
+.kpi-l   { font-size: 11px; color: var(--text-secondary); margin-top: 5px; line-height: 1.4; }
+
+/* ── Section label ────────────────────────────────────────── */
+.clabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: .85rem;
+}
+
+/* ── Chart wrappers ───────────────────────────────────────── */
+.radar-section  { position: relative; width: 100%; height: 270px; }
+.polar-section  { position: relative; width: 100%; height: 270px; }
+.bar-section    { position: relative; height: 340px; }
+
+/* ── Legend ───────────────────────────────────────────────── */
+.leg      { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-secondary); }
+.leg-sq   { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── Feedback rows ────────────────────────────────────────── */
+.fb-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.fb-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+
+.fb-ico {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.fb-txt { font-size: 12.5px; color: var(--text-primary); line-height: 1.6; padding-top: 4px; }
+
+/* ── Progress bars ────────────────────────────────────────── */
+.prog-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; }
+.prog-track { width: 100%; height: 7px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
+.prog-fill  { height: 100%; border-radius: 4px; }
+
+/* ── Segmented bar ────────────────────────────────────────── */
+.seg-group-label { font-size: 11px; color: var(--text-tertiary); font-weight: 700; margin: 12px 0 6px; letter-spacing: .02em; }
+.seg-group-label:first-child { margin-top: 0; }
+
+.seg-row {
+  display: flex; width: 100%; height: 38px;
+  border-radius: var(--radius-sm); overflow: hidden;
+  margin-bottom: 6px;
+  gap: 2px;
+}
+.seg-piece {
+  height: 100%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+  transition: flex .3s; cursor: default;
+  border-radius: 4px;
+  text-align: center;
+  padding: 0 4px;
+}
+
+/* ── Topic tags ───────────────────────────────────────────── */
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 12px; margin: 3px;
+  border: 1px solid; cursor: default;
+  transition: opacity .15s;
+}
+.tag:hover { opacity: .75; }
+
+.t-b { background: rgba(90,160,255,.12);  color: #7db8ff;  border-color: rgba(90,160,255,.3);  }
+.t-t { background: rgba(54,194,138,.12);  color: #5ecfa0;  border-color: rgba(54,194,138,.3);  }
+.t-a { background: rgba(240,164,41,.12);  color: #f5b84d;  border-color: rgba(240,164,41,.3);  }
+.t-p { background: rgba(155,142,255,.12); color: #b8afff;  border-color: rgba(155,142,255,.3); }
+.t-c { background: rgba(224,106,74,.12);  color: #e89175;  border-color: rgba(224,106,74,.3);  }
+
+/* ── Value element grid ───────────────────────────────────── */
+.val-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.val-item {
+  padding: 13px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex; align-items: flex-start; gap: 10px;
+  transition: background .15s, border-color .15s;
+}
+.val-item:hover { background: var(--bg-tertiary); border-color: var(--border-hover); }
+.val-icon { flex-shrink: 0; margin-top: 1px; }
+.val-txt  { font-size: 12.5px; color: var(--text-primary); line-height: 1.5; }
+
+/* ── Divider ──────────────────────────────────────────────── */
+.mt { margin-top: 14px; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .kpi-row { grid-template-columns: repeat(2,1fr); }
+  .grid2   { grid-template-columns: 1fr; }
+  .val-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 480px) {
+  .kpi-row  { grid-template-columns: 1fr 1fr; }
+  .val-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">لوحة نتائج الاستبيان — استجابات 10 مشاركين حول عناصر القيمة والملاحظات وأنواع البرامج المستقبلية والموضوعات والتقييمات العامة.</h2>
+
+<div class="container">
+<div class="db">
+
+<!-- ── KPI Row ──────────────────────────────────────────── -->
+<div class="kpi-row">
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--blue-dim)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/>
+        <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="8.5" x2="22" y2="8.5"/>
+        <line x1="2" y1="15.5" x2="22" y2="15.5"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--blue)">6</div>
+    <div class="kpi-l">عناصر القيمة المُحدَّدة</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--amber-dim)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f0a429" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        <line x1="9" y1="10" x2="15" y2="10"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--amber)">5</div>
+    <div class="kpi-l">ملاحظات على البرنامج</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--green-dim)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#36c28a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--green)">7</div>
+    <div class="kpi-l">أنواع البرامج المستقبلية</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--violet-dim)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9b8eff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--violet)">9</div>
+    <div class="kpi-l">الموضوعات المطلوبة</div>
+  </div>
+
+</div><!-- /kpi-row -->
+
+<!-- ── Polar + Radar ─────────────────────────────────────── -->
+<div class="grid2">
+
+  <div class="card">
+    <div class="clabel">التقييمات العامة — توزيع الاستجابات</div>
+    <div class="polar-section">
+      <canvas id="polarChart" role="img" aria-label="مخطط قطبي — موافق بشدة: 9، موافق: 1، ينطبق بدرجة كبيرة: 4، ينطبق بدرجة كبيرة جداً: 6، ممتازة: 9، جيدة جداً: 1 (من أصل 10 مشاركين)"></canvas>
+    </div>
+    <div class="leg">
+      <span class="leg-item"><span class="leg-sq" style="background:#5aa0ff"></span>موافق بشدة</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#36c28a"></span>موافق</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#9b8eff"></span>ينطبق بدرجة كبيرة</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#e06a4a"></span>ينطبق بدرجة كبيرة جداً</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#f0a429"></span>ممتازة</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#888780"></span>جيدة جداً</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="clabel">عناصر القيمة — عرض الرادار</div>
+    <div class="radar-section">
+      <canvas id="radarChart" role="img" aria-label="مخطط رادار لعناصر القيمة الستة بناءً على بيانات الاستبيان الفعلية"></canvas>
+    </div>
+  </div>
+
+</div><!-- /grid2 -->
+
+<!-- ── Topic cluster ─────────────────────────────────────── -->
+<div class="section-full card">
+  <div class="clabel">الموضوعات المطلوبة — التصنيف المجمّع</div>
+
+  <div class="seg-group-label">الأزمات والصراعات</div>
+  <div class="seg-row">
+    <div class="seg-piece" style="flex:1;background:rgba(90,160,255,.18);color:#7db8ff">اتخاذ القرار وقت الأزمات</div>
+    <div class="seg-piece" style="flex:1;background:rgba(90,160,255,.28);color:#9fcaff">التطبيق الاستراتيجي للذكاء الاصطناعي في الأزمات</div>
+    <div class="seg-piece" style="flex:1;background:rgba(90,160,255,.42);color:#bfdbff">التعامل مع أزمات الحروب</div>
+    <div class="seg-piece" style="flex:1;background:#5aa0ff;color:#0a1a36">العمليات النفسية</div>
+  </div>
+
+  <div class="seg-group-label">الإعلام والاستراتيجية</div>
+  <div class="seg-row">
+    <div class="seg-piece" style="flex:1;background:rgba(54,194,138,.18);color:#5ecfa0">التخطيط الاستراتيجي والرصد الإعلامي</div>
+    <div class="seg-piece" style="flex:1;background:rgba(54,194,138,.38);color:#80dab4">المحاكاة الإعلامية</div>
+    <div class="seg-piece" style="flex:1;background:#36c28a;color:#04251b">الأوضاع الجيوسياسية</div>
+  </div>
+
+  <div class="seg-group-label">الذكاء الاصطناعي والحكومة</div>
+  <div class="seg-row">
+    <div class="seg-piece" style="flex:1;background:rgba(240,164,41,.2);color:#f5b84d">أدوات الذكاء الاصطناعي في المؤشرات الحكومية</div>
+    <div class="seg-piece" style="flex:1;background:#f0a429;color:#2a1700">أدوات الذكاء الاصطناعي في الإعلان والتسويق</div>
+  </div>
+</div>
+
+<!-- ── Future bar + Feedback ──────────────────────────────── -->
+<div class="grid2">
+
+  <div class="card">
+    <div class="clabel">أنواع البرامج المستقبلية</div>
+    <div class="bar-section">
+      <canvas id="futureBar" role="img" aria-label="مخطط شريطي أفقي لأنواع البرامج التنفيذية المستقبلية المفضّلة"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="clabel">ملاحظات البرنامج</div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--blue-dim)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="12" y1="15" x2="12" y2="19"/><line x1="10" y1="17" x2="14" y2="17"/>
+        </svg>
+      </div>
+      <div class="fb-txt">ينبغي أن تكون البرامج أطول وتمتد على أيام متعددة</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--blue-dim)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="fb-txt">يجب أن يكون البرنامج أكثر من يوم واحد</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--green-dim)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#36c28a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="1"/>
+          <line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>
+          <line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/>
+        </svg>
+      </div>
+      <div class="fb-txt">الحاجة إلى أمثلة واقعية من القطاع الحكومي</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--amber-dim)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f0a429" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <div class="fb-txt">العرض التقديمي الخاص بكوفيد كان مملاً</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--violet-dim)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9b8eff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="6"/>
+          <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+        </svg>
+      </div>
+      <div class="fb-txt">تحويله إلى دبلوم معتمد</div>
+    </div>
+
+    <div class="mt">
+      <div class="clabel" style="margin-bottom:.5rem">أوزان فئات الملاحظات</div>
+      <div class="prog-label"><span>طلبات مدة أطول</span><span style="color:var(--text-primary);font-weight:600">عنصران</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:40%;background:var(--blue)"></div></div>
+      <div class="prog-label"><span>جودة المحتوى</span><span style="color:var(--text-primary);font-weight:600">عنصر واحد</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:20%;background:var(--amber)"></div></div>
+      <div class="prog-label"><span>أمثلة واقعية</span><span style="color:var(--text-primary);font-weight:600">عنصر واحد</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:20%;background:var(--green)"></div></div>
+      <div class="prog-label"><span>صيغة البرنامج</span><span style="color:var(--text-primary);font-weight:600">عنصر واحد</span></div>
+      <div class="prog-track" style="margin-bottom:0"><div class="prog-fill" style="width:20%;background:var(--violet)"></div></div>
+    </div>
+  </div>
+
+</div><!-- /grid2 -->
+
+<!-- ── Value elements grid ────────────────────────────────── -->
+<div class="section-full card">
+  <div class="clabel">عناصر القيمة — جميع العناصر الستة</div>
+  <div class="val-grid">
+
+    <div class="val-item">
+      <span class="val-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          <line x1="9" y1="10" x2="15" y2="10"/>
+        </svg>
+      </span>
+      <span class="val-txt">النقاشات التفاعلية</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#36c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </span>
+      <span class="val-txt">تبادل الخبرات بين المشاركين</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9b8eff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="6" height="6" rx="1"/>
+          <rect x="2" y="2" width="20" height="20" rx="3"/>
+          <line x1="9" y1="2" x2="9" y2="5"/><line x1="15" y1="2" x2="15" y2="5"/>
+          <line x1="9" y1="19" x2="9" y2="22"/><line x1="15" y1="19" x2="15" y2="22"/>
+          <line x1="2" y1="9" x2="5" y2="9"/><line x1="2" y1="15" x2="5" y2="15"/>
+          <line x1="19" y1="9" x2="22" y2="9"/><line x1="19" y1="15" x2="22" y2="15"/>
+        </svg>
+      </span>
+      <span class="val-txt">توظيف الذكاء الاصطناعي في إدارة السمعة والأزمات</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          <line x1="12" y1="12" x2="12" y2="17"/>
+          <line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/>
+        </svg>
+      </span>
+      <span class="val-txt">الحالات والتطبيقات العملية</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f0a429" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+      </span>
+      <span class="val-txt">أدوات وأطر عملية قابلة للتطبيق</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888780" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="9" y1="18" x2="15" y2="18"/>
+          <line x1="10" y1="22" x2="14" y2="22"/>
+          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+        </svg>
+      </span>
+      <span class="val-txt">الرؤى الاستراتيجية</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Future tags ────────────────────────────────────────── -->
+<div class="section-full card">
+  <div class="clabel">أنواع البرامج المستقبلية — وسوم الموضوعات</div>
+  <div>
+    <span class="tag t-p">برامج متقدمة ومتخصصة</span>
+    <span class="tag t-p">جلسات تنفيذية مغلقة للقيادات</span>
+    <span class="tag t-p">برامج مخصصة لجهات العمل</span>
+    <span class="tag t-p">جلسات استشارية للقيادات</span>
+    <span class="tag t-t">مجتمعات ممارسة وتبادل الخبرات</span>
+    <span class="tag t-b">برامج حول الذكاء الاصطناعي وصناعة القرار</span>
+    <span class="tag t-t">مختبرات تطبيقية ودراسات حالة</span>
+  </div>
+</div>
+
+</div><!-- /db -->
+</div><!-- /container -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   مصدر البيانات: Updated_Report.xlsx — ورقة "Survey" (ن=10 مشاركين)
+   جميع القيم محسوبة من الاستجابات الخام باستخدام مقاييس التقييم العربية.
+   ═══════════════════════════════════════════════════════════════ */
+
+const COLORS = {
+  blue:   '#5aa0ff',
+  green:  '#36c28a',
+  violet: '#9b8eff',
+  coral:  '#e06a4a',
+  amber:  '#f0a429',
+  slate:  '#888780'
+};
+
+const gridLine  = 'rgba(255,255,255,0.08)';
+const tooltipBg = '#1a1a20';
+
+Chart.defaults.font.family = '"Segoe UI", "Tahoma", "Arial", sans-serif';
+Chart.defaults.color = '#b0b0b0';
+
+/* ══════════════════════════════════════════════════════════════
+   المخطط القطبي — توزيع الاستجابات
+   ──────────────────────────────────────────────────────────────
+   المصدر: أسئلة الاتفاق (س1–س9) وأسئلة التطبيق (س10–س13)
+   والتقييم العام (ن=10 مشاركين).
+
+   أسئلة الاتفاق:
+     • موافق بشدة: 9 من أصل 10
+     • موافق: 1 من أصل 10
+
+   أسئلة التطبيق (متوسط س10–س13):
+     • ينطبق بدرجة كبيرة جداً: 6 استجابات
+     • ينطبق بدرجة كبيرة: 4 استجابات
+
+   التقييم العام:
+     • ممتازة: 9 مشاركين
+     • جيدة جداً: 1 مشارك
+   ══════════════════════════════════════════════════════════════ */
+new Chart(document.getElementById('polarChart'), {
+  type: 'polarArea',
+  data: {
+    labels: [
+      'موافق بشدة',           // س1: 9 من 10
+      'موافق',                // س1: 1 من 10
+      'ينطبق بدرجة كبيرة',   // متوسط س10–س13: 4 من 10
+      'ينطبق بدرجة كبيرة جداً',// متوسط س10–س13: 6 من 10
+      'ممتازة',               // التقييم العام: 9 من 10
+      'جيدة جداً'             // التقييم العام: 1 من 10
+    ],
+    datasets: [{
+      data: [9, 1, 4, 6, 9, 1],
+      backgroundColor: [
+        COLORS.blue   + 'bb',
+        COLORS.green  + 'bb',
+        COLORS.violet + 'bb',
+        COLORS.coral  + 'bb',
+        COLORS.amber  + 'bb',
+        COLORS.slate  + 'bb'
+      ],
+      borderColor: [
+        COLORS.blue, COLORS.green, COLORS.violet,
+        COLORS.coral, COLORS.amber, COLORS.slate
+      ],
+      borderWidth: 1.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        ticks: { display: false },
+        grid:  { color: gridLine }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: tooltipBg,
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
+        callbacks: {
+          label: d => `  ${d.label}: ${d.raw} من أصل 10 مشاركين`
+        }
+      }
+    }
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   مخطط الرادار — عناصر القيمة
+   ──────────────────────────────────────────────────────────────
+   المصدر: سؤال اختيار متعدد حول "أبرز عناصر القيمة المضافة"
+   عدد الاختيارات (ن=10 مشاركين، اختيارات متعددة مسموحة):
+     • توظيف الذكاء الاصطناعي         → 10 اختيارات → 5.00
+     • النقاشات التفاعلية              →  9 اختيارات → 4.50
+     • تبادل الخبرات مع المشاركين      →  9 اختيارات → 4.50
+     • الحالات والتطبيقات العملية       →  6 اختيارات → 3.00
+     • الرؤى الاستراتيجية              →  5 اختيارات → 2.50
+     • أدوات وأطر عملية قابلة للتطبيق  →  3 اختيارات → 1.50
+
+   المعادلة: (عدد الاختيارات / 10) × 5 ← مقياس 0–5
+   ══════════════════════════════════════════════════════════════ */
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: [
+      'النقاشات\nالتفاعلية',         // 9 → 4.50
+      'تبادل\nالخبرات',              // 9 → 4.50
+      'الذكاء الاصطناعي\nفي الأزمات', // 10 → 5.00 ← الأعلى
+      'الحالات\nالعملية',            // 6 → 3.00
+      'الأدوات\nالعملية',            // 3 → 1.50 ← الأدنى
+      'الرؤى\nالاستراتيجية'         // 5 → 2.50
+    ],
+    datasets: [{
+      label: 'عناصر القيمة (درجة الاختيار من 5)',
+      data: [4.50, 4.50, 5.00, 3.00, 1.50, 2.50],
+      backgroundColor: 'rgba(90,160,255,0.18)',
+      borderColor: '#5aa0ff',
+      borderWidth: 2.5,
+      pointBackgroundColor: '#5aa0ff',
+      pointBorderColor: '#0a1a36',
+      pointBorderWidth: 1.5,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: '#7db8ff'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        min: 0,
+        max: 5.5,
+        ticks: { display: false, stepSize: 1 },
+        grid: { color: 'rgba(255,255,255,0.15)', lineWidth: 1 },
+        angleLines: { color: 'rgba(255,255,255,0.25)', lineWidth: 1 },
+        pointLabels: {
+          font:  { size: 11, weight: '500' },
+          color: '#e5e5e5',
+          padding: 10
+        }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: tooltipBg,
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
+        callbacks: {
+          label: ctx => `  الدرجة: ${ctx.raw.toFixed(2)} / 5  (${Math.round(ctx.raw / 5 * 10)} من 10 اختاروه)`
+        }
+      }
+    }
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   المخطط الشريطي الأفقي — أنواع البرامج المستقبلية
+   ──────────────────────────────────────────────────────────────
+   المصدر: سؤال اختيار متعدد حول البرامج التنفيذية المستقبلية المرغوبة
+   عدد الاختيارات (ن=10 مشاركين):
+     • برامج مخصصة لجهات العمل         → 9 ← الأعلى
+     • برامج متقدمة ومتخصصة            → 8
+     • مجتمعات ممارسة وتبادل الخبرات   → 7
+     • برامج الذكاء الاصطناعي وصناعة القرار → 7
+     • جلسات تنفيذية مغلقة للقيادات    → 6
+     • جلسات استشارية للقيادات          → 5
+     • مختبرات تطبيقية ودراسات حالة    → 4 ← الأدنى
+   ══════════════════════════════════════════════════════════════ */
+new Chart(document.getElementById('futureBar'), {
+  type: 'bar',
+  data: {
+    labels: [
+      'برامج متقدمة ومتخصصة',               // 8 اختيارات
+      'جلسات تنفيذية مغلقة للقيادات',       // 6 اختيارات
+      'برامج مخصصة لجهات العمل',            // 9 اختيارات ← الأعلى
+      'جلسات استشارية للقيادات',            // 5 اختيارات
+      'مجتمعات ممارسة وتبادل الخبرات',      // 7 اختيارات
+      'برامج الذكاء الاصطناعي وصناعة القرار', // 7 اختيارات
+      'مختبرات تطبيقية ودراسات حالة'        // 4 اختيارات ← الأدنى
+    ],
+    datasets: [{
+      label: 'عدد الاختيارات (من أصل 10 مشاركين)',
+      data: [8, 6, 9, 5, 7, 7, 4],
+      backgroundColor: [
+        COLORS.violet + 'cc',
+        COLORS.violet + '88',
+        COLORS.violet + 'ee',
+        COLORS.violet + '77',
+        COLORS.violet + 'aa',
+        COLORS.violet + 'aa',
+        COLORS.violet + '55'
+      ],
+      borderColor: [
+        COLORS.violet,
+        COLORS.violet + 'aa',
+        COLORS.violet,
+        COLORS.violet + '88',
+        COLORS.violet + 'cc',
+        COLORS.violet + 'cc',
+        COLORS.violet + '66'
+      ],
+      borderWidth: 1,
+      borderRadius: 5,
+      borderSkipped: false,
+      barThickness: 24
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        display: false,
+        grid: { display: false },
+        max: 10
+      },
+      y: {
+        grid: { display: false },
+        ticks: {
+          color: '#b0b0b0',
+          font: { size: 11 },
+          autoSkip: false
+        }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: tooltipBg,
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
+        callbacks: {
+          label: ctx => `  ${ctx.raw} من أصل 10 مشاركين اختاروا هذا`
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
