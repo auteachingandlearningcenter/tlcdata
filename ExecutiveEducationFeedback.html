@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey Results Dashboard</title>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-base:       #0a0a0b;
+  --bg-primary:    #111114;
+  --bg-secondary:  #18181d;
+  --bg-tertiary:   #222228;
+  --bg-hover:      #2a2a32;
+
+  --text-primary:  #e5e5e5;
+  --text-secondary:#b0b0b0;
+  --text-tertiary: #8a8a8a;
+
+  --border:        rgba(255,255,255,0.07);
+  --border-hover:  rgba(255,255,255,0.13);
+
+  --blue:     #5aa0ff;
+  --blue-dim: rgba(90,160,255,0.15);
+  --green:    #36c28a;
+  --green-dim:rgba(54,194,138,0.15);
+  --violet:   #9b8eff;
+  --violet-dim:rgba(155,142,255,0.15);
+  --amber:    #f0a429;
+  --amber-dim:rgba(240,164,41,0.15);
+  --coral:    #e06a4a;
+  --teal:     #29b8b8;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --font: "Gill Sans", "Gill Sans MT", "Myriad Pro", Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ───────────────────────────────────────────────── */
+.container  { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+.db         { padding: 1.5rem 0 2.5rem; }
+
+.kpi-row    { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+.grid2      { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.section-full { margin-bottom: 12px; }
+
+/* ── Cards ────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.4rem;
+  transition: border-color .2s;
+}
+.card:hover { border-color: var(--border-hover); }
+
+/* ── KPI Cards ────────────────────────────────────────────── */
+.kpi {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .15s;
+}
+.kpi:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+
+.kpi-icon-wrap {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px;
+}
+.kpi-n   { font-size: 32px; font-weight: 600; line-height: 1; }
+.kpi-l   { font-size: 11px; color: var(--text-secondary); margin-top: 5px; line-height: 1.35; }
+
+/* ── Section label ────────────────────────────────────────── */
+.clabel {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: .85rem;
+}
+
+/* ── Chart wrappers ───────────────────────────────────────── */
+.radar-section  { position: relative; width: 100%; height: 270px; }
+.polar-section  { position: relative; width: 100%; height: 270px; }
+.bar-section    { position: relative; height: 340px; }
+
+/* ── Legend ───────────────────────────────────────────────── */
+.leg      { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-secondary); }
+.leg-sq   { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── Feedback rows ────────────────────────────────────────── */
+.fb-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.fb-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+
+.fb-ico {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.fb-txt { font-size: 12.5px; color: var(--text-primary); line-height: 1.5; padding-top: 5px; }
+
+/* ── Progress bars ────────────────────────────────────────── */
+.prog-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; }
+.prog-track { width: 100%; height: 7px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
+.prog-fill  { height: 100%; border-radius: 4px; }
+
+/* ── Segmented bar ────────────────────────────────────────── */
+.seg-group-label { font-size: 11px; color: var(--text-tertiary); font-weight: 600; margin: 12px 0 6px; letter-spacing: .04em; }
+.seg-group-label:first-child { margin-top: 0; }
+
+.seg-row {
+  display: flex; width: 100%; height: 38px;
+  border-radius: var(--radius-sm); overflow: hidden;
+  margin-bottom: 6px;
+  gap: 2px;
+}
+.seg-piece {
+  height: 100%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+  transition: flex .3s; cursor: default;
+  border-radius: 4px;
+}
+
+/* ── Topic tags ───────────────────────────────────────────── */
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 12px; margin: 3px;
+  border: 1px solid; cursor: default;
+  transition: opacity .15s;
+}
+.tag:hover { opacity: .75; }
+
+/* dark-adapted tag colours */
+.t-b { background: rgba(90,160,255,.12);  color: #7db8ff;  border-color: rgba(90,160,255,.3);  }
+.t-t { background: rgba(54,194,138,.12);  color: #5ecfa0;  border-color: rgba(54,194,138,.3);  }
+.t-a { background: rgba(240,164,41,.12);  color: #f5b84d;  border-color: rgba(240,164,41,.3);  }
+.t-p { background: rgba(155,142,255,.12); color: #b8afff;  border-color: rgba(155,142,255,.3); }
+.t-c { background: rgba(224,106,74,.12);  color: #e89175;  border-color: rgba(224,106,74,.3);  }
+
+/* ── Value element grid ───────────────────────────────────── */
+.val-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.val-item {
+  padding: 13px 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex; align-items: flex-start; gap: 10px;
+  transition: background .15s, border-color .15s;
+}
+.val-item:hover { background: var(--bg-tertiary); border-color: var(--border-hover); }
+.val-icon { flex-shrink: 0; margin-top: 1px; }
+.val-txt  { font-size: 12.5px; color: var(--text-primary); line-height: 1.4; }
+
+/* ── Topic items ──────────────────────────────────────────── */
+.topic-area { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.topic-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: var(--radius-sm);
+  background: var(--bg-secondary); cursor: default;
+  transition: background .15s;
+}
+.topic-item:hover { background: var(--bg-tertiary); }
+.topic-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.topic-txt { font-size: 12px; color: var(--text-primary); line-height: 1.3; }
+
+/* ── Divider ──────────────────────────────────────────────── */
+.mt { margin-top: 14px; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .kpi-row { grid-template-columns: repeat(2,1fr); }
+  .grid2   { grid-template-columns: 1fr; }
+  .val-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 480px) {
+  .kpi-row  { grid-template-columns: 1fr 1fr; }
+  .val-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Survey results dashboard — 27 participant responses across value elements, feedback, future program types, topics, and general ratings.</h2>
+
+<div class="container">
+<div class="db">
+
+<!-- ── KPI Row ──────────────────────────────────────────── -->
+<div class="kpi-row">
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--blue-dim)">
+      <!-- diamond / value icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/>
+        <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="8.5" x2="22" y2="8.5"/>
+        <line x1="2" y1="15.5" x2="22" y2="15.5"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--blue)">6</div>
+    <div class="kpi-l">Value elements identified</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--amber-dim)">
+      <!-- chat-bubble feedback icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f0a429" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        <line x1="9" y1="10" x2="15" y2="10"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--amber)">5</div>
+    <div class="kpi-l">Program feedback items</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--green-dim)">
+      <!-- rocket / future icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#36c28a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--green)">7</div>
+    <div class="kpi-l">Future program types</div>
+  </div>
+
+  <div class="kpi">
+    <div class="kpi-icon-wrap" style="background:var(--violet-dim)">
+      <!-- layers / topics icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9b8eff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
+      </svg>
+    </div>
+    <div class="kpi-n" style="color:var(--violet)">9</div>
+    <div class="kpi-l">Topics requested</div>
+  </div>
+
+</div><!-- /kpi-row -->
+
+<!-- ── Polar + Radar ─────────────────────────────────────── -->
+<div class="grid2">
+
+  <div class="card">
+    <div class="clabel">General ratings — response distribution</div>
+    <div class="polar-section">
+      <canvas id="polarChart" role="img" aria-label="Polar area chart — Strongly agree: 9, Agree: 1, To a large extent: 4, To a very large extent: 6, Excellent: 9, Very good: 1 (out of 10 respondents)">Strongly agree: 9, Agree: 1, To a large extent: 4, To a very large extent: 6, Excellent: 9, Very good: 1.</canvas>
+    </div>
+    <div class="leg">
+      <span class="leg-item"><span class="leg-sq" style="background:#5aa0ff"></span>Strongly agree</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#36c28a"></span>Agree</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#9b8eff"></span>To a large extent</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#e06a4a"></span>To a very large extent</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#f0a429"></span>Excellent</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#888780"></span>Very good</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="clabel">Value elements — radar view</div>
+    <div class="radar-section">
+      <canvas id="radarChart" role="img" aria-label="Radar chart — AI in crisis mgmt: 5.0, Interactive discussions: 4.5, Exchange of experiences: 4.5, Practical cases: 3.0, Strategic insights: 2.5, Practical tools: 1.5 (out of 5)">Value elements scored from selection frequency: AI in crisis mgmt 5.0, Interactive discussions 4.5, Exchange of experiences 4.5, Practical cases 3.0, Strategic insights 2.5, Practical tools 1.5.</canvas>
+    </div>
+  </div>
+
+</div><!-- /grid2 -->
+
+<!-- ── Topic cluster ─────────────────────────────────────── -->
+<div class="section-full card">
+  <div class="clabel">Topics requested — cluster breakdown</div>
+
+  <div class="seg-group-label">Crisis &amp; conflict</div>
+  <div class="seg-row">
+    <div class="seg-piece" style="flex:1;background:rgba(90,160,255,.18);color:#7db8ff">Decision-making during crises</div>
+    <div class="seg-piece" style="flex:1;background:rgba(90,160,255,.28);color:#9fcaff">Strategic application of AI in crises</div>
+    <div class="seg-piece" style="flex:1;background:rgba(90,160,255,.42);color:#bfdbff">Handling war crises</div>
+    <div class="seg-piece" style="flex:1;background:#5aa0ff;color:#0a1a36">Psychological operations</div>
+  </div>
+
+  <div class="seg-group-label">Media &amp; strategy</div>
+  <div class="seg-row">
+    <div class="seg-piece" style="flex:1;background:rgba(54,194,138,.18);color:#5ecfa0">Strategic planning &amp; media monitoring</div>
+    <div class="seg-piece" style="flex:1;background:rgba(54,194,138,.38);color:#80dab4">Media simulation</div>
+    <div class="seg-piece" style="flex:1;background:#36c28a;color:#04251b">Geopolitical situations</div>
+  </div>
+
+  <div class="seg-group-label">AI &amp; government</div>
+  <div class="seg-row">
+    <div class="seg-piece" style="flex:1;background:rgba(240,164,41,.2);color:#f5b84d">AI tools in govt indicators</div>
+    <div class="seg-piece" style="flex:1;background:#f0a429;color:#2a1700">AI tools in advertising &amp; marketing</div>
+  </div>
+</div>
+
+<!-- ── Future bar + Feedback ──────────────────────────────── -->
+<div class="grid2">
+
+  <div class="card">
+    <div class="clabel">Future program types</div>
+    <div class="bar-section">
+      <canvas id="futureBar" role="img" aria-label="Horizontal bar chart — Customized for orgs: 9, Advanced & specialized: 8, Communities of practice: 7, AI programs: 7, Closed executive: 6, Advisory sessions: 5, Applied labs: 4 (out of 10 respondents)"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="clabel">Program feedback</div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--blue-dim)">
+        <!-- calendar-plus -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="12" y1="15" x2="12" y2="19"/><line x1="10" y1="17" x2="14" y2="17"/>
+        </svg>
+      </div>
+      <div class="fb-txt">Programs should be longer and extended over multiple days</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--blue-dim)">
+        <!-- clock -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="fb-txt">Program should be more than one day</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--green-dim)">
+        <!-- building -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#36c28a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="1"/>
+          <line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>
+          <line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/>
+        </svg>
+      </div>
+      <div class="fb-txt">Need real examples from the government sector</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--amber-dim)">
+        <!-- alert circle -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f0a429" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <div class="fb-txt">The COVID presentation was boring</div>
+    </div>
+
+    <div class="fb-row">
+      <div class="fb-ico" style="background:var(--violet-dim)">
+        <!-- certificate / award -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9b8eff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="6"/>
+          <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+        </svg>
+      </div>
+      <div class="fb-txt">Convert it into an accredited diploma</div>
+    </div>
+
+    <div class="mt">
+      <div class="clabel" style="margin-bottom:.5rem">Feedback category weight</div>
+      <div class="prog-label"><span>Duration requests</span><span style="color:var(--text-primary);font-weight:600">2 items</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:40%;background:var(--blue)"></div></div>
+      <div class="prog-label"><span>Content quality</span><span style="color:var(--text-primary);font-weight:600">1 item</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:20%;background:var(--amber)"></div></div>
+      <div class="prog-label"><span>Real-world examples</span><span style="color:var(--text-primary);font-weight:600">1 item</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:20%;background:var(--green)"></div></div>
+      <div class="prog-label"><span>Program format</span><span style="color:var(--text-primary);font-weight:600">1 item</span></div>
+      <div class="prog-track" style="margin-bottom:0"><div class="prog-fill" style="width:20%;background:var(--violet)"></div></div>
+    </div>
+  </div>
+
+</div><!-- /grid2 -->
+
+<!-- ── Value elements grid ────────────────────────────────── -->
+<div class="section-full card">
+  <div class="clabel">Value elements — all 6 items</div>
+  <div class="val-grid">
+
+    <div class="val-item">
+      <span class="val-icon">
+        <!-- messages / interactive discussions -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5aa0ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          <line x1="9" y1="10" x2="15" y2="10"/>
+        </svg>
+      </span>
+      <span class="val-txt">Interactive discussions</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <!-- users / exchange -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#36c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </span>
+      <span class="val-txt">Exchange of experiences among participants</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <!-- cpu / AI -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9b8eff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="6" height="6" rx="1"/>
+          <rect x="2" y="2" width="20" height="20" rx="3"/>
+          <line x1="9" y1="2" x2="9" y2="5"/><line x1="15" y1="2" x2="15" y2="5"/>
+          <line x1="9" y1="19" x2="9" y2="22"/><line x1="15" y1="19" x2="15" y2="22"/>
+          <line x1="2" y1="9" x2="5" y2="9"/><line x1="2" y1="15" x2="5" y2="15"/>
+          <line x1="19" y1="9" x2="22" y2="9"/><line x1="19" y1="15" x2="22" y2="15"/>
+        </svg>
+      </span>
+      <span class="val-txt">Use of artificial intelligence in reputation and crisis management</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <!-- briefcase / practical cases -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          <line x1="12" y1="12" x2="12" y2="17"/>
+          <line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/>
+        </svg>
+      </span>
+      <span class="val-txt">Practical cases and applications</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <!-- tool / frameworks -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f0a429" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+      </span>
+      <span class="val-txt">Practical tools and applicable frameworks</span>
+    </div>
+
+    <div class="val-item">
+      <span class="val-icon">
+        <!-- lightbulb / strategic insights -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888780" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="9" y1="18" x2="15" y2="18"/>
+          <line x1="10" y1="22" x2="14" y2="22"/>
+          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+        </svg>
+      </span>
+      <span class="val-txt">Strategic insights</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Future tags ────────────────────────────────────────── -->
+<div class="section-full card">
+  <div class="clabel">Future program types — topic tags</div>
+  <div>
+    <span class="tag t-p">Advanced and specialized programs</span>
+    <span class="tag t-p">Closed executive sessions for leadership</span>
+    <span class="tag t-p">Customized programs for organizations</span>
+    <span class="tag t-p">Advisory sessions for leadership</span>
+    <span class="tag t-t">Communities of practice and knowledge exchange</span>
+    <span class="tag t-b">Programs on artificial intelligence and decision-making</span>
+    <span class="tag t-t">Applied labs and case studies</span>
+  </div>
+</div>
+
+</div><!-- /db -->
+</div><!-- /container -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DATA SOURCE: Updated_Report.xlsx — "Survey" sheet (n=10 respondents)
+   All values computed from raw responses using Arabic scale mappings.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Shared dark theme palette ─────────────────────────── */
+const COLORS = {
+  blue:   '#5aa0ff',
+  green:  '#36c28a',
+  violet: '#9b8eff',
+  coral:  '#e06a4a',
+  amber:  '#f0a429',
+  slate:  '#888780'
+};
+
+const gridLine  = 'rgba(255,255,255,0.08)';
+const angleLine = 'rgba(255,255,255,0.22)';
+const labelCol  = '#c8c8c8';
+const tooltipBg = '#1a1a20';
+
+Chart.defaults.font.family = '"Gill Sans", "Gill Sans MT", Helvetica, Arial, sans-serif';
+Chart.defaults.color = '#b0b0b0';
+
+/* ══════════════════════════════════════════════════════════════
+   POLAR AREA CHART
+   ──────────────────────────────────────────────────────────────
+   Source: Survey sheet — mixed response types across rating questions.
+   Each segment represents the COUNT of that response category observed:
+
+   Agreement questions (Q1–Q9, n=10 each):
+     • "Strongly agree" (موافق بشدة): dominant response = 9 occurrences in Q1
+     • "Agree" (موافق): minority response = 1 occurrence in Q1
+     (Q1 is representative; other agreement Qs follow same pattern)
+
+   Application questions (Q10–Q13, n=10 each):
+     • "To a very large extent" (ينطبق بدرجة كبيرة جداً): avg 6 responses
+     • "To a large extent" (ينطبق بدرجة كبيرة): avg 4 responses
+
+   Overall program rating (final question, n=10):
+     • "Excellent" (ممتازة): 9 respondents
+     • "Very good" (جيدة جدًا): 1 respondent
+
+   Each polar slice = count of that response category (out of 10).
+   ══════════════════════════════════════════════════════════════ */
+new Chart(document.getElementById('polarChart'), {
+  type: 'polarArea',
+  data: {
+    labels: [
+      'Strongly agree',       // موافق بشدة — Q1 count: 9/10
+      'Agree',                // موافق — Q1 count: 1/10
+      'To a large extent',    // ينطبق بدرجة كبيرة — avg across Q10–Q13: 4/10
+      'To a very large extent',// ينطبق بدرجة كبيرة جداً — avg across Q10–Q13: 6/10
+      'Excellent',            // ممتازة — overall rating: 9/10
+      'Very good'             // جيدة جدًا — overall rating: 1/10
+    ],
+    datasets: [{
+      /* Actual counts (out of 10 respondents per category) */
+      data: [9, 1, 4, 6, 9, 1],
+      backgroundColor: [
+        COLORS.blue   + 'bb',
+        COLORS.green  + 'bb',
+        COLORS.violet + 'bb',
+        COLORS.coral  + 'bb',
+        COLORS.amber  + 'bb',
+        COLORS.slate  + 'bb'
+      ],
+      borderColor: [
+        COLORS.blue, COLORS.green, COLORS.violet,
+        COLORS.coral, COLORS.amber, COLORS.slate
+      ],
+      borderWidth: 1.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        ticks: { display: false },
+        grid:  { color: gridLine }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: tooltipBg,
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
+        callbacks: {
+          label: d => `  ${d.label}: ${d.raw} / 10 respondents`
+        }
+      }
+    }
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   RADAR CHART — Value Elements
+   ──────────────────────────────────────────────────────────────
+   Source: Survey sheet — column "ما هي أبرز العناصر التي مثلت قيمة مضافة لكم"
+   (Q14: "What were the most prominent value-added elements?")
+   Multi-select question — respondents chose all that applied.
+
+   Raw selection counts (n=10 respondents, multiple choices allowed):
+     • توظيف الذكاء الاصطناعي (AI in crisis mgmt)       → 10 selections
+     • النقاشات التفاعلية (Interactive discussions)       →  9 selections
+     • تبادل الخبرات مع المشاركين (Exchange of exp.)     →  9 selections
+     • الحالات والتطبيقات العملية (Practical cases)      →  6 selections
+     • الرؤى الاستراتيجية (Strategic insights)           →  5 selections
+     • أدوات وأطر عملية قابلة للتطبيق (Practical tools)  →  3 selections
+
+   Normalization: count / 10 * 5  →  mapped to 0–5 radar scale
+   Scale max set to 5.5 to give headroom above the max value (5.0).
+   ══════════════════════════════════════════════════════════════ */
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: [
+      'Interactive\ndiscussions',    // 9 → 4.50
+      'Exchange of\nexperiences',    // 9 → 4.50
+      'AI in crisis\nmgmt',          // 10 → 5.00  ← highest
+      'Practical\ncases',            // 6 → 3.00
+      'Practical\ntools',            // 3 → 1.50  ← lowest
+      'Strategic\ninsights'          // 5 → 2.50
+    ],
+    datasets: [{
+      label: 'Value elements (selection score out of 5)',
+      /* Formula: (selections / 10) * 5 */
+      data: [4.50, 4.50, 5.00, 3.00, 1.50, 2.50],
+      backgroundColor: 'rgba(90,160,255,0.18)',
+      borderColor: '#5aa0ff',
+      borderWidth: 2.5,
+      pointBackgroundColor: '#5aa0ff',
+      pointBorderColor: '#0a1a36',
+      pointBorderWidth: 1.5,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: '#7db8ff'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        min: 0,
+        max: 5.5,   /* headroom above max value 5.0 */
+        ticks: { display: false, stepSize: 1 },
+        grid: {
+          color: 'rgba(255,255,255,0.15)',
+          lineWidth: 1
+        },
+        angleLines: {
+          color: 'rgba(255,255,255,0.25)',
+          lineWidth: 1
+        },
+        pointLabels: {
+          font:  { size: 11, weight: '500' },
+          color: '#e5e5e5',
+          padding: 10
+        }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: tooltipBg,
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
+        callbacks: {
+          label: ctx => `  Score: ${ctx.raw.toFixed(2)} / 5  (${Math.round(ctx.raw / 5 * 10)} of 10 selected)`
+        }
+      }
+    }
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   HORIZONTAL BAR CHART — Future Program Types
+   ──────────────────────────────────────────────────────────────
+   Source: Survey sheet — column "كيف ترون إمكانية البناء على مخرجات هذا البرنامج"
+   (Q15: "Future executive programs desired")
+   Multi-select question — respondents chose all preferred types.
+
+   Raw selection counts (n=10 respondents):
+     • برامج مخصصة لجهات العمل (Customized for orgs)     → 9
+     • برامج متقدمة ومتخصصة (Advanced & specialized)     → 8
+     • مجتمعات ممارسة وتبادل الخبرات (Communities)       → 7
+     • برامج الذكاء الاصطناعي وصناعة القرار (AI)         → 7
+     • جلسات تنفيذية مغلقة للقيادات (Closed exec)        → 6
+     • جلسات استشارية للقيادات (Advisory sessions)        → 5
+     • مختبرات تطبيقية ودراسات حالة (Applied labs)       → 4
+
+   Bars ordered to match original dashboard label sequence.
+   Color opacity scales with count (darker = more selected).
+   ══════════════════════════════════════════════════════════════ */
+new Chart(document.getElementById('futureBar'), {
+  type: 'bar',
+  data: {
+    labels: [
+      'Advanced & specialized programs',   // 8 selections
+      'Closed executive sessions',          // 6 selections
+      'Customized programs for orgs',       // 9 selections ← highest
+      'Advisory sessions for leadership',   // 5 selections
+      'Communities of practice',            // 7 selections
+      'AI & decision-making programs',      // 7 selections
+      'Applied labs & case studies'         // 4 selections ← lowest
+    ],
+    datasets: [{
+      label: 'Selections (out of 10 respondents)',
+      /* Actual selection counts from Excel Q15 */
+      data: [8, 6, 9, 5, 7, 7, 4],
+      backgroundColor: [
+        COLORS.violet + 'cc',   // 8 — high
+        COLORS.violet + '88',   // 6 — medium
+        COLORS.violet + 'ee',   // 9 — highest (deepest)
+        COLORS.violet + '77',   // 5 — medium-low
+        COLORS.violet + 'aa',   // 7 — medium-high
+        COLORS.violet + 'aa',   // 7 — medium-high
+        COLORS.violet + '55'    // 4 — lowest (lightest)
+      ],
+      borderColor: [
+        COLORS.violet,
+        COLORS.violet + 'aa',
+        COLORS.violet,
+        COLORS.violet + '88',
+        COLORS.violet + 'cc',
+        COLORS.violet + 'cc',
+        COLORS.violet + '66'
+      ],
+      borderWidth: 1,
+      borderRadius: 5,
+      borderSkipped: false,
+      barThickness: 24
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        display: false,
+        grid: { display: false },
+        max: 10   /* max possible = 10 respondents */
+      },
+      y: {
+        grid: { display: false },
+        ticks: {
+          color: '#b0b0b0',
+          font: { size: 11 },
+          autoSkip: false
+        }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: tooltipBg,
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1,
+        callbacks: {
+          label: ctx => `  ${ctx.raw} of 10 respondents selected this`
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
