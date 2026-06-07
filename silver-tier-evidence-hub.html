@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silver Tier Evidence Hub – Applied Teaching Practice | AU TLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+   ============================================================ */
+:root {
+  --au-navy:       #0A2240;
+  --au-blue:       #1A4F8A;
+  --au-sky:        #2E8BC0;
+  --au-gold:       #C9A227;
+  --au-gold-lt:    #F0D080;
+  --au-silver:     #A8B8CC;
+  --au-silver-lt:  #EDF2F7;
+  --white:         #FFFFFF;
+  --off-white:     #F7F9FC;
+  --text-dark:     #0D1B2A;
+  --text-mid:      #3A5068;
+  --text-soft:     #6B8299;
+  --border:        rgba(10,34,64,0.10);
+  --shadow-sm:     0 2px 12px rgba(10,34,64,0.07);
+  --shadow-md:     0 8px 32px rgba(10,34,64,0.12);
+  --shadow-lg:     0 20px 60px rgba(10,34,64,0.16);
+  --radius-sm:     10px;
+  --radius-md:     18px;
+  --radius-lg:     28px;
+  --radius-xl:     40px;
+  --transition:    0.3s cubic-bezier(0.4,0,0.2,1);
+  --font-display:  'Sora', sans-serif;
+  --font-body:     'Sora', sans-serif;
+  --font-serif:    'Lora', serif;
+}
+
+/* dark mode */
+[data-theme="dark"] {
+  --white:         #0D1B2A;
+  --off-white:     #111E2E;
+  --text-dark:     #E8F0F8;
+  --text-mid:      #A8C4DC;
+  --text-soft:     #6B8299;
+  --border:        rgba(168,184,204,0.12);
+  --shadow-sm:     0 2px 12px rgba(0,0,0,0.25);
+  --shadow-md:     0 8px 32px rgba(0,0,0,0.35);
+  --shadow-lg:     0 20px 60px rgba(0,0,0,0.45);
+  --au-silver-lt:  #1A2D42;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--off-white);
+  color: var(--text-dark);
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   STICKY NAVIGATION
+   ============================================================ */
+#top-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all var(--transition);
+}
+[data-theme="dark"] #top-nav {
+  background: rgba(13,27,42,0.88);
+}
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--au-navy);
+}
+[data-theme="dark"] .nav-logo { color: var(--text-dark); }
+.nav-logo .badge-mini {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--au-gold), var(--au-gold-lt));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--au-navy);
+}
+.nav-logo span {
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-mid);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all var(--transition);
+}
+.nav-links a:hover {
+  background: var(--au-silver-lt);
+  color: var(--au-blue);
+}
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.btn-nav {
+  background: var(--au-blue);
+  color: white !important;
+  padding: 8px 18px !important;
+  border-radius: 20px !important;
+  font-size: 0.82rem !important;
+}
+.btn-nav:hover { background: var(--au-navy) !important; }
+
+/* Dark mode toggle */
+#theme-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--text-mid);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  transition: all var(--transition);
+}
+#theme-toggle:hover { border-color: var(--au-gold); color: var(--au-gold); }
+
+.hamburger {
+  display: none;
+  width: 36px; height: 36px;
+  border: none; background: none; cursor: pointer;
+  flex-direction: column; gap: 5px; align-items: center; justify-content: center;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--text-dark);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  padding-top: 64px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--au-navy) 0%, var(--au-blue) 55%, #1e6fa8 100%);
+}
+
+/* Geometric BG */
+.hero-bg {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-bg .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: var(--au-gold);
+  top: -150px; right: -100px;
+  animation: float1 8s ease-in-out infinite;
+}
+.orb-2 {
+  width: 400px; height: 400px;
+  background: var(--au-sky);
+  bottom: -100px; left: -80px;
+  animation: float2 10s ease-in-out infinite;
+}
+.orb-3 {
+  width: 250px; height: 250px;
+  background: #ffffff;
+  top: 40%; left: 40%;
+  animation: float1 6s ease-in-out infinite reverse;
+}
+@keyframes float1 {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.04); }
+}
+@keyframes float2 {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(20px) scale(0.97); }
+}
+
+/* Grid lines overlay */
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* Badge */
+.silver-badge-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(201,162,39,0.5);
+  border-radius: 50px;
+  padding: 8px 20px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  animation: fadeSlideUp 0.6s ease both;
+}
+.silver-badge-hero .badge-icon {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--au-gold), var(--au-gold-lt));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--au-navy);
+}
+.silver-badge-hero span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--au-gold-lt);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+  animation: fadeSlideUp 0.6s 0.1s ease both;
+}
+.hero-title .gold-text {
+  background: linear-gradient(90deg, var(--au-gold), var(--au-gold-lt));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 1.2rem;
+  animation: fadeSlideUp 0.6s 0.15s ease both;
+}
+
+.hero-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 2rem;
+  animation: fadeSlideUp 0.6s 0.2s ease both;
+}
+
+/* Progress tracker */
+.hero-progress {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  animation: fadeSlideUp 0.6s 0.25s ease both;
+}
+.hero-progress h4 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 0.75rem;
+}
+.progress-steps-mini {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.ps-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+.ps-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+.ps-dot.done { background: var(--au-gold); color: var(--au-navy); }
+.ps-dot.active { background: white; color: var(--au-blue); box-shadow: 0 0 0 4px rgba(255,255,255,0.25); }
+.ps-dot.pending { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.25); }
+.ps-label { font-size: 0.62rem; color: rgba(255,255,255,0.6); text-align: center; max-width: 60px; line-height: 1.3; }
+.ps-line {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.2);
+  margin-top: -14px;
+}
+.ps-line.done { background: var(--au-gold); }
+
+/* CTA Buttons */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  animation: fadeSlideUp 0.6s 0.3s ease both;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--au-gold), #d4a82a);
+  color: var(--au-navy);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 14px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all var(--transition);
+  box-shadow: 0 4px 20px rgba(201,162,39,0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201,162,39,0.55);
+}
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 13px 24px;
+  border-radius: 50px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition);
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+}
+
+/* Hero Visual */
+.hero-visual {
+  animation: fadeSlideUp 0.6s 0.2s ease both;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.achievement-card-hero {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  overflow: hidden;
+}
+.achievement-card-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--au-gold), var(--au-gold-lt), var(--au-gold));
+}
+
+/* Big badge */
+.big-badge {
+  width: 120px; height: 120px;
+  margin: 0 auto 1.5rem;
+  position: relative;
+}
+.big-badge svg {
+  width: 100%; height: 100%;
+  filter: drop-shadow(0 8px 24px rgba(201,162,39,0.5));
+}
+.badge-pulse {
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(201,162,39,0.4);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+.badge-pulse-2 {
+  position: absolute; inset: -16px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,162,39,0.2);
+  animation: pulse 2.5s 0.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.06); opacity: 0.2; }
+}
+
+.achievement-card-hero h3 {
+  font-size: 1.4rem; font-weight: 800;
+  color: white; margin-bottom: 0.3rem;
+}
+.achievement-card-hero p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 1.5rem;
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+.stat-item {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 10px 6px;
+}
+.stat-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--au-gold-lt);
+  display: block;
+}
+.stat-label {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.3;
+}
+
+/* ============================================================
+   SECTION WRAPPER
+   ============================================================ */
+.section {
+  padding: 6rem 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.section-sm { padding: 4rem 2rem; }
+.section-full { max-width: 100%; padding: 6rem 0; }
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--au-blue);
+  background: rgba(26,79,138,0.08);
+  padding: 6px 14px;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+[data-theme="dark"] .section-label { background: rgba(26,79,138,0.2); }
+
+.section-title {
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.section-desc {
+  font-size: 1.05rem;
+  color: var(--text-soft);
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+/* ============================================================
+   SECTION 1 — WHAT IS SILVER TIER
+   ============================================================ */
+#what-is { background: var(--white); border-radius: 0; }
+
+.what-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+.what-left {}
+.benefit-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 2rem;
+}
+.benefit-card {
+  background: var(--au-silver-lt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--au-sky);
+}
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--au-blue), var(--au-sky));
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.benefit-card:hover::before { opacity: 1; }
+.bc-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--au-blue), var(--au-sky));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: white;
+  margin-bottom: 0.75rem;
+}
+.benefit-card h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.3rem;
+}
+.benefit-card p {
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+/* Quote callout */
+.quote-callout {
+  background: linear-gradient(135deg, var(--au-navy), var(--au-blue));
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.quote-callout::before {
+  content: '"';
+  position: absolute;
+  top: -20px; left: 10px;
+  font-family: var(--font-serif);
+  font-size: 120px;
+  color: rgba(255,255,255,0.08);
+  line-height: 1;
+}
+.quote-callout p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.6;
+  position: relative;
+}
+.quote-callout cite {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--au-gold-lt);
+  font-style: normal;
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+/* Right panel */
+.what-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tier-info-card {
+  background: var(--au-silver-lt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+}
+.tier-info-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.tier-info-card h3 i { color: var(--au-blue); }
+.tier-info-card ul {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.tier-info-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-mid);
+}
+.tier-info-card li::before {
+  content: '';
+  width: 18px; height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--au-gold), var(--au-gold-lt));
+  display: flex; align-items: center; justify-content: center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230A2240' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: 2px;
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, rgba(201,162,39,0.12), rgba(201,162,39,0.04));
+  border: 1.5px solid rgba(201,162,39,0.35);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+}
+.highlight-box .hb-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--au-gold);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.highlight-box p {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   SECTION 2 — CHOOSE YOUR ROUTE
+   ============================================================ */
+.route-bg {
+  background: var(--off-white);
+  padding: 6rem 2rem;
+}
+.route-inner { max-width: 1280px; margin: 0 auto; }
+
+.route-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.route-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.route-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px);
+}
+.route-card.primary-route {
+  border-color: var(--au-blue);
+}
+.route-card.primary-route::before {
+  content: 'RECOMMENDED';
+  position: absolute;
+  top: 20px; right: -28px;
+  background: var(--au-blue);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 4px 36px;
+  transform: rotate(45deg);
+}
+.route-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.route-badge.a { background: rgba(26,79,138,0.1); color: var(--au-blue); }
+.route-badge.b { background: rgba(201,162,39,0.1); color: #a08318; }
+[data-theme="dark"] .route-badge.b { color: var(--au-gold-lt); }
+
+.route-card h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+.route-card > p {
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  margin-bottom: 1.75rem;
+  line-height: 1.7;
+}
+.route-evidence {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.evidence-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--au-silver-lt);
+  border-radius: 10px;
+  font-size: 0.83rem;
+  color: var(--text-mid);
+  transition: all var(--transition);
+}
+.evidence-item:hover {
+  background: rgba(26,79,138,0.08);
+  color: var(--au-blue);
+}
+.evidence-item .ei-icon {
+  width: 30px; height: 30px; min-width: 30px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+}
+.ei-icon.screenshot { background: rgba(46,139,192,0.15); color: var(--au-sky); }
+.ei-icon.video { background: rgba(26,79,138,0.15); color: var(--au-blue); }
+.ei-icon.reflection { background: rgba(201,162,39,0.15); color: var(--au-gold); }
+.ei-icon.feedback { background: rgba(46,179,100,0.15); color: #2eb364; }
+.ei-icon.cert { background: rgba(168,130,230,0.15); color: #a082e6; }
+.ei-icon.doc { background: rgba(255,140,60,0.15); color: #ff8c3c; }
+
+.route-steps {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rs-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.83rem;
+  color: var(--text-mid);
+}
+.rs-num {
+  width: 24px; height: 24px; min-width: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--au-gold), var(--au-gold-lt));
+  color: var(--au-navy);
+  font-weight: 800;
+  font-size: 0.72rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   SECTION 3 — JOURNEY TIMELINE
+   ============================================================ */
+.timeline-bg {
+  background: linear-gradient(180deg, var(--white) 0%, var(--au-silver-lt) 100%);
+  padding: 6rem 2rem;
+}
+[data-theme="dark"] .timeline-bg {
+  background: linear-gradient(180deg, var(--au-silver-lt) 0%, var(--white) 100%);
+}
+.timeline-inner { max-width: 1280px; margin: 0 auto; }
+
+.timeline-scroll {
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  margin-top: 3rem;
+}
+.timeline-track {
+  display: flex;
+  gap: 0;
+  min-width: max-content;
+  align-items: flex-start;
+  padding: 1rem 0 2rem;
+}
+.tl-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-width: 160px;
+}
+.tl-connector {
+  flex: 1;
+  height: 3px;
+  background: linear-gradient(90deg, var(--au-blue), var(--au-sky));
+  margin-top: 36px;
+  min-width: 40px;
+  max-width: 80px;
+  position: relative;
+}
+.tl-connector::after {
+  content: '';
+  position: absolute;
+  right: -6px; top: -4px;
+  width: 0; height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid var(--au-sky);
+}
+.tl-node {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin-bottom: 1rem;
+  position: relative;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.tl-node:hover { transform: scale(1.1); }
+.tl-node::before {
+  content: attr(data-step);
+  position: absolute;
+  top: -10px; right: -8px;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--au-navy);
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.tl-node.step-1 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: var(--au-blue); }
+.tl-node.step-2 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); color: #2e7d32; }
+.tl-node.step-3 { background: linear-gradient(135deg, #fff8e1, #ffecb3); color: #f57f17; }
+.tl-node.step-4 { background: linear-gradient(135deg, #f3e5f5, #e1bee7); color: #6a1b9a; }
+.tl-node.step-5 { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; }
+.tl-node.step-6 { background: linear-gradient(135deg, #fce4ec, #f8bbd0); color: #ad1457; }
+.tl-node.step-7 { background: linear-gradient(135deg, var(--au-gold), var(--au-gold-lt)); color: var(--au-navy); }
+
+.tl-content {
+  text-align: center;
+  padding: 0 12px;
+  max-width: 160px;
+}
+.tl-content h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.3rem;
+}
+.tl-content p {
+  font-size: 0.72rem;
+  color: var(--text-soft);
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+}
+.tl-tip {
+  display: inline-block;
+  font-size: 0.65rem;
+  background: rgba(26,79,138,0.08);
+  color: var(--au-blue);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* Mobile timeline */
+.timeline-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 2rem;
+}
+.tlm-item {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 1rem;
+}
+.tlm-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tlm-node {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.tlm-line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(180deg, var(--au-blue), var(--au-sky));
+  min-height: 30px;
+  margin: 4px auto;
+}
+.tlm-content {
+  padding-bottom: 1.5rem;
+}
+.tlm-content h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.3rem;
+}
+.tlm-content p {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   SECTION 4 — INTERACTIVE WALKTHROUGH
+   ============================================================ */
+.walkthrough-bg {
+  background: var(--au-navy);
+  padding: 6rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.walkthrough-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.walkthrough-inner { max-width: 1280px; margin: 0 auto; position: relative; }
+
+.walkthrough-inner .section-label { background: rgba(201,162,39,0.15); color: var(--au-gold-lt); }
+.walkthrough-inner .section-title { color: white; }
+.walkthrough-inner .section-desc { color: rgba(255,255,255,0.6); }
+
+.step-slider {
+  margin-top: 3rem;
+}
+.slider-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.slider-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+}
+.slider-tab.active {
+  background: var(--au-gold);
+  border-color: var(--au-gold);
+  color: var(--au-navy);
+}
+.slider-tab:hover:not(.active) {
+  border-color: rgba(255,255,255,0.4);
+  color: white;
+}
+
+.slider-panels { position: relative; }
+.slider-panel {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+.slider-panel.active { display: grid; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.panel-info h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+.panel-info p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.panel-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+}
+.pc-item i { color: var(--au-gold); width: 18px; }
+
+.panel-visual {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pv-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+.pv-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.pv-dot.red { background: #ff6058; }
+.pv-dot.yellow { background: #ffbd2e; }
+.pv-dot.green { background: #27c93f; }
+.pv-bar {
+  height: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.pv-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--au-gold), var(--au-gold-lt));
+  animation: barGrow 1.5s ease both;
+}
+@keyframes barGrow { from { width: 0; } }
+.pv-item {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pv-item .pi-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.pv-item .pi-text { flex: 1; }
+.pv-item .pi-text .pi-name { font-size: 0.78rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+.pv-item .pi-text .pi-sub { font-size: 0.68rem; color: rgba(255,255,255,0.45); }
+.pv-item .pi-status {
+  font-size: 0.65rem;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+.pi-status.done { background: rgba(46,179,100,0.2); color: #5de49b; }
+.pi-status.pending { background: rgba(255,195,0,0.15); color: #ffd860; }
+.pi-status.upload { background: rgba(46,139,192,0.2); color: var(--au-sky); }
+
+/* ============================================================
+   SECTION 5 — SUBMISSION CHECKLIST
+   ============================================================ */
+.checklist-bg { background: var(--white); padding: 6rem 2rem; }
+.checklist-inner { max-width: 1280px; margin: 0 auto; }
+
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 3rem;
+}
+.cl-category {
+  background: var(--au-silver-lt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition);
+}
+.cl-category:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.cl-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, var(--au-navy), var(--au-blue));
+}
+.cl-header i { font-size: 18px; color: var(--au-gold-lt); }
+.cl-header h4 { font-size: 0.88rem; font-weight: 700; color: white; }
+.cl-items {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cl-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--white);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all var(--transition);
+  user-select: none;
+}
+.cl-item:hover { background: rgba(26,79,138,0.06); }
+.cl-item.checked { color: #2e7d32; }
+.cl-item .cl-checkbox {
+  width: 18px; height: 18px; min-width: 18px;
+  border-radius: 4px;
+  border: 2px solid rgba(26,79,138,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  color: transparent;
+  transition: all var(--transition);
+}
+.cl-item.checked .cl-checkbox {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: white;
+}
+.cl-item .cl-tag {
+  margin-left: auto;
+  font-size: 0.62rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+.cl-tag.required { background: rgba(220,53,69,0.1); color: #dc3545; }
+.cl-tag.optional { background: rgba(46,139,192,0.1); color: var(--au-sky); }
+
+.cl-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3rem;
+  background: var(--au-silver-lt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+}
+.cl-progress-bar .cpl-info { flex: 1; }
+.cl-progress-bar .cpl-title { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+.cl-progress-bar .cpl-bar {
+  height: 8px;
+  background: var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.cpl-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--au-blue), var(--au-sky));
+  transition: width 0.5s ease;
+}
+.cpl-count {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--au-blue);
+}
+
+/* ============================================================
+   SECTION 6 — TIPS
+   ============================================================ */
+.tips-bg { background: var(--off-white); padding: 6rem 2rem; }
+.tips-inner { max-width: 1280px; margin: 0 auto; }
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 3rem;
+}
+.tip-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.5rem;
+  transition: all var(--transition);
+  position: relative;
+}
+.tip-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.tip-num {
+  position: absolute;
+  top: -14px; left: 20px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--au-blue), var(--au-sky));
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.tip-card h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+.tip-card p {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.mistakes-panel {
+  background: linear-gradient(135deg, #fff5f5, #ffe9e9);
+  border: 1.5px solid rgba(220,53,69,0.2);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+[data-theme="dark"] .mistakes-panel {
+  background: rgba(220,53,69,0.08);
+  border-color: rgba(220,53,69,0.2);
+}
+.mistakes-panel h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #c0392b;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.mistakes-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mistake-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.83rem;
+  color: var(--text-mid);
+}
+.mistake-item .mi-x {
+  width: 20px; height: 20px; min-width: 20px;
+  border-radius: 50%;
+  background: rgba(220,53,69,0.15);
+  color: #dc3545;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   SECTION 7 — FAQ
+   ============================================================ */
+.faq-bg { background: var(--white); padding: 6rem 2rem; }
+.faq-inner { max-width: 860px; margin: 0 auto; }
+
+.faq-list {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.faq-item {
+  background: var(--au-silver-lt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition);
+}
+.faq-item.open {
+  border-color: var(--au-blue);
+  box-shadow: var(--shadow-sm);
+}
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+.faq-q-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.faq-icon {
+  width: 30px; height: 30px; min-width: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: var(--text-soft);
+  transition: all var(--transition);
+  background: var(--white);
+}
+.faq-item.open .faq-icon {
+  background: var(--au-blue);
+  border-color: var(--au-blue);
+  color: white;
+  transform: rotate(45deg);
+}
+.faq-a {
+  display: none;
+  padding: 0 1.5rem 1.25rem;
+  font-size: 0.87rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  margin-top: 0;
+  padding-top: 1rem;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ============================================================
+   SECTION 8 — FINAL CTA
+   ============================================================ */
+.cta-section {
+  background: linear-gradient(135deg, var(--au-navy) 0%, #0e3060 40%, var(--au-blue) 100%);
+  padding: 7rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,162,39,0.12) 0%, transparent 70%);
+}
+.floating-badge {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(201,162,39,0.3);
+  animation: floatBadge 6s ease-in-out infinite;
+  pointer-events: none;
+}
+.fb-1 { width: 80px; height: 80px; top: 15%; left: 10%; animation-delay: 0s; }
+.fb-2 { width: 50px; height: 50px; top: 60%; left: 5%; animation-delay: 1s; }
+.fb-3 { width: 60px; height: 60px; top: 20%; right: 8%; animation-delay: 2s; }
+.fb-4 { width: 100px; height: 100px; top: 65%; right: 6%; animation-delay: 0.5s; }
+@keyframes floatBadge {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+.cta-inner { position: relative; max-width: 700px; margin: 0 auto; }
+
+.cta-trophy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.trophy-ring {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--au-gold), var(--au-gold-lt), var(--au-gold));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px;
+  box-shadow:
+    0 0 0 12px rgba(201,162,39,0.15),
+    0 0 0 24px rgba(201,162,39,0.08),
+    0 20px 60px rgba(201,162,39,0.4);
+  animation: trophyPulse 3s ease-in-out infinite;
+}
+@keyframes trophyPulse {
+  0%,100% { box-shadow: 0 0 0 12px rgba(201,162,39,0.15), 0 0 0 24px rgba(201,162,39,0.08), 0 20px 60px rgba(201,162,39,0.4); }
+  50% { box-shadow: 0 0 0 20px rgba(201,162,39,0.12), 0 0 0 36px rgba(201,162,39,0.05), 0 20px 80px rgba(201,162,39,0.5); }
+}
+
+.cta-inner h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.cta-inner h2 span {
+  background: linear-gradient(90deg, var(--au-gold), var(--au-gold-lt));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cta-inner > p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 2.5rem;
+}
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+.btn-cta-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--au-gold), #d4a82a);
+  color: var(--au-navy);
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 16px 36px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 6px 30px rgba(201,162,39,0.5);
+  transition: all var(--transition);
+}
+.btn-cta-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(201,162,39,0.65);
+}
+.btn-cta-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.3);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 15px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition);
+}
+.btn-cta-ghost:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-3px);
+}
+
+/* Testimonials */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 4rem;
+}
+.testimonial-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: left;
+  backdrop-filter: blur(8px);
+}
+.tc-stars {
+  color: var(--au-gold);
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 2px;
+}
+.tc-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+.tc-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tc-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+}
+.tc-name { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.9); }
+.tc-role { font-size: 0.68rem; color: rgba(255,255,255,0.5); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--au-navy);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+footer p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+}
+footer .footer-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.78rem;
+}
+footer .footer-badge i { color: var(--au-gold); }
+
+/* ============================================================
+   ANIMATIONS & UTILITIES
+   ============================================================ */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.animate-delay-1 { transition-delay: 0.1s; }
+.animate-delay-2 { transition-delay: 0.2s; }
+.animate-delay-3 { transition-delay: 0.3s; }
+.animate-delay-4 { transition-delay: 0.4s; }
+
+/* Stats counter */
+.stats-banner {
+  background: var(--au-silver-lt);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+}
+.stats-banner-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+.stat-block { text-align: center; }
+.stat-block .sb-num {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--au-blue);
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.stat-block .sb-label {
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+.stat-divider {
+  width: 1px; height: 50px;
+  background: var(--border);
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  z-index: 999;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--shadow-md);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  text-decoration: none;
+  color: var(--text-mid);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+.mobile-menu a:hover { background: var(--au-silver-lt); color: var(--au-blue); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-visual { justify-content: flex-start; }
+  .achievement-card-hero { max-width: 100%; }
+  .what-grid { grid-template-columns: 1fr; }
+  .checklist-grid { grid-template-columns: repeat(2, 1fr); }
+  .tips-grid { grid-template-columns: repeat(2, 1fr); }
+  .slider-panel { grid-template-columns: 1fr; }
+  .testimonials { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .route-grid { grid-template-columns: 1fr; }
+  .checklist-grid { grid-template-columns: 1fr; }
+  .tips-grid { grid-template-columns: 1fr; }
+  .mistakes-list { grid-template-columns: 1fr; }
+  .benefit-cards { grid-template-columns: 1fr; }
+  .stats-banner-inner { gap: 2rem; }
+  .stat-divider { display: none; }
+  .timeline-scroll { display: none; }
+  .timeline-mobile { display: flex; }
+  .hero-ctas { flex-direction: column; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     STICKY NAVIGATION
+     ============================================================ -->
+<nav id="top-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="AU TLC Silver Tier Hub">
+      <div class="badge-mini" aria-hidden="true">⭐</div>
+      <span>AU TLC · Silver Tier</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#what-is">What Is It</a></li>
+      <li><a href="#routes">Choose Route</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#submit" class="btn-nav">Submit Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <button id="theme-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+      <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="#what-is">What Is It?</a>
+  <a href="#routes">Choose Your Route</a>
+  <a href="#journey">Faculty Journey</a>
+  <a href="#walkthrough">Walkthrough</a>
+  <a href="#checklist">Submission Checklist</a>
+  <a href="#tips">Success Tips</a>
+  <a href="#faq">FAQ</a>
+  <a href="#submit" style="color: var(--au-blue); font-weight: 700;">🚀 Submit Now</a>
+</div>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="silver-badge-hero" role="img" aria-label="Silver Tier Recognition Program">
+        <div class="badge-icon">⭐</div>
+        <span>Ajman University TLC · Silver Tier Recognition</span>
+      </div>
+      <h1 class="hero-title" id="hero-title">
+        Silver Tier<br>
+        <span class="gold-text">Evidence Hub</span>
+      </h1>
+      <p class="hero-subtitle">Applied Teaching Practice Recognition</p>
+      <p class="hero-tagline">Showcase your teaching innovation and earn institutional recognition.</p>
+
+      <!-- Progress Tracker -->
+      <div class="hero-progress" role="group" aria-label="Application progress tracker">
+        <h4>Your Recognition Journey</h4>
+        <div class="progress-steps-mini">
+          <div class="ps-item">
+            <div class="ps-dot done" aria-label="Step 1 complete">1</div>
+            <span class="ps-label">Review</span>
+          </div>
+          <div class="ps-line done" aria-hidden="true"></div>
+          <div class="ps-item">
+            <div class="ps-dot active" aria-label="Step 2 current: Select Route">2</div>
+            <span class="ps-label">Select Route</span>
+          </div>
+          <div class="ps-line" aria-hidden="true"></div>
+          <div class="ps-item">
+            <div class="ps-dot pending" aria-label="Step 3 pending: Prepare">3</div>
+            <span class="ps-label">Prepare</span>
+          </div>
+          <div class="ps-line" aria-hidden="true"></div>
+          <div class="ps-item">
+            <div class="ps-dot pending" aria-label="Step 4 pending: Upload">4</div>
+            <span class="ps-label">Upload</span>
+          </div>
+          <div class="ps-line" aria-hidden="true"></div>
+          <div class="ps-item">
+            <div class="ps-dot pending" aria-label="Step 5 pending: Recognition">5</div>
+            <span class="ps-label">Recognition</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#submit" class="btn-primary"><i class="fas fa-rocket" aria-hidden="true"></i> Start Submission</a>
+        <a href="#routes" class="btn-ghost"><i class="fas fa-map" aria-hidden="true"></i> View Routes</a>
+        <a href="#checklist" class="btn-ghost"><i class="fas fa-download" aria-hidden="true"></i> Checklist</a>
+      </div>
+    </div>
+
+    <!-- Hero Visual -->
+    <div class="hero-visual" aria-hidden="true">
+      <div class="achievement-card-hero">
+        <div class="big-badge">
+          <div class="badge-pulse"></div>
+          <div class="badge-pulse-2"></div>
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#C9A227"/>
+                <stop offset="50%" style="stop-color:#F0D080"/>
+                <stop offset="100%" style="stop-color:#C9A227"/>
+              </linearGradient>
+            </defs>
+            <!-- Outer ring -->
+            <circle cx="60" cy="60" r="55" fill="none" stroke="url(#badgeGrad)" stroke-width="4" stroke-dasharray="8,4"/>
+            <!-- Shield body -->
+            <path d="M60 15 L90 28 L90 62 C90 78 75 90 60 96 C45 90 30 78 30 62 L30 28 Z" fill="url(#badgeGrad)"/>
+            <!-- Star inside -->
+            <polygon points="60,38 64,52 78,52 67,60 71,74 60,66 49,74 53,60 42,52 56,52" fill="#0A2240" opacity="0.8"/>
+            <!-- Ribbon -->
+            <path d="M45,95 L55,88 L60,96 L65,88 L75,95 L70,108 L60,102 L50,108 Z" fill="url(#badgeGrad)"/>
+          </svg>
+        </div>
+        <h3>Silver Tier Recognition</h3>
+        <p>Applied Teaching Practice · AU TLC</p>
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-num" id="stat-faculty">147</span>
+            <span class="stat-label">Faculty Recognized</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">2</span>
+            <span class="stat-label">Pathways</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num" id="stat-days">14</span>
+            <span class="stat-label">Days to Review</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Banner -->
+<div class="stats-banner" role="region" aria-label="Program statistics">
+  <div class="stats-banner-inner">
+    <div class="stat-block animate-on-scroll">
+      <span class="sb-num" data-target="147" data-suffix="">0</span>
+      <span class="sb-label">Faculty Members Recognized</span>
+    </div>
+    <div class="stat-divider" aria-hidden="true"></div>
+    <div class="stat-block animate-on-scroll animate-delay-1">
+      <span class="sb-num" data-target="94" data-suffix="%">0%</span>
+      <span class="sb-label">Completion Rate</span>
+    </div>
+    <div class="stat-divider" aria-hidden="true"></div>
+    <div class="stat-block animate-on-scroll animate-delay-2">
+      <span class="sb-num" data-target="2" data-suffix="">0</span>
+      <span class="sb-label">Recognition Routes</span>
+    </div>
+    <div class="stat-divider" aria-hidden="true"></div>
+    <div class="stat-block animate-on-scroll animate-delay-3">
+      <span class="sb-num" data-target="14" data-suffix=" days">0 days</span>
+      <span class="sb-label">Average Review Time</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 1 — WHAT IS SILVER TIER
+     ============================================================ -->
+<section id="what-is" class="section" aria-labelledby="what-is-title">
+  <div class="animate-on-scroll">
+    <div class="section-label"><i class="fas fa-award" aria-hidden="true"></i> About the Programme</div>
+    <h2 class="section-title" id="what-is-title">What is Silver Tier Recognition?</h2>
+    <p class="section-desc">A formal institutional acknowledgment of your excellence in teaching innovation, evidence-based practice, and commitment to transforming student learning.</p>
+  </div>
+
+  <div class="what-grid">
+    <div class="what-left animate-on-scroll">
+      <div class="benefit-cards" role="list">
+        <div class="benefit-card" role="listitem">
+          <div class="bc-icon" aria-hidden="true"><i class="fas fa-certificate"></i></div>
+          <h4>Formal Recognition</h4>
+          <p>Receive an official institutional certificate acknowledged by AU leadership.</p>
+        </div>
+        <div class="benefit-card" role="listitem">
+          <div class="bc-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></div>
+          <h4>Career Development</h4>
+          <p>Strengthen your professional portfolio with evidence of teaching excellence.</p>
+        </div>
+        <div class="benefit-card" role="listitem">
+          <div class="bc-icon" aria-hidden="true"><i class="fas fa-users"></i></div>
+          <h4>Community of Practice</h4>
+          <p>Join an elite network of innovative educators at Ajman University.</p>
+        </div>
+        <div class="benefit-card" role="listitem">
+          <div class="bc-icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></div>
+          <h4>Student Impact</h4>
+          <p>Demonstrate measurable improvements in student engagement and outcomes.</p>
+        </div>
+        <div class="benefit-card" role="listitem">
+          <div class="bc-icon" aria-hidden="true"><i class="fas fa-star"></i></div>
+          <h4>Tier Progression</h4>
+          <p>Silver is your gateway to Gold and Platinum tier recognition.</p>
+        </div>
+        <div class="benefit-card" role="listitem">
+          <div class="bc-icon" aria-hidden="true"><i class="fas fa-lightbulb"></i></div>
+          <h4>Teaching Innovation</h4>
+          <p>Get TLC support and resources to further enhance your practice.</p>
+        </div>
+      </div>
+
+      <div class="quote-callout" role="blockquote">
+        <p>"Silver Tier recognition is not just an award — it is evidence that you are transforming how students learn. It is your story of teaching impact, told through evidence."</p>
+        <cite>— Teaching and Learning Centre, Ajman University</cite>
+      </div>
+    </div>
+
+    <div class="what-right animate-on-scroll animate-delay-1">
+      <div class="tier-info-card">
+        <h3><i class="fas fa-bullseye" aria-hidden="true"></i> Programme Purpose</h3>
+        <ul>
+          <li>Recognize faculty who apply evidence-based teaching innovations</li>
+          <li>Celebrate measurable improvements in course design and delivery</li>
+          <li>Support continuous professional development through structured pathways</li>
+          <li>Build a culture of teaching excellence across AU</li>
+          <li>Connect innovative educators in a reflective community</li>
+        </ul>
+      </div>
+
+      <div class="tier-info-card">
+        <h3><i class="fas fa-road" aria-hidden="true"></i> Recognition Pathway</h3>
+        <ul>
+          <li>Bronze Tier — Initial engagement &amp; digital readiness</li>
+          <li><strong>Silver Tier</strong> — Applied teaching practice innovation</li>
+          <li>Gold Tier — Advanced pedagogical leadership</li>
+          <li>Platinum Tier — Teaching excellence exemplar</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <div class="hb-label">📌 Key Insight</div>
+        <p>Silver Tier evidence can be gathered from your existing Moodle courses. You do not need to start from scratch — your innovation is already happening. This process helps you document and celebrate it.</p>
+      </div>
+
+      <div class="highlight-box">
+        <div class="hb-label">🕐 Time Commitment</div>
+        <p>Most faculty complete their Silver Tier submission in <strong>3–5 hours</strong> of focused work. Evidence collection from existing course activity is straightforward with our templates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2 — CHOOSE YOUR ROUTE
+     ============================================================ -->
+<div class="route-bg" id="routes">
+  <div class="route-inner">
+    <div class="animate-on-scroll">
+      <div class="section-label"><i class="fas fa-route" aria-hidden="true"></i> Two Pathways</div>
+      <h2 class="section-title">Choose Your Route</h2>
+      <p class="section-desc">Select the pathway that best fits your professional situation. Both routes lead to the same Silver Tier recognition.</p>
+    </div>
+
+    <div class="route-grid" role="list">
+      <!-- Route A -->
+      <div class="route-card primary-route animate-on-scroll" role="listitem">
+        <div class="route-badge a" role="img" aria-label="Route A">
+          <i class="fas fa-flask" aria-hidden="true"></i> Route A
+        </div>
+        <h3>Applied Teaching Practice</h3>
+        <p>Ideal for faculty who have actively redesigned their Moodle course, integrated H5P activities, or implemented evidence-based teaching innovations that demonstrably improved student engagement or outcomes.</p>
+
+        <div class="route-evidence" role="list" aria-label="Required evidence for Route A">
+          <div class="evidence-item" role="listitem">
+            <div class="ei-icon screenshot" aria-hidden="true"><i class="fas fa-images"></i></div>
+            <span>Before &amp; After Moodle screenshots showing course redesign</span>
+          </div>
+          <div class="evidence-item" role="listitem">
+            <div class="ei-icon video" aria-hidden="true"><i class="fas fa-video"></i></div>
+            <span>Short walkthrough video (3–5 min) explaining your innovation</span>
+          </div>
+          <div class="evidence-item" role="listitem">
+            <div class="ei-icon reflection" aria-hidden="true"><i class="fas fa-pen-fancy"></i></div>
+            <span>Reflective summary (300–500 words) on teaching impact</span>
+          </div>
+          <div class="evidence-item" role="listitem">
+            <div class="ei-icon feedback" aria-hidden="true"><i class="fas fa-comments"></i></div>
+            <span>Student feedback or engagement data evidence</span>
+          </div>
+        </div>
+
+        <div class="route-steps" aria-label="Route A steps">
+          <div class="rs-item"><div class="rs-num">1</div> Gather before &amp; after screenshots</div>
+          <div class="rs-item"><div class="rs-num">2</div> Record your walkthrough video</div>
+          <div class="rs-item"><div class="rs-num">3</div> Write your reflective summary</div>
+          <div class="rs-item"><div class="rs-num">4</div> Collect student feedback evidence</div>
+          <div class="rs-item"><div class="rs-num">5</div> Submit via the Moodle form</div>
+        </div>
+      </div>
+
+      <!-- Route B -->
+      <div class="route-card animate-on-scroll animate-delay-1" role="listitem">
+        <div class="route-badge b" role="img" aria-label="Route B">
+          <i class="fas fa-graduation-cap" aria-hidden="true"></i> Route B
+        </div>
+        <h3>Structured Programme Recognition</h3>
+        <p>Ideal for faculty who have completed an approved structured professional development programme, workshop series, or certified teaching qualification. A streamlined verification process.</p>
+
+        <div class="route-evidence" role="list" aria-label="Required evidence for Route B">
+          <div class="evidence-item" role="listitem">
+            <div class="ei-icon cert" aria-hidden="true"><i class="fas fa-certificate"></i></div>
+            <span>Certificate of completion from approved programme</span>
+          </div>
+          <div class="evidence-item" role="listitem">
+            <div class="ei-icon doc" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
+            <span>Programme details &amp; learning outcomes documentation</span>
+          </div>
+          <div class="evidence-item" role="listitem">
+            <div class="ei-icon reflection" aria-hidden="true"><i class="fas fa-pen-fancy"></i></div>
+            <span>Brief reflection on application to your teaching (200 words)</span>
+          </div>
+        </div>
+
+        <div class="route-steps" aria-label="Route B steps">
+          <div class="rs-item"><div class="rs-num">1</div> Confirm your programme is on the approved list</div>
+          <div class="rs-item"><div class="rs-num">2</div> Upload your certificate or proof of completion</div>
+          <div class="rs-item"><div class="rs-num">3</div> Include programme details document</div>
+          <div class="rs-item"><div class="rs-num">4</div> Write a brief teaching reflection</div>
+          <div class="rs-item"><div class="rs-num">5</div> Submit and await TLC verification</div>
+        </div>
+
+        <div class="highlight-box" style="margin-top:1.5rem">
+          <div class="hb-label">✅ Approved Programmes</div>
+          <p>Contact the TLC to confirm if your programme qualifies. Examples include HEA Fellowship, Coursera Teaching specializations, and AU-endorsed faculty development programmes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 3 — FACULTY JOURNEY (TIMELINE)
+     ============================================================ -->
+<div class="timeline-bg" id="journey">
+  <div class="timeline-inner">
+    <div class="animate-on-scroll">
+      <div class="section-label"><i class="fas fa-map-signs" aria-hidden="true"></i> Step-by-Step</div>
+      <h2 class="section-title">Your Faculty Journey</h2>
+      <p class="section-desc">Follow these seven steps to move from intent to official Silver Tier recognition.</p>
+    </div>
+
+    <!-- Desktop horizontal timeline -->
+    <div class="timeline-scroll animate-on-scroll" role="list" aria-label="7-step recognition journey">
+      <div class="timeline-track">
+        <div class="tl-step" role="listitem">
+          <div class="tl-node step-1" data-step="1" title="Step 1" aria-label="Step 1: Review Requirements"><i class="fas fa-book-open" aria-hidden="true"></i></div>
+          <div class="tl-content">
+            <h4>Review Requirements</h4>
+            <p>Read this guide fully. Understand what evidence is needed for your chosen route.</p>
+            <span class="tl-tip">⏱ 30 min</span>
+          </div>
+        </div>
+        <div class="tl-connector" aria-hidden="true"></div>
+
+        <div class="tl-step" role="listitem">
+          <div class="tl-node step-2" data-step="2" title="Step 2" aria-label="Step 2: Select Route"><i class="fas fa-route" aria-hidden="true"></i></div>
+          <div class="tl-content">
+            <h4>Select Route</h4>
+            <p>Decide between Route A (Practice) or Route B (Programme). Both are equally valued.</p>
+            <span class="tl-tip">💡 Quick decision</span>
+          </div>
+        </div>
+        <div class="tl-connector" aria-hidden="true"></div>
+
+        <div class="tl-step" role="listitem">
+          <div class="tl-node step-3" data-step="3" title="Step 3" aria-label="Step 3: Prepare Evidence"><i class="fas fa-folder-open" aria-hidden="true"></i></div>
+          <div class="tl-content">
+            <h4>Prepare Evidence</h4>
+            <p>Gather screenshots, write your reflection, record your video or collect your certificate.</p>
+            <span class="tl-tip">⏱ 2–4 hrs</span>
+          </div>
+        </div>
+        <div class="tl-connector" aria-hidden="true"></div>
+
+        <div class="tl-step" role="listitem">
+          <div class="tl-node step-4" data-step="4" title="Step 4" aria-label="Step 4: Upload Materials"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i></div>
+          <div class="tl-content">
+            <h4>Upload Materials</h4>
+            <p>Use the Moodle submission form to upload all required files and documents.</p>
+            <span class="tl-tip">⏱ 20 min</span>
+          </div>
+        </div>
+        <div class="tl-connector" aria-hidden="true"></div>
+
+        <div class="tl-step" role="listitem">
+          <div class="tl-node step-5" data-step="5" title="Step 5" aria-label="Step 5: Submit Form"><i class="fas fa-paper-plane" aria-hidden="true"></i></div>
+          <div class="tl-content">
+            <h4>Submit Form</h4>
+            <p>Complete the submission form with all required information and click Submit.</p>
+            <span class="tl-tip">✅ One click</span>
+          </div>
+        </div>
+        <div class="tl-connector" aria-hidden="true"></div>
+
+        <div class="tl-step" role="listitem">
+          <div class="tl-node step-6" data-step="6" title="Step 6" aria-label="Step 6: TLC Verification"><i class="fas fa-search" aria-hidden="true"></i></div>
+          <div class="tl-content">
+            <h4>TLC Verification</h4>
+            <p>The Teaching &amp; Learning Centre reviews your submission within 14 working days.</p>
+            <span class="tl-tip">📬 You'll hear back</span>
+          </div>
+        </div>
+        <div class="tl-connector" aria-hidden="true"></div>
+
+        <div class="tl-step" role="listitem">
+          <div class="tl-node step-7" data-step="7" title="Step 7" aria-label="Step 7: Receive Recognition"><i class="fas fa-trophy" aria-hidden="true"></i></div>
+          <div class="tl-content">
+            <h4>Recognition!</h4>
+            <p>Receive your official Silver Tier certificate and join the recognized faculty community.</p>
+            <span class="tl-tip">🎉 Celebrate!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile vertical timeline -->
+    <div class="timeline-mobile animate-on-scroll" role="list" aria-label="7-step recognition journey">
+      <div class="tlm-item" role="listitem">
+        <div class="tlm-left"><div class="tlm-node step-1" aria-hidden="true"><i class="fas fa-book-open"></i></div><div class="tlm-line"></div></div>
+        <div class="tlm-content"><h4>1. Review Requirements</h4><p>Read this guide fully. 30 min.</p></div>
+      </div>
+      <div class="tlm-item" role="listitem">
+        <div class="tlm-left"><div class="tlm-node step-2" aria-hidden="true"><i class="fas fa-route"></i></div><div class="tlm-line"></div></div>
+        <div class="tlm-content"><h4>2. Select Your Route</h4><p>Route A or Route B — both are equally valued.</p></div>
+      </div>
+      <div class="tlm-item" role="listitem">
+        <div class="tlm-left"><div class="tlm-node step-3" aria-hidden="true"><i class="fas fa-folder-open"></i></div><div class="tlm-line"></div></div>
+        <div class="tlm-content"><h4>3. Prepare Evidence</h4><p>Screenshots, reflection, video or certificate. 2–4 hrs.</p></div>
+      </div>
+      <div class="tlm-item" role="listitem">
+        <div class="tlm-left"><div class="tlm-node step-4" aria-hidden="true"><i class="fas fa-cloud-upload-alt"></i></div><div class="tlm-line"></div></div>
+        <div class="tlm-content"><h4>4. Upload Materials</h4><p>Use the Moodle submission form.</p></div>
+      </div>
+      <div class="tlm-item" role="listitem">
+        <div class="tlm-left"><div class="tlm-node step-5" aria-hidden="true"><i class="fas fa-paper-plane"></i></div><div class="tlm-line"></div></div>
+        <div class="tlm-content"><h4>5. Submit Form</h4><p>Click Submit — you're done!</p></div>
+      </div>
+      <div class="tlm-item" role="listitem">
+        <div class="tlm-left"><div class="tlm-node step-6" aria-hidden="true"><i class="fas fa-search"></i></div><div class="tlm-line"></div></div>
+        <div class="tlm-content"><h4>6. TLC Verification</h4><p>Review within 14 working days.</p></div>
+      </div>
+      <div class="tlm-item" role="listitem">
+        <div class="tlm-left"><div class="tlm-node step-7" aria-hidden="true"><i class="fas fa-trophy"></i></div></div>
+        <div class="tlm-content"><h4>7. Receive Recognition! 🎉</h4><p>Get your official Silver Tier certificate.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 4 — INTERACTIVE WALKTHROUGH
+     ============================================================ -->
+<div class="walkthrough-bg" id="walkthrough">
+  <div class="walkthrough-inner">
+    <div class="animate-on-scroll">
+      <div class="section-label"><i class="fas fa-magic" aria-hidden="true"></i> Interactive Guide</div>
+      <h2 class="section-title">Process Walkthrough</h2>
+      <p class="section-desc">Explore each step of the submission process with this guided walkthrough.</p>
+    </div>
+
+    <div class="step-slider animate-on-scroll">
+      <div class="slider-nav" role="tablist" aria-label="Walkthrough steps">
+        <button class="slider-tab active" data-panel="0" role="tab" aria-selected="true" aria-controls="panel-0"><i class="fas fa-book-open" aria-hidden="true"></i> Prepare</button>
+        <button class="slider-tab" data-panel="1" role="tab" aria-selected="false" aria-controls="panel-1"><i class="fas fa-folder-open" aria-hidden="true"></i> Gather</button>
+        <button class="slider-tab" data-panel="2" role="tab" aria-selected="false" aria-controls="panel-2"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Upload</button>
+        <button class="slider-tab" data-panel="3" role="tab" aria-selected="false" aria-controls="panel-3"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit</button>
+        <button class="slider-tab" data-panel="4" role="tab" aria-selected="false" aria-controls="panel-4"><i class="fas fa-trophy" aria-hidden="true"></i> Celebrate</button>
+      </div>
+
+      <div class="slider-panels">
+        <!-- Panel 0: Prepare -->
+        <div class="slider-panel active" id="panel-0" role="tabpanel" aria-labelledby="tab-0">
+          <div class="panel-info">
+            <h3>Step 1: Prepare Your Evidence</h3>
+            <p>Before uploading anything, take 30 minutes to review what you'll need. Use our downloadable checklist to organize your materials. Most evidence already exists in your Moodle course — you're just documenting what you've done.</p>
+            <div class="panel-checklist">
+              <div class="pc-item"><i class="fas fa-check-circle" aria-hidden="true"></i> Download the evidence checklist template</div>
+              <div class="pc-item"><i class="fas fa-check-circle" aria-hidden="true"></i> Identify your strongest teaching innovation example</div>
+              <div class="pc-item"><i class="fas fa-check-circle" aria-hidden="true"></i> Choose Route A or Route B</div>
+              <div class="pc-item"><i class="fas fa-check-circle" aria-hidden="true"></i> Set aside 3–5 hours for evidence preparation</div>
+            </div>
+          </div>
+          <div class="panel-visual" aria-label="Evidence preparation checklist mockup">
+            <div class="pv-header">
+              <div class="pv-dot red" aria-hidden="true"></div>
+              <div class="pv-dot yellow" aria-hidden="true"></div>
+              <div class="pv-dot green" aria-hidden="true"></div>
+              <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-left:8px">Evidence Preparation Dashboard</span>
+            </div>
+            <div class="pv-bar"><div class="pv-bar-fill" style="width:25%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="25% complete"></div></div>
+            <span style="font-size:0.68rem;color:rgba(255,255,255,0.4)">Preparation: 1 of 4 steps complete</span>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">📋</div><div class="pi-text"><div class="pi-name">Evidence Checklist</div><div class="pi-sub">Template downloaded</div></div><div class="pi-status done">Done</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">🔍</div><div class="pi-text"><div class="pi-name">Route Selection</div><div class="pi-sub">Awaiting decision</div></div><div class="pi-status pending">Pending</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">📁</div><div class="pi-text"><div class="pi-name">Evidence Gathering</div><div class="pi-sub">Not started</div></div><div class="pi-status pending">Pending</div></div>
+          </div>
+        </div>
+
+        <!-- Panel 1: Gather -->
+        <div class="slider-panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+          <div class="panel-info">
+            <h3>Step 2: Gather Your Evidence</h3>
+            <p>This is the main work phase. For Route A, take before &amp; after screenshots of your Moodle course, record a short screen walkthrough video, write your reflective summary, and collect any student engagement data.</p>
+            <div class="panel-checklist">
+              <div class="pc-item"><i class="fas fa-camera" aria-hidden="true"></i> Screenshot your Moodle course (before &amp; after)</div>
+              <div class="pc-item"><i class="fas fa-video" aria-hidden="true"></i> Record a 3–5 min walkthrough video</div>
+              <div class="pc-item"><i class="fas fa-pen" aria-hidden="true"></i> Write 300–500 word reflection</div>
+              <div class="pc-item"><i class="fas fa-chart-bar" aria-hidden="true"></i> Export student engagement data</div>
+            </div>
+          </div>
+          <div class="panel-visual" aria-label="Evidence gathering dashboard mockup">
+            <div class="pv-header">
+              <div class="pv-dot red" aria-hidden="true"></div>
+              <div class="pv-dot yellow" aria-hidden="true"></div>
+              <div class="pv-dot green" aria-hidden="true"></div>
+              <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-left:8px">Evidence Gathering</span>
+            </div>
+            <div class="pv-bar"><div class="pv-bar-fill" style="width:50%" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="50% complete"></div></div>
+            <span style="font-size:0.68rem;color:rgba(255,255,255,0.4)">Gathering: 2 of 4 items collected</span>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">🖼️</div><div class="pi-text"><div class="pi-name">Screenshots (Before)</div><div class="pi-sub">moodle-before.png · 2.1MB</div></div><div class="pi-status done">Done</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">🖼️</div><div class="pi-text"><div class="pi-name">Screenshots (After)</div><div class="pi-sub">moodle-after.png · 1.8MB</div></div><div class="pi-status done">Done</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">🎥</div><div class="pi-text"><div class="pi-name">Walkthrough Video</div><div class="pi-sub">Recording in progress...</div></div><div class="pi-status pending">In Progress</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">📝</div><div class="pi-text"><div class="pi-name">Reflective Summary</div><div class="pi-sub">Word document ready</div></div><div class="pi-status upload">Upload</div></div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Upload -->
+        <div class="slider-panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+          <div class="panel-info">
+            <h3>Step 3: Upload Your Materials</h3>
+            <p>Navigate to the submission form in this Moodle course. Upload each piece of evidence in the designated upload areas. Make sure files are clearly named and under the size limits.</p>
+            <div class="panel-checklist">
+              <div class="pc-item"><i class="fas fa-file-image" aria-hidden="true"></i> Screenshots — PNG or PDF, max 10MB each</div>
+              <div class="pc-item"><i class="fas fa-file-video" aria-hidden="true"></i> Video — MP4 or via YouTube/OneDrive link</div>
+              <div class="pc-item"><i class="fas fa-file-word" aria-hidden="true"></i> Reflection — Word or PDF, max 5MB</div>
+              <div class="pc-item"><i class="fas fa-file-alt" aria-hidden="true"></i> Feedback evidence — Any format</div>
+            </div>
+          </div>
+          <div class="panel-visual" aria-label="File upload interface mockup">
+            <div class="pv-header">
+              <div class="pv-dot red" aria-hidden="true"></div>
+              <div class="pv-dot yellow" aria-hidden="true"></div>
+              <div class="pv-dot green" aria-hidden="true"></div>
+              <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-left:8px">Moodle Upload Interface</span>
+            </div>
+            <div class="pv-bar"><div class="pv-bar-fill" style="width:75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75% complete"></div></div>
+            <span style="font-size:0.68rem;color:rgba(255,255,255,0.4)">Upload: 3 of 4 files uploaded</span>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">🖼️</div><div class="pi-text"><div class="pi-name">Course Screenshots</div><div class="pi-sub">2 files · 3.9MB</div></div><div class="pi-status done">✓ Uploaded</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">🎥</div><div class="pi-text"><div class="pi-name">Walkthrough Video</div><div class="pi-sub">OneDrive link added</div></div><div class="pi-status done">✓ Uploaded</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">📝</div><div class="pi-text"><div class="pi-name">Reflective Summary</div><div class="pi-sub">reflection-draft.docx</div></div><div class="pi-status done">✓ Uploaded</div></div>
+            <div class="pv-item"><div class="pi-icon" aria-hidden="true">📊</div><div class="pi-text"><div class="pi-name">Student Feedback</div><div class="pi-sub">Click to upload</div></div><div class="pi-status upload">↑ Upload</div></div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Submit -->
+        <div class="slider-panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
+          <div class="panel-info">
+            <h3>Step 4: Submit &amp; Await Verification</h3>
+            <p>Once all files are uploaded, complete the submission form fields, review everything one final time, and click Submit. You'll receive an automated confirmation email. The TLC will review your submission within 14 working days.</p>
+            <div class="panel-checklist">
+              <div class="pc-item"><i class="fas fa-check-double" aria-hidden="true"></i> All required files uploaded</div>
+              <div class="pc-item"><i class="fas fa-user" aria-hidden="true"></i> Personal details completed</div>
+              <div class="pc-item"><i class="fas fa-route" aria-hidden="true"></i> Route selection confirmed</div>
+              <div class="pc-item"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submission button clicked</div>
+            </div>
+          </div>
+          <div class="panel-visual" aria-label="Submission confirmation mockup">
+            <div class="pv-header">
+              <div class="pv-dot red" aria-hidden="true"></div>
+              <div class="pv-dot yellow" aria-hidden="true"></div>
+              <div class="pv-dot green" aria-hidden="true"></div>
+              <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-left:8px">Submission Confirmation</span>
+            </div>
+            <div style="text-align:center;padding:1.5rem 0;">
+              <div style="font-size:3rem;margin-bottom:0.75rem">✅</div>
+              <div style="font-size:0.95rem;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:0.4rem">Submission Received!</div>
+              <div style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:1.5rem">Reference #ST-2025-1847</div>
+              <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:1rem;font-size:0.78rem;color:rgba(255,255,255,0.65);line-height:1.6">
+                📬 Confirmation email sent to your AU email<br>
+                🔍 TLC review: 14 working days<br>
+                📞 Questions: tlc@ajman.ac.ae
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 4: Celebrate -->
+        <div class="slider-panel" id="panel-4" role="tabpanel" aria-labelledby="tab-4">
+          <div class="panel-info">
+            <h3>Step 5: Receive Your Recognition!</h3>
+            <p>Upon successful verification, you will receive your official Silver Tier certificate, be listed in the AU TLC recognition register, invited to the recognition ceremony, and gain access to exclusive Gold Tier pathways.</p>
+            <div class="panel-checklist">
+              <div class="pc-item"><i class="fas fa-certificate" aria-hidden="true"></i> Official digital certificate issued</div>
+              <div class="pc-item"><i class="fas fa-list" aria-hidden="true"></i> Listed in AU TLC recognition register</div>
+              <div class="pc-item"><i class="fas fa-users" aria-hidden="true"></i> Invited to recognition ceremony</div>
+              <div class="pc-item"><i class="fas fa-star" aria-hidden="true"></i> Gold Tier pathway unlocked</div>
+            </div>
+          </div>
+          <div class="panel-visual" aria-label="Certificate preview mockup" style="text-align:center">
+            <div style="background:linear-gradient(135deg,rgba(201,162,39,0.2),rgba(201,162,39,0.05));border:2px solid rgba(201,162,39,0.4);border-radius:16px;padding:2rem;position:relative">
+              <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.5);margin-bottom:0.5rem">Ajman University · Teaching &amp; Learning Centre</div>
+              <div style="font-size:1.5rem;font-weight:800;color:rgba(255,255,255,0.9);margin-bottom:0.25rem">Silver Tier</div>
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.55);margin-bottom:1.5rem">APPLIED TEACHING PRACTICE RECOGNITION</div>
+              <div style="font-size:1.2rem;font-weight:700;color:var(--au-gold-lt);margin-bottom:0.25rem">Dr. Faculty Name</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);margin-bottom:1.5rem">College of Engineering · 2025</div>
+              <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:rgba(255,255,255,0.4)">
+                <span>TLC Director</span><span>Verified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 5 — SUBMISSION CHECKLIST
+     ============================================================ -->
+<div class="checklist-bg" id="checklist">
+  <div class="checklist-inner">
+    <div class="animate-on-scroll">
+      <div class="section-label"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Complete Checklist</div>
+      <h2 class="section-title">What You Need to Submit</h2>
+      <p class="section-desc">Use this interactive checklist to track your evidence collection. Click each item to mark it complete.</p>
+    </div>
+
+    <div class="checklist-grid animate-on-scroll">
+      <!-- Screenshots -->
+      <div class="cl-category">
+        <div class="cl-header">
+          <i class="fas fa-images" aria-hidden="true"></i>
+          <h4>Screenshots &amp; Visuals</h4>
+        </div>
+        <div class="cl-items">
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Before: Original Moodle course screenshot
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            After: Redesigned course screenshot
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            H5P activity screenshots (if applicable)
+            <span class="cl-tag optional">Optional</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Student analytics/participation screenshots
+            <span class="cl-tag optional">Optional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reflection -->
+      <div class="cl-category">
+        <div class="cl-header">
+          <i class="fas fa-pen-fancy" aria-hidden="true"></i>
+          <h4>Reflective Summary</h4>
+        </div>
+        <div class="cl-items">
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Written reflection (300–500 words)
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Describes specific innovation implemented
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Describes impact on student learning
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Future improvement intentions included
+            <span class="cl-tag optional">Optional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video -->
+      <div class="cl-category">
+        <div class="cl-header">
+          <i class="fas fa-video" aria-hidden="true"></i>
+          <h4>Video Evidence</h4>
+        </div>
+        <div class="cl-items">
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Screen walkthrough video (3–5 minutes)
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Video shows course navigation
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Commentary explains design decisions
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Uploaded to OneDrive or YouTube (unlisted)
+            <span class="cl-tag required">Required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Feedback -->
+      <div class="cl-category">
+        <div class="cl-header">
+          <i class="fas fa-comments" aria-hidden="true"></i>
+          <h4>Feedback &amp; Engagement</h4>
+        </div>
+        <div class="cl-items">
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Student survey or feedback evidence
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Engagement data (activity completion, quiz stats)
+            <span class="cl-tag optional">Optional</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Course evaluation excerpts (anonymized)
+            <span class="cl-tag optional">Optional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Route B Docs -->
+      <div class="cl-category">
+        <div class="cl-header">
+          <i class="fas fa-certificate" aria-hidden="true"></i>
+          <h4>Route B: Programme Proof</h4>
+        </div>
+        <div class="cl-items">
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Certificate of programme completion
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Programme outline / learning outcomes doc
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Brief teaching reflection (200 words)
+            <span class="cl-tag required">Required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- General -->
+      <div class="cl-category">
+        <div class="cl-header">
+          <i class="fas fa-user-check" aria-hidden="true"></i>
+          <h4>Submission Form</h4>
+        </div>
+        <div class="cl-items">
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Full name &amp; employee ID
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            College / Department
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Route selection confirmed (A or B)
+            <span class="cl-tag required">Required</span>
+          </div>
+          <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheck(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck(this)">
+            <div class="cl-checkbox" aria-hidden="true"><i class="fas fa-check"></i></div>
+            Academic year indicated
+            <span class="cl-tag required">Required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="cl-progress-bar animate-on-scroll" role="status" aria-live="polite" aria-label="Checklist completion progress">
+      <div class="cpl-info">
+        <div class="cpl-title">Checklist Progress</div>
+        <div class="cpl-bar">
+          <div class="cpl-bar-fill" id="cl-bar-fill" style="width:0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+      <div class="cpl-count" id="cl-count" aria-label="Items completed">0/<span id="cl-total">0</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 6 — SUCCESS TIPS
+     ============================================================ -->
+<div class="tips-bg" id="tips">
+  <div class="tips-inner">
+    <div class="animate-on-scroll">
+      <div class="section-label"><i class="fas fa-lightbulb" aria-hidden="true"></i> Expert Guidance</div>
+      <h2 class="section-title">Faculty Success Tips</h2>
+      <p class="section-desc">These insights from the TLC team will help you prepare a strong, compelling submission.</p>
+    </div>
+
+    <div class="tips-grid" role="list">
+      <div class="tip-card animate-on-scroll" role="listitem">
+        <div class="tip-num" aria-hidden="true">1</div>
+        <h4>Keep Reflections Concise &amp; Specific</h4>
+        <p>Focus on one or two specific innovations rather than trying to cover everything. Depth beats breadth. Reviewers want to understand exactly what you changed and why.</p>
+      </div>
+      <div class="tip-card animate-on-scroll animate-delay-1" role="listitem">
+        <div class="tip-num" aria-hidden="true">2</div>
+        <h4>Focus on Student Impact</h4>
+        <p>Always connect your evidence back to student learning outcomes. The question isn't just "what did you do?" but "what changed for your students as a result?"</p>
+      </div>
+      <div class="tip-card animate-on-scroll animate-delay-2" role="listitem">
+        <div class="tip-num" aria-hidden="true">3</div>
+        <h4>Use Clear, Annotated Screenshots</h4>
+        <p>Add arrows or highlights to your screenshots to draw attention to the specific features or changes. Before/after comparisons are very powerful evidence.</p>
+      </div>
+      <div class="tip-card animate-on-scroll" role="listitem">
+        <div class="tip-num" aria-hidden="true">4</div>
+        <h4>Speak Naturally in Your Video</h4>
+        <p>You don't need a professional recording setup. Use Zoom screen recording or Loom. Talk as if you're explaining your course to a colleague — natural &amp; authentic wins.</p>
+      </div>
+      <div class="tip-card animate-on-scroll animate-delay-1" role="listitem">
+        <div class="tip-num" aria-hidden="true">5</div>
+        <h4>Highlight Engagement Data</h4>
+        <p>Moodle activity completion rates, quiz attempt statistics, and H5P interaction data are all powerful. Even a simple table comparing semester to semester is compelling.</p>
+      </div>
+      <div class="tip-card animate-on-scroll animate-delay-2" role="listitem">
+        <div class="tip-num" aria-hidden="true">6</div>
+        <h4>Contact TLC Before Submitting</h4>
+        <p>The TLC team is here to support you. A 15-minute consultation before you finalize your submission can save significant time and ensure your evidence meets expectations.</p>
+      </div>
+    </div>
+
+    <div class="mistakes-panel animate-on-scroll" role="alert">
+      <h3><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Common Mistakes to Avoid</h3>
+      <div class="mistakes-list" role="list">
+        <div class="mistake-item" role="listitem">
+          <div class="mi-x" aria-hidden="true"><i class="fas fa-times"></i></div>
+          Submitting blurry or unclear screenshots that can't be reviewed
+        </div>
+        <div class="mistake-item" role="listitem">
+          <div class="mi-x" aria-hidden="true"><i class="fas fa-times"></i></div>
+          Writing a reflection that describes what you did but not the impact
+        </div>
+        <div class="mistake-item" role="listitem">
+          <div class="mi-x" aria-hidden="true"><i class="fas fa-times"></i></div>
+          Uploading files that exceed size limits (video via link instead)
+        </div>
+        <div class="mistake-item" role="listitem">
+          <div class="mi-x" aria-hidden="true"><i class="fas fa-times"></i></div>
+          Forgetting to include student feedback or engagement evidence
+        </div>
+        <div class="mistake-item" role="listitem">
+          <div class="mi-x" aria-hidden="true"><i class="fas fa-times"></i></div>
+          Submitting under Route B without checking programme approval first
+        </div>
+        <div class="mistake-item" role="listitem">
+          <div class="mi-x" aria-hidden="true"><i class="fas fa-times"></i></div>
+          Missing required form fields (name, college, route selection)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 7 — FAQ
+     ============================================================ -->
+<div class="faq-bg" id="faq">
+  <div class="faq-inner">
+    <div class="animate-on-scroll">
+      <div class="section-label"><i class="fas fa-question-circle" aria-hidden="true"></i> Common Questions</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-desc">Everything you need to know before submitting your Silver Tier evidence.</p>
+    </div>
+
+    <div class="faq-list animate-on-scroll" role="list">
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFAQ(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFAQ(this)">
+          <span class="faq-q-text">Do I need a full teaching portfolio to apply for Silver Tier?</span>
+          <div class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-a" role="region">
+          No. Silver Tier does not require a full portfolio. You need focused, specific evidence of one or two teaching innovations — not a comprehensive record of your entire teaching career. The submission is designed to be manageable and targeted.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFAQ(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFAQ(this)">
+          <span class="faq-q-text">Can I submit multiple examples or evidence from different courses?</span>
+          <div class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-a" role="region">
+          Yes, you may include evidence from more than one course, but it is recommended to focus on your strongest example and present it in depth. Quality and depth of reflection is more important than quantity of examples. Two strong pieces of evidence from one course are better than five superficial examples from five courses.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFAQ(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFAQ(this)">
+          <span class="faq-q-text">What happens after I submit? Will I know if my submission is being reviewed?</span>
+          <div class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-a" role="region">
+          Upon submission, you will receive an automated confirmation email with your submission reference number. The TLC team will review your evidence within 14 working days. If additional information is needed, the TLC will contact you directly. You will receive a final decision email with feedback regardless of the outcome.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFAQ(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFAQ(this)">
+          <span class="faq-q-text">Will TLC provide feedback if my submission is not successful?</span>
+          <div class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-a" role="region">
+          Absolutely. If your submission does not meet the criteria, you will receive specific, constructive feedback explaining what additional evidence or improvements are needed. You are welcome to resubmit after addressing the feedback. The TLC is here to support your success, not simply to evaluate it.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFAQ(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFAQ(this)">
+          <span class="faq-q-text">How long does the verification process take?</span>
+          <div class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-a" role="region">
+          The standard review period is 14 working days from the date of submission. During peak periods (end of semester), this may extend slightly. You will be notified of any delays. If you have not heard back after 14 working days, you are encouraged to contact tlc@ajman.ac.ae with your submission reference number.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFAQ(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFAQ(this)">
+          <span class="faq-q-text">Can workshops or individual TLC sessions count toward Silver Tier?</span>
+          <div class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-a" role="region">
+          Individual workshops or TLC sessions alone do not qualify for Route B, which requires a structured programme with defined learning outcomes and completion criteria. However, a series of workshops that form a coherent programme may qualify. Contact the TLC to discuss your specific situation. For Route A, workshop attendance can be mentioned in your reflection as development context, but the main evidence must be your applied teaching practice.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFAQ(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFAQ(this)">
+          <span class="faq-q-text">Is there a deadline for submitting Silver Tier evidence?</span>
+          <div class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="faq-a" role="region">
+          Silver Tier submissions are accepted on a rolling basis throughout the academic year. However, submissions received after a specific semester deadline may be recognized in the following ceremony cycle. Check with TLC for current cycle deadlines to ensure your recognition is included in the next ceremony.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 8 — FINAL CTA
+     ============================================================ -->
+<section class="cta-section" id="submit" aria-labelledby="cta-title">
+  <div class="floating-badge fb-1" aria-hidden="true"></div>
+  <div class="floating-badge fb-2" aria-hidden="true"></div>
+  <div class="floating-badge fb-3" aria-hidden="true"></div>
+  <div class="floating-badge fb-4" aria-hidden="true"></div>
+
+  <div class="cta-inner">
+    <div class="cta-trophy" aria-hidden="true">
+      <div class="trophy-ring">🏆</div>
+    </div>
+
+    <h2 id="cta-title">Your teaching innovation<br>deserves <span>recognition.</span></h2>
+    <p>You have already done the hard work. Now let the evidence speak for itself.</p>
+
+    <div class="cta-buttons">
+      <a href="#" class="btn-cta-primary" role="button">
+        <i class="fas fa-rocket" aria-hidden="true"></i> Start My Submission Now
+      </a>
+      <a href="#" class="btn-cta-ghost" role="button">
+        <i class="fas fa-download" aria-hidden="true"></i> Download Evidence Templates
+      </a>
+      <a href="mailto:tlc@ajman.ac.ae" class="btn-cta-ghost" role="button">
+        <i class="fas fa-envelope" aria-hidden="true"></i> Contact TLC
+      </a>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials" role="list">
+      <div class="testimonial-card" role="listitem">
+        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
+        <p class="tc-text">"The Silver Tier process helped me see the real impact of my H5P redesign. The reflection made me a more intentional educator."</p>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background: linear-gradient(135deg, var(--au-blue), var(--au-sky));" aria-hidden="true">SM</div>
+          <div>
+            <div class="tc-name">Dr. Sara M.</div>
+            <div class="tc-role">College of Business · Route A</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
+        <p class="tc-text">"I was worried the process would be bureaucratic. Instead, it was genuinely meaningful and the TLC team was incredibly supportive."</p>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background: linear-gradient(135deg, #6a1b9a, #ab47bc);" aria-hidden="true">AK</div>
+          <div>
+            <div class="tc-name">Dr. Ahmed K.</div>
+            <div class="tc-role">College of Engineering · Route B</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="tc-stars" aria-label="5 stars">★★★★★</div>
+        <p class="tc-text">"Completing Silver Tier gave me the confidence to go further. I'm now working toward Gold. The recognition matters — to me and my students."</p>
+        <div class="tc-author">
+          <div class="tc-avatar" style="background: linear-gradient(135deg, #00695c, #26a69a);" aria-hidden="true">LR</div>
+          <div>
+            <div class="tc-name">Dr. Layla R.</div>
+            <div class="tc-role">College of Health Sciences · Route A</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <p>© 2025 Ajman University · Teaching and Learning Centre · Silver Tier Recognition Programme</p>
+    <div class="footer-badge">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+      <span>tlc@ajman.ac.ae</span>
+      <span style="margin:0 8px;opacity:0.3">|</span>
+      <i class="fas fa-award" aria-hidden="true"></i>
+      <span>Silver Tier Evidence Hub v2.0</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ── Dark Mode ── */
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = themeToggle.querySelector('i');
+const savedTheme = localStorage.getItem('tlc-theme') || 'light';
+if (savedTheme === 'dark') {
+  document.body.setAttribute('data-theme', 'dark');
+  themeIcon.className = 'fas fa-sun';
+}
+themeToggle.addEventListener('click', () => {
+  const isDark = document.body.getAttribute('data-theme') === 'dark';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+  localStorage.setItem('tlc-theme', isDark ? 'light' : 'dark');
+});
+
+/* ── Hamburger Menu ── */
+const hamburger = document.getElementById('hamburger-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen);
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* ── Scroll Animations ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+/* ── Counter Animation ── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const startTime = performance.now();
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(ease * target);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.animated) {
+      e.target.dataset.animated = 'true';
+      animateCounter(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+/* ── Slider / Walkthrough ── */
+const tabs = document.querySelectorAll('.slider-tab');
+const panels = document.querySelectorAll('.slider-panel');
+tabs.forEach((tab, i) => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    panels[i].classList.add('active');
+    // Re-trigger bar animations
+    panels[i].querySelectorAll('.pv-bar-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0';
+      requestAnimationFrame(() => { bar.style.width = w; });
+    });
+  });
+});
+
+/* ── FAQ Accordion ── */
+function toggleFAQ(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+
+/* ── Checklist ── */
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  const isChecked = item.classList.contains('checked');
+  item.setAttribute('aria-checked', isChecked);
+  updateProgress();
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('.cl-item');
+  const done = document.querySelectorAll('.cl-item.checked');
+  const pct = all.length ? Math.round((done.length / all.length) * 100) : 0;
+  const bar = document.getElementById('cl-bar-fill');
+  const count = document.getElementById('cl-count');
+  const total = document.getElementById('cl-total');
+  if (bar) bar.style.width = pct + '%';
+  if (bar) bar.setAttribute('aria-valuenow', pct);
+  if (total) total.textContent = all.length;
+  if (count) count.innerHTML = done.length + '/<span id="cl-total">' + all.length + '</span>';
+}
+// Init total
+updateProgress();
+
+/* ── Smooth active nav link ── */
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 80) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.style.color = '';
+    if (link.getAttribute('href') === '#' + current) {
+      link.style.color = 'var(--au-blue)';
+    }
+  });
+});
+
+/* ── Confetti on final CTA click ── */
+document.querySelector('.btn-cta-primary').addEventListener('click', (e) => {
+  e.preventDefault();
+  launchConfetti();
+  setTimeout(() => {
+    alert('🎉 Opening submission form... \n\nIn a live deployment, this would navigate to the Moodle assignment submission page.');
+  }, 400);
+});
+
+function launchConfetti() {
+  const colors = ['#C9A227','#F0D080','#1A4F8A','#2E8BC0','#ffffff'];
+  for (let i = 0; i < 60; i++) {
+    const dot = document.createElement('div');
+    dot.style.cssText = `
+      position:fixed;
+      width:${6+Math.random()*8}px;
+      height:${6+Math.random()*8}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      left:${20+Math.random()*60}%;
+      top:50%;
+      pointer-events:none;
+      z-index:9999;
+      animation:confettiFall ${1+Math.random()*2}s ease forwards;
+      animation-delay:${Math.random()*0.5}s;
+    `;
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 3000);
+  }
+}
+
+const confettiStyle = document.createElement('style');
+confettiStyle.textContent = `
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(${-300}px) rotate(${360}deg) translateX(${Math.random()>0.5?'':'-'}${Math.random()*200}px); opacity: 0; }
+}`;
+document.head.appendChild(confettiStyle);
+
+/* ── Nav scroll shrink ── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('top-nav');
+  if (window.scrollY > 50) {
+    nav.style.boxShadow = 'var(--shadow-md)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
