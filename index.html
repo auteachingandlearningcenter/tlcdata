@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faculty PD Achievement Dashboard | Ajman University TLC</title>
+<meta name="description" content="Faculty Professional Development achievement dashboard for Ajman University's Teaching and Learning Center. Load a Moodle Workplace badge report; data stays in your browser.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="topbar no-print">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">AU</span>
+    <div>
+      <h1>Faculty PD Achievement</h1>
+      <p>Ajman University &middot; Teaching &amp; Learning Center</p>
+    </div>
+  </div>
+
+  <nav class="tabs" aria-label="Dashboard views">
+    <div role="tablist" aria-label="Dashboard views">
+      <button role="tab" id="tab-individual" aria-controls="panel-individual" aria-selected="true">Individual</button>
+      <button role="tab" id="tab-college" aria-controls="panel-college" aria-selected="false" tabindex="-1">College</button>
+    </div>
+  </nav>
+
+  <div class="tools">
+    <label class="btn btn-primary" for="file-badges">Load badge report</label>
+    <input type="file" id="file-badges" class="visually-hidden" accept=".xlsx,.xls,.csv,.html,.htm">
+    <button class="btn btn-icon" id="btn-settings" type="button" aria-expanded="false" aria-controls="settings" title="Settings">
+      <span aria-hidden="true">&#9881;</span><span class="visually-hidden">Settings</span>
+    </button>
+    <button class="btn btn-icon" id="btn-theme" type="button" aria-pressed="false" title="Toggle dark mode">
+      <span aria-hidden="true" id="theme-icon">&#9790;</span><span class="visually-hidden">Dark mode</span>
+    </button>
+  </div>
+</header>
+
+<section id="settings" class="settings no-print" hidden aria-label="Settings">
+  <div class="settings-grid">
+    <div class="field">
+      <label for="set-cycle">Academic year starts in</label>
+      <select id="set-cycle">
+        <option value="1">January (calendar year)</option><option value="2">February</option><option value="3">March</option>
+        <option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option>
+        <option value="8">August</option><option value="9" selected>September</option><option value="10">October</option>
+        <option value="11">November</option><option value="12">December</option>
+      </select>
+      <p class="hint">Cycle dates are not in the badge report. Change this once the TLC confirms them.</p>
+    </div>
+    <div class="field">
+      <label for="set-active">Active participant window (days)</label>
+      <input id="set-active" type="number" min="7" max="365" value="60">
+      <p class="hint">Active = earned a badge within this many days of the newest badge in the file.</p>
+    </div>
+    <div class="field">
+      <label for="file-roster">Roster (optional): email, department</label>
+      <input id="file-roster" type="file" accept=".xlsx,.xls,.csv">
+      <p class="hint">Adds Department (and rank). Columns: <code>email</code>, <code>department</code>, optional <code>rank</code>, <code>hire date</code>.</p>
+    </div>
+    <div class="field">
+      <label for="file-map">Badge-to-theme map (optional)</label>
+      <input id="file-map" type="file" accept=".xlsx,.xls,.csv">
+      <p class="hint">Columns: <code>badge</code>, <code>theme</code>. <button class="link" id="btn-map-template" type="button">Download template</button></p>
+    </div>
+  </div>
+</section>
+
+<div id="status" class="statusbar no-print" role="status" aria-live="polite"></div>
+<details id="notes" class="notes no-print" hidden>
+  <summary>Data notes</summary>
+  <div id="notes-body"></div>
+</details>
+
+<main id="main" tabindex="-1">
+
+  <section id="empty" class="empty">
+    <div class="card empty-card" id="dropzone">
+      <h2>Load a Moodle Workplace badge report</h2>
+      <p>Choose the badge report (Excel, CSV or the HTML export) with <strong>Load badge report</strong>, or drop it here. The file is read in your browser and is never uploaded.</p>
+      <p><label class="btn btn-primary" for="file-badges">Choose file</label></p>
+    </div>
+  </section>
+
+  <!-- ================= INDIVIDUAL ================= -->
+  <section id="panel-individual" role="tabpanel" aria-labelledby="tab-individual" hidden>
+    <div class="toolbar no-print">
+      <div class="field grow">
+        <label for="q">Find faculty by name or email</label>
+        <input id="q" type="search" autocomplete="off" placeholder="e.g. m.elsheikh@ajman.ac.ae or Mariam">
+      </div>
+      <div class="field">
+        <label for="year-ind">Academic year</label>
+        <select id="year-ind" class="year-select"></select>
+      </div>
+    </div>
+    <ul id="results" class="results no-print" aria-label="Search results"></ul>
+    <div id="ind-content"></div>
+  </section>
+
+  <!-- ================= COLLEGE ================= -->
+  <section id="panel-college" role="tabpanel" aria-labelledby="tab-college" hidden>
+    <div class="toolbar no-print">
+      <div class="field"><label for="f-college">College</label><select id="f-college"></select></div>
+      <div class="field"><label for="f-status">Badge status</label>
+        <select id="f-status">
+          <option value="all">All faculty</option>
+          <option value="gold">Gold achievers</option>
+          <option value="silver">Silver achievers</option>
+          <option value="bronze">Bronze achievers</option>
+          <option value="none">In progress (no tier yet)</option>
+        </select></div>
+      <div class="field"><label for="year-college">Academic year</label><select id="year-college" class="year-select"></select></div>
+    </div>
+    <h2 class="visually-hidden">College Dashboard</h2>
+    <div id="college-content"></div>
+  </section>
+
+</main>
+
+<footer class="footer no-print">
+  <p>Data is processed locally in your browser and is not stored or sent anywhere. Tier results are calculated from badge issuances; items marked <em>Not in report</em> need data the Moodle badge report does not contain.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
